@@ -29,7 +29,7 @@ class MesaController extends Controller
         Mesa::create($request->all());
 
         return redirect()->route('mesas.index')
-                         ->with('success', 'Mesa creada correctamente.');
+                         ->with('success','Mesa creada correctamente.');
     }
 
     public function show($id)
@@ -57,7 +57,7 @@ class MesaController extends Controller
         $mesa->update($request->all());
 
         return redirect()->route('mesas.index')
-                         ->with('success', 'Mesa actualizada correctamente.');
+                         ->with('success','Mesa actualizada correctamente.');
     }
 
     public function destroy($id)
@@ -66,6 +66,6 @@ class MesaController extends Controller
         $mesa->delete();
 
         return redirect()->route('mesas.index')
-                         ->with('success', 'Mesa eliminada correctamente.');
+                         ->with('success','Mesa eliminada correctamente.');
     }
 }

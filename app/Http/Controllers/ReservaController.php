@@ -39,7 +39,7 @@ class ReservaController extends Controller
         Reserva::create($request->all());
 
         return redirect()->route('reservas.index')
-                         ->with('success', 'Reserva creada correctamente.');
+                         ->with('success','Reserva creada correctamente.');
     }
 
     public function show($id)
@@ -72,7 +72,7 @@ class ReservaController extends Controller
         $reserva->update($request->all());
 
         return redirect()->route('reservas.index')
-                         ->with('success', 'Reserva actualizada correctamente.');
+                         ->with('success','Reserva actualizada correctamente.');
     }
 
     public function destroy($id)
@@ -81,6 +81,6 @@ class ReservaController extends Controller
         $reserva->delete();
 
         return redirect()->route('reservas.index')
-                         ->with('success', 'Reserva eliminada correctamente.');
+                         ->with('success','Reserva eliminada correctamente.');
     }
 }
