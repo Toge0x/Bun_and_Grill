@@ -7,53 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
-    /** @use HasFactory<\Database\Factories\ClienteFactory> */
     use HasFactory;
 
-    // InfoPago
-    private $pago;
-    // int
-    private $puntos;
-    // array Pedido
-    private $pedidos;
-    // array Alergeno
-    private $alergenos;
+    protected $table = 'clientes';
+    protected $primaryKey = 'email';
+    public $incrementing = false;       // porque la primary key no es un entero
+    protected $keyType = 'string';
 
-    function __construct($pago, $puntos, $pedidos, $alergenos)
+    protected $fillable = [
+        'email',
+        'puntos',
+    ];
+
+    // RELACIONES
+
+    public function reservas()  // 1 a N, cliente tiene muchas reservas
     {
-        $this->pago = $pago;
-        $this->puntos = $puntos;
-        $this->pedidos = $pedidos;
-        $this->alergenos = $alergenos;
+        return $this->hasMany(Reserva::class, 'cliente_email', 'email');
     }
 
-    function crearReserva(){
-        // Código para crear una reserva
-        // todo
-        return false;
+    public function alergenos()
+    {
+        return $this->belongsToMany(Alergeno::class, 'cliente_alergenos', 'cliente_email', 'alergeno_id');
+    }    
+
+    public function usuario()   // 1 a 1 con usuario, herencia
+    {
+        return $this->hasOne(Usuario::class, 'email', 'email');
     }
-
-    function registrarInfoPago(){
-        // Código para registrar la información de pago
-        // todo
-    }
-
-    function registrarAlergenos(){
-        // Código para registrar los alergenos
-        // todo
-    }
-
-    function getPedidos(){
-        // Código para obtener los pedidos
-        // todo
-        // return arrayPedidos
-    }
-
-    function getAlergenos(){
-        // Código para obtener los alergenos
-        // todo
-        // return arrayAlergenos
-    }
-
-
 }

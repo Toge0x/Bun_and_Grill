@@ -3,14 +3,15 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Usuario;
+use App\Models\Cliente;
 use Illuminate\Support\Facades\Hash;
 
 class UsuarioSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        DB::table('usuarios')->insert([
+        $usuarios = [
             [
                 'nombre' => 'paco',
                 'apellidos' => 'perez',
@@ -18,7 +19,7 @@ class UsuarioSeeder extends Seeder
                 'password' => Hash::make('pacop89'),
                 'telefono' => '123456789',
                 'direccion' => 'calle ua',
-                'sexo' => 'Masculino'
+                'sexo' => 'Masculino',
             ],
             [
                 'nombre' => 'maria',
@@ -27,8 +28,14 @@ class UsuarioSeeder extends Seeder
                 'password' => Hash::make('mariam04'),
                 'telefono' => '987654321',
                 'direccion' => 'calle au',
-                'sexo' => 'Femenino'
+                'sexo' => 'Femenino',
             ]
-        ]);
+        ];
+
+        foreach($usuarios as $data){
+            Usuario::firstOrCreate([
+                'email' => $data['email']
+            ], $data);
+        }
     }
 }

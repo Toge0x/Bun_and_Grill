@@ -2,27 +2,30 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use App\Models\Reserva;
+use App\Models\Cliente;
+use App\Models\Mesa;
 use Carbon\Carbon;
 
 class ReservaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        DB::table('reservas')->insert([
-            [
-                'reserva_id' => 1,
-                'cliente_email' => 'pacop@gmail.com',
-                'mesa_id' => 1,
-                'fechaReserva' => Carbon::now()->format('Y-m-d'),
-                'horaReserva' => Carbon::now()->format('H:i:s'),
+        $cliente = Cliente::where('email', 'pacop@gmail.com')->first();     // asegurarse de que existen el cliente y la mesa
+        $mesa = Mesa::where('capacidad', '>=', 4)->first();         // primera mesa con capacidad >= 4
+
+        if($cliente && $mesa){
+            Reserva::create([
+                'cliente_email' => $cliente->email,
+                'mesa_id' => $mesa->mesa_id,
+                'fechaReserva' => Carbon::now()->toDateString(),
+                'horaReserva' => Carbon::now()->toTimeString(),
                 'duracion' => 30,
                 'estado' => 'Reservada'
-            ]
-        ]);
+            ]);
+        }else{
+            echo "No se pudo crear la reserva: cliente o mesa no encontrada.\n";
+        }
     }
 }

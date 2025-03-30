@@ -13,43 +13,35 @@ class Genero {
 
 class Usuario extends Model
 {
-    /** @use HasFactory<\Database\Factories\UsuarioFactory> */
     use HasFactory;
 
-    private $nombre;
+    protected $table = 'usuarios';
+    protected $primaryKey = 'email';
+    public $incrementing = false;       // primary key no es un numero
+    protected $keyType = 'string';
 
-    private $apellidos;
+    protected $fillable = [
+        'nombre',
+        'apellidos',
+        'email',
+        'password',
+        'telefono',
+        'direccion',
+        'sexo',
+    ];
 
-    private $email;
-
-    private $password;
-
-    private $telefono;
-
-    private $direccion;
-
-    private $genero;
-
-    function __construct($nombre, $apellidos, $email, $password, $telefono, $direccion, $genero)
+    public function cliente()   // relacion 1:1 con cliente, herencia
     {
-        $this->nombre = $nombre;
-        $this->apellidos = $apellidos;
-        $this->email = $email;
-        $this->password = $password;
-        $this->telefono = $telefono;
-        $this->direccion = $direccion;
-        $this->genero = $genero;
+        return $this->belongsTo(Cliente::class, 'email', 'email');
     }
 
-    function registrarUsuario(){
-        // Código para registrar un usuario
-        // Todo: Implementar
+    public function registrarUsuario()      // metodos a implementar
+    {
         return false;
     }
 
-    function autenticarUsuario(){
-        // Código para autenticar un usuario
-        // Todo: Implementar
+    public function autenticarUsuario()
+    {
         return false;
     }
 }

@@ -12,20 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reservas', function (Blueprint $table) {
-            $table->id('reserva_id');           // clave primaria correcta
-            $table->string('cliente_email');    // clave ajena a clientes
+            $table->id('reserva_id');
+
+            $table->string('cliente_email');        // ajena a cliente
             $table->foreign('cliente_email')->references('email')->on('clientes')->onDelete('cascade');
-            
-            $table->unsignedBigInteger('mesa_id');  // clave ajena a mesas
+
+            $table->unsignedBigInteger('mesa_id');      // ajena a mesa
             $table->foreign('mesa_id')->references('mesa_id')->on('mesas')->onDelete('cascade');
-        
-            $table->date('fechaReserva');
+
+            $table->date('fechaReserva');       // campos de la tabla
             $table->time('horaReserva');
-            $table->integer('duracion');
+            $table->float('duracion');
             $table->enum('estado', ['Finalizada', 'Reservada']);
+
             $table->timestamps();
         });
-        
     }
 
     /**

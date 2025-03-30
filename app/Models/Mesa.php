@@ -5,34 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EstadoMesa{
-    const Reservada = "Reservada";
-    const Disponible = "Disponible";
-}
-
 class Mesa extends Model
 {
-    /** @use HasFactory<\Database\Factories\MesaFactory> */
     use HasFactory;
 
-    // int
-    private $idMesa;
-    // Date
-    private $fechaReserva; // esto es innecesario? ya que reserva tiene la fecha
-    // int
-    private $capacidad;
-    // Time
-    private $horaReserva; // igual que en fechaReserva
-    // EstadoMesa
-    private $estado;
+    protected $table = 'mesas';
+    protected $primaryKey = 'mesa_id';
+    public $timestamps = true;
 
-    function reservarMesa(){
-        // todo
-        return false;
+    protected $fillable = [
+        'capacidad',
+        'estado',
+    ];
+
+    // Relaciones
+
+    public function reservas()
+    {
+        return $this->hasMany(Reserva::class, 'mesa_id', 'mesa_id');
     }
 
-    function liberarMesa(){
-        // todo
-        return false;
+    // Métodos adicionales opcionales (no obligatorios para funcionar)
+
+    public function reservarMesa()
+    {
+        $this->estado = 'Reservada';
+        $this->save();
+    }
+
+    public function liberarMesa()
+    {
+        $this->estado = 'Disponible';
+        $this->save();
     }
 }

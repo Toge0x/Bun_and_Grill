@@ -9,14 +9,16 @@ class DatabaseSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
         $this->call([
             UsuarioSeeder::class,
             ClienteSeeder::class,
+            AlergenoSeeder::class,
             ClienteAlergenoSeeder::class,
             MesaSeeder::class,
-            ReservaSeeder::class
+            ReservaSeeder::class,
         ]);
     }
+
 }

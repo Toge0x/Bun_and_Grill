@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('telefono')->nullable();
             $table->string('direccion')->nullable();
-            $table->enum('sexo', ['Masculino', 'Femenino']);
+            $table->enum('sexo', ['Masculino', 'Femenino', 'Otro']);
             $table->timestamps();
         });
     }

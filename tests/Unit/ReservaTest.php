@@ -3,30 +3,38 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Cliente;
+use App\Models\Usuario;
+use App\Models\Mesa;
+use App\Models\Reserva;
 
 class ReservaTest extends TestCase
 {
+    use RefreshDatabase;
 
-    public function test_Cliente_Tiene_Reserva(): void
+    public function test_cliente_tiene_reserva(): void
     {
+        // Arrange: crear usuario, cliente, mesa y reserva
+        $usuario = Usuario::factory()->create(['email' => 'pacop@gmail.com']);
+        $cliente = Cliente::factory()->create(['email' => $usuario->email]);
+        $mesa = Mesa::factory()->create(['capacidad' => 4]);
 
-        $cliente = DB::table('clientes')->where('email', 'pacop@gmail.com')->first();
+        $reserva = Reserva::create([
+            'cliente_email' => $cliente->email,
+            'mesa_id' => $mesa->mesa_id,
+            'fechaReserva' => now()->toDateString(),
+            'horaReserva' => now()->toTimeString(),
+            'duracion' => 1.5,
+            'estado' => 'Reservada'
+        ]);
 
+        // Act: obtener las reservas del cliente
+        $reservas = $cliente->reservas;
+
+        // Assert
         $this->assertNotNull($cliente, "Cliente no encontrado");
-
-        $mesas = DB::table('mesas')->where('mesa_id', '1')->first();
-    
-        $this->assertNotNull($mesas, "Mesa no encontrado");
-
-        $alergeno = DB::table('reservas')
-            ->where('mesa_id',$mesas->mesa_id)
-            ->where('cliente_email', $cliente->email)  
-            ->first();
-
-        $this->assertNotNull($alergeno, "Alergeno 'gluten' no encontrado");
-
+        $this->assertNotNull($mesa, "Mesa no encontrada");
+        $this->assertTrue($reservas->contains($reserva), "La reserva no está asociada al cliente");
     }
 }

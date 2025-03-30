@@ -3,27 +3,33 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Cliente;
+use App\Models\Usuario;
 
 class UsuarioTest extends TestCase
 {
+    use RefreshDatabase;
 
-    public function test_Cliente_Tiene_Usuario(): void
+    public function test_cliente_tiene_usuario(): void
     {
+        // Arrange: crea usuario y cliente relacionados
+        $usuario = Usuario::factory()->create([
+            'email' => 'mariam@gmail.com'
+        ]);
 
-        $cliente = DB::table('clientes')->where('email', 'mariam@gmail.com')->first();
+        Cliente::factory()->create([
+            'email' => $usuario->email,
+            'puntos' => 50
+        ]);
 
+        // Act: obtener cliente y su usuario relacionado
+        $cliente = Cliente::where('email', 'mariam@gmail.com')->first();
+        $usuarioRelacionado = $cliente->usuario;
+
+        // Assert: ambos deben existir
         $this->assertNotNull($cliente, "Cliente no encontrado");
-
-
-        $alergeno = DB::table('usuarios')
-            ->where('email', $cliente->email)
-            ->first();
-
-
-        $this->assertNotNull($alergeno, "Alergeno 'gluten' no encontrado");
-
+        $this->assertNotNull($usuarioRelacionado, "Usuario relacionado no encontrado");
+        $this->assertEquals('mariam@gmail.com', $usuarioRelacionado->email);
     }
 }

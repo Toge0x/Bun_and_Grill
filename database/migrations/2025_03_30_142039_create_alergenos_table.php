@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mesas', function (Blueprint $table) {
-            $table->id('mesa_id');
-            $table->integer('capacidad');
-            $table->enum('estado', ['Reservada', 'Disponible'])->default('Disponible');
-            $table->timestamps();
-        });
+        Schema::create('alergenos', function (Blueprint $table) {
+            $table->id(); // alergeno_id
+            $table->string('nombre')->unique();
+        });        
     }
 
     /**
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mesas');
+        Schema::dropIfExists('alergenos');
     }
 };

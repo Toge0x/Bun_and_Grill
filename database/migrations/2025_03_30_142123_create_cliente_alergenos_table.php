@@ -13,19 +13,14 @@ return new class extends Migration
     {
         Schema::create('cliente_alergenos', function (Blueprint $table) {
             $table->id();
-            $table->string('cliente_email'); 
+            $table->string('cliente_email');
+            $table->unsignedBigInteger('alergeno_id');
+        
             $table->foreign('cliente_email')->references('email')->on('clientes')->onDelete('cascade');
-    
-            $table->enum('alergeno', [
-                'Gluten', 'Crustáceos', 'Huevos', 'Pescado', 'Cacahuetes', 
-                'Soja', 'Lácteos', 'Frutos_con_cascara', 'Apio', 'Mostaza', 
-                'Sésamo', 'Sulfitos', 'Altramuces', 'Moluscos'
-            ]);
-
-            $table->timestamps();
+            $table->foreign('alergeno_id')->references('id')->on('alergenos')->onDelete('cascade');
         });
+        
     }
-
 
     /**
      * Reverse the migrations.
