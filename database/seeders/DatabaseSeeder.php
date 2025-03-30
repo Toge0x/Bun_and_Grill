@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             ClienteAlergenoSeeder::class,
             MesaSeeder::class,
             ReservaSeeder::class,
+            ProductoSeeder::class,
+            PedidoSeeder::class,
         ]);
     }
 

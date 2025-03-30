@@ -6,6 +6,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\ProductoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,5 +19,5 @@ Route::resource('clientes', ClienteController::class);
 Route::resource('usuarios', UsuarioController::class);
 Route::resource('mesas', MesaController::class);
 Route::resource('reservas', ReservaController::class);
-
+Route::resource('productos', ProductoController::class);
 
