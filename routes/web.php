@@ -52,6 +52,9 @@ Route::get('/admin-hamburguesas', function () {
     return view('hamburguesas');
 });
 
+// Controlador login
+Route::post('/login', [UsuarioController::class, 'checkLogin'])->name('login');
+
 
 
 
