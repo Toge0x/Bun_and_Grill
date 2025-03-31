@@ -127,6 +127,17 @@
             <img src="{{ asset('images/logo.png') }}" alt="Bun & Grill Logo">
         </div>
 
+        <!-- para mostrar los errores -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form method="POST" action="/login">
             @csrf
 

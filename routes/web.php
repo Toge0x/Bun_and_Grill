@@ -10,7 +10,7 @@ use App\Http\Controllers\ProductoController;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 Route::get('/hamburguesa-del-mes', function () {
     return view('hamburguesa-del-mes');
@@ -30,11 +30,15 @@ Route::get('/usuario-pedido', function () {
 
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');
+
+Route::post('/login', [UsuarioController::class, 'checkLogin']);
 
 Route::get('/registro', function () {
     return view('registro');
 })->name('registro');
+
+Route::post('/registro', [UsuarioController::class, 'store']);
 
 Route::get('/admin', function () {
     return view('listado-reservas');
@@ -52,8 +56,6 @@ Route::get('/admin-hamburguesas', function () {
     return view('hamburguesas');
 });
 
-// Controlador login
-Route::post('/login', [UsuarioController::class, 'checkLogin'])->name('login');
 
 
 

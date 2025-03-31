@@ -3,23 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use App\Models\Cliente;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
-
-    public function checkLogin(Request $request)
-    {   // Corregir después
-        $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required'
-        ]);
-
-        $usuario = Usuario::where('email', $request->email)->first();
-
-
-    }
 
     public function index()
     {
@@ -32,23 +23,26 @@ class UsuarioController extends Controller
         return view('usuarios.create');
     }
 
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        $request->validate([
-            'nombre'   => 'required',
-            'email'    => 'required|email|unique:usuarios,email',
-            'password' => 'required'
+        $usuario = Usuario::create([        // validado en RegisterRequest ya podemos crearlo directamente
+            'nombre'     => $request->nombre,
+            'apellidos'  => $request->apellidos,
+            'email'      => $request->email,
+            'password'   => Hash::make($request->password),
+            'telefono'   => $request->telefono,
+            'direccion'  => $request->direccion,
+            'sexo'       => $request->sexo,
         ]);
 
-        Usuario::create([
-            'nombre'   => $request->nombre,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password)
+        Cliente::create([
+            'email'   => $usuario->email,
+            'puntos'  => 0,
         ]);
 
-        return redirect()->route('usuarios.index')
-                         ->with('success','Usuario creado correctamente.');
+        return redirect()->route('home')->with('success', '¡Registro completado correctamente!');
     }
+
 
     public function show($id)
     {
@@ -91,4 +85,20 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index')
                          ->with('success','Usuario eliminado correctamente.');
     }
+
+
+    public function checkLogin(LoginRequest $request)
+    {
+        $usuario = Usuario::where('email', $request->email)->first();
+
+        if (!$usuario || !Hash::check($request->password, $usuario->password)) {
+            return back()->withErrors([
+                'email' => 'Credenciales incorrectas.'
+            ])->withInput();                    // mantienes el email escrito
+        }
+
+        return back()->with('success', 'Login exitoso');    // simplemente pasa la validación
+    }
+
+
 }
