@@ -32,6 +32,10 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/registro', function () {
+    return view('registro');
+})->name('registro');
+
 Route::get('/admin', function () {
     return view('listado-reservas');
 })->name('admin-reservas');

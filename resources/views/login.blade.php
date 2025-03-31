@@ -100,6 +100,21 @@
     .forgot-password:hover {
         color: #333;
     }
+
+    .registro-link {
+    margin-top: 20px;
+    display: block;
+    color: #666;
+    font-size: 14px;
+}
+    .registro-link a {
+        color: #f0b000;
+        text-decoration: underline;
+    }
+
+    .registro-link a:hover {
+        color: #e0a500;
+    }
 </style>
 @endsection
 
@@ -147,6 +162,10 @@
             </div>
 
             <button type="submit" class="login-button">LOGIN</button>
+
+            <div class="registro-link">
+                ¿No tienes una cuenta? <a href="{{ route('registro') }}">Registrate aquí</a>
+            </div>
 
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}" class="forgot-password">
