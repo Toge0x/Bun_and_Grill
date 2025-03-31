@@ -201,11 +201,7 @@
                 <img src="{{ asset('images/logo.png') }}" alt="Bun & Grill">
             </div>
             <nav class="sidebar-menu">
-                <a href="/admin" class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="/admin-reservas" class="menu-item {{ request()->routeIs('admin.reservas*') ? 'active' : '' }}">
+                <a href="{{ route('admin-reservas') }}" class="menu-item {{ request()->routeIs('admin.reservas*') ? 'active' : '' }}">
                     <i class="fas fa-calendar-alt"></i>
                     <span>Reservas</span>
                 </a>

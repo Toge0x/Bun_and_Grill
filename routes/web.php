@@ -33,12 +33,8 @@ Route::get('/login', function () {
 });
 
 Route::get('/admin', function () {
-    return view('dashboard');
-});
-
-Route::get('/admin-reservas', function () {
     return view('listado-reservas');
-});
+})->name('admin-reservas');
 
 Route::get('/admin-pedidos', function () {
     return view('pedidos');

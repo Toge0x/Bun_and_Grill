@@ -255,7 +255,7 @@
             </button>
         </div>
 
-        <a href="{{ route('admin.pedidos.create') }}" class="btn btn-primary">
+        <a href="/admin-pedidos" class="btn btn-primary">
             <i class="fas fa-plus"></i> Nuevo Pedido
         </a>
     </div>
@@ -318,15 +318,15 @@
                         <span>• Refresco Cola x1</span>
                     </div>
                 </td>
-                <td>$35.50</td>
+                <td>35.50€</td>
                 <td>15/05/2023<br><small>19:30</small></td>
                 <td><span class="status-badge status-preparacion">En preparación</span></td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.pedidos.show', 1) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.pedidos.edit', 1) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
@@ -345,15 +345,15 @@
                         <span>• Papas Fritas Grandes x2</span>
                     </div>
                 </td>
-                <td>$28.75</td>
+                <td>28.75€</td>
                 <td>15/05/2023<br><small>18:45</small></td>
                 <td><span class="status-badge status-entregado">Entregado</span></td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.pedidos.show', 2) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.pedidos.edit', 2) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
@@ -373,71 +373,15 @@
                         <span>• Refresco Cola x3</span>
                     </div>
                 </td>
-                <td>$52.25</td>
+                <td>52.25€</td>
                 <td>15/05/2023<br><small>18:15</small></td>
                 <td><span class="status-badge status-entregado">Entregado</span></td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.pedidos.show', 3) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.pedidos.edit', 3) }}" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#P1086</td>
-                <td>Ana Martínez<br><small>Tel: 555-789-0123</small></td>
-                <td>
-                    <div>2 Hamburguesas, 1 Ensalada</div>
-                    <div class="order-items">
-                        <span>• Hamburguesa Clásica x1</span>
-                        <span>• Hamburguesa del Mes x1</span>
-                        <span>• Ensalada César x1</span>
-                    </div>
-                </td>
-                <td>$42.00</td>
-                <td>15/05/2023<br><small>17:30</small></td>
-                <td><span class="status-badge status-cancelado">Cancelado</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="{{ route('admin.pedidos.show', 4) }}" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="{{ route('admin.pedidos.edit', 4) }}" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#P1085</td>
-                <td>Luis Sánchez<br><small>Tel: 555-234-5678</small></td>
-                <td>
-                    <div>1 Hamburguesa, 1 Papas, 1 Refresco</div>
-                    <div class="order-items">
-                        <span>• Hamburguesa Clásica x1</span>
-                        <span>• Papas Fritas Medianas x1</span>
-                        <span>• Refresco Limón x1</span>
-                    </div>
-                </td>
-                <td>$25.50</td>
-                <td>15/05/2023<br><small>16:45</small></td>
-                <td><span class="status-badge status-pendiente">Pendiente</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="{{ route('admin.pedidos.show', 5) }}" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="{{ route('admin.pedidos.edit', 5) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
