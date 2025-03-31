@@ -244,7 +244,7 @@
             </button>
         </div>
 
-        <a href="{{ route('admin.reservas.create') }}" class="btn btn-primary">
+        <a href="/admin-reservas" class="btn btn-primary">
             <i class="fas fa-plus"></i> Nueva Reserva
         </a>
     </div>
@@ -306,10 +306,10 @@
                 <td><span class="status-badge status-pendiente">Pendiente</span></td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.reservas.show', 1) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.reservas.edit', 1) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
@@ -327,73 +327,10 @@
                 <td><span class="status-badge status-confirmada">Confirmada</span></td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.reservas.show', 2) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.reservas.edit', 2) }}" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#1003</td>
-                <td>Carlos Rodríguez<br><small>Tel: 555-456-7890</small></td>
-                <td>16/05/2023<br><small>19:00</small></td>
-                <td>6</td>
-                <td>3</td>
-                <td><span class="status-badge status-confirmada">Confirmada</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="{{ route('admin.reservas.show', 3) }}" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="{{ route('admin.reservas.edit', 3) }}" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#1004</td>
-                <td>Ana Martínez<br><small>Tel: 555-789-0123</small></td>
-                <td>14/05/2023<br><small>20:30</small></td>
-                <td>3</td>
-                <td>10</td>
-                <td><span class="status-badge status-cancelada">Cancelada</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="{{ route('admin.reservas.show', 4) }}" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="{{ route('admin.reservas.edit', 4) }}" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#1005</td>
-                <td>Luis Sánchez<br><small>Tel: 555-234-5678</small></td>
-                <td>15/05/2023<br><small>19:30</small></td>
-                <td>5</td>
-                <td>7</td>
-                <td><span class="status-badge status-completada">Completada</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="{{ route('admin.reservas.show', 5) }}" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="{{ route('admin.reservas.edit', 5) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">

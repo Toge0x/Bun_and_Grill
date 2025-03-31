@@ -124,7 +124,7 @@
         <a href="/hamburguesa-del-mes" class="nav-link">Hamburgusa del Mes</a>
         <a href="/carta" class="nav-link">Carta</a>
         <a href="/reservas" class="nav-link">Reservas</a>
-        <a href="/contactanos" class="nav-link">Contáctanos</a>
+        <a href="/usuario-pedido" class="nav-link">Haz tu pedido</a>
         <a href="/login" class="login-btn">LOGIN</a>
     </div>
 

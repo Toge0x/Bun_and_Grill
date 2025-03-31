@@ -86,11 +86,11 @@
                 <span class="separator">|</span>
                 <a href="/reservas" class="footer-link">Reservas</a>
                 <span class="separator">|</span>
-                <a href="/contactanos" class="footer-link">Conáctanos</a>
+                <a href="/contactanos" class="footer-link">Contáctanos</a>
             </div>
 
             <div class="footer-address">
-                1717 Harrison St, San Francisco
+                Alicante, España
             </div>
         </div>
 

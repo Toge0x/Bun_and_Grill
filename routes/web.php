@@ -24,8 +24,8 @@ Route::get('/reservas', function () {
     return view('reservas');
 });
 
-Route::get('/contactanos', function () {
-    return view('contactanos');
+Route::get('/usuario-pedido', function () {
+    return view('usuario-pedido');
 });
 
 Route::get('/login', function () {

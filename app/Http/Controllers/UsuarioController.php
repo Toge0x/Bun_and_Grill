@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
+
+    public function checkLogin(Request $request)
+    {   // Corregir después
+        $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $usuario = Usuario::where('email', $request->email)->first();
+
+
+    }
+
     public function index()
     {
         $usuarios = Usuario::orderBy('id','desc')->paginate(10);

@@ -205,7 +205,7 @@
             </button>
         </div>
 
-        <a href="{{ route('admin.clientes.create') }}" class="btn btn-primary">
+        <a href="/admin-clientes" class="btn btn-primary">
             <i class="fas fa-plus"></i> Nuevo Cliente
         </a>
     </div>
@@ -236,10 +236,10 @@
                 <td>01/01/2023</td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.clientes.show', 1) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.clientes.edit', 1) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
@@ -262,10 +262,10 @@
                 <td>15/02/2023</td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.clientes.show', 2) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.clientes.edit', 2) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
@@ -288,10 +288,10 @@
                 <td>10/03/2023</td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.clientes.show', 3) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.clientes.edit', 3) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
@@ -314,10 +314,10 @@
                 <td>05/04/2023</td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.clientes.show', 4) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.clientes.edit', 4) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
@@ -340,10 +340,10 @@
                 <td>20/04/2023</td>
                 <td>
                     <div class="action-buttons">
-                        <a href="{{ route('admin.clientes.show', 5) }}" class="btn-icon btn-view" title="Ver detalles">
+                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.clientes.edit', 5) }}" class="btn-icon btn-edit" title="Editar">
+                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn-icon btn-delete" title="Eliminar">
