@@ -12,8 +12,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::paginate(10);
-        return view('productos.index', compact('productos'));
+        $productos = Producto::orderBy('idProducto','desc')->paginate(10);
+        return view('hamburguesas', compact('productos'));
     }
 
     public function create()
@@ -23,7 +23,7 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        $productos = Producto::create([        // validado en RegisterRequest ya podemos crearlo directamente
+        $productos = Producto::create([       
             'nombre'     => $request->nombre,
             'ingredientes'  => $request->ingredientes,
             'alergenos'      => $request->alergenos,
@@ -60,7 +60,7 @@ class ProductoController extends Controller
     $productos = Producto::findOrFail($id);
     $productos->update($request->all());
 
-    return redirect()->route('hamburguesas.index')
+    return redirect()->route('hamburguesas')
                          ->with('success','Hamburguesa actualizada correctamente.');
     }
 
@@ -68,7 +68,7 @@ class ProductoController extends Controller
     {
         $reserva = Producto::findOrFail($id);
         $reserva->delete();
-        return redirect()->route('hamburguesas.index')
+        return redirect()->route('hamburguesas')
                          ->with('success','Hamburguesa eliminada correctamente.');
     }
 }
