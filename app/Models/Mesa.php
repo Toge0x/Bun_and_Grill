@@ -59,8 +59,8 @@
         return ['message' => 'Mesa no actualizada'];
         }
     
-        public function leerMesa($id){
-            $mesa = self::find($id);
+        public function leerTodasMesas(){
+            $mesa = self::all();
             if($mesa){
                 return  $mesa;
             }

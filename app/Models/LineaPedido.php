@@ -49,8 +49,8 @@ class LineaPedido extends Model
     return ['message' => 'Linped no actualizada'];
     }
 
-    public function leerLinped($id){
-        $linped = self::find($id);
+    public function leerTodosLinped(){
+        $linped = self::all();
         if($linped){
             return  $linped;
         }

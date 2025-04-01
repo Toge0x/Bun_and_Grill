@@ -15,7 +15,7 @@ class ReservaController extends Controller
                            ->orderBy('fecha','desc')
                            ->paginate(10);
 
-        return view('reservas.index', compact('reservas'));
+        return view('reservas', compact('reservas'));
     }
 
     public function create()
@@ -45,9 +45,14 @@ class ReservaController extends Controller
     public function show($id)
     {
         $reserva = Reserva::with(['cliente','mesa'])->findOrFail($id);
-        return view('reservas.show', compact('reserva'));
+        return view('reservas', compact('reserva'));
     }
 
+    public function showAll()
+    {
+        $reserva = Reserva::with(['cliente','mesa'])->all();
+        return view('reservas', compact('reserva'));
+    }
     public function edit($id)
     {
         $reserva = Reserva::findOrFail($id);

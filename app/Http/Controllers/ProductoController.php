@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Producto;
 
 class ProductoController extends Controller
 {
@@ -15,51 +16,59 @@ class ProductoController extends Controller
         return view('productos.index', compact('productos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('productos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $productos = Producto::create([        // validado en RegisterRequest ya podemos crearlo directamente
+            'nombre'     => $request->nombre,
+            'ingredientes'  => $request->ingredientes,
+            'alergenos'      => $request->alergenos,
+            'precio'   =>  $request->precio,
+            'valoraciones'   => $request->valoraciones,
+            'imagen'  => $request->imagen,
+        ]);
+
+
+        return redirect()->route('hamburguesas.index')
+        ->with('success','Hamburguesa creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        return view('hamburguesas', compact('producto'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+    public function showAll(string $id)
+    {
+        $productos = Producto::all();
+        return view('hamburguesas', compact('productos'))
+    }
+    
     public function edit(string $id)
     {
-        //
+        $productos = Producto::findOrFail($id);
+        return view('hamburguesas.edit', compact('productos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+
+    $productos = Producto::findOrFail($id);
+    $productos->update($request->all());
+
+    return redirect()->route('hamburguesas.index')
+                         ->with('success','Hamburguesa actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $reserva = Producto::findOrFail($id);
+        $reserva->delete();
+        return redirect()->route('hamburguesas.index')
+                         ->with('success','Hamburguesa eliminada correctamente.');
     }
 }

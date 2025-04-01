@@ -63,8 +63,8 @@ class Reserva extends Model
     return ['message' => 'Reserva no actualizada'];
     }
 
-    public function leerReserva($id){
-        $reservas = self::find($id);
+    public function leerTodasReservas(){
+        $reservas = self::all();
         if($reservas){
             return  $reservas;
         }

@@ -46,8 +46,8 @@ class Pedido extends Model
     return ['message' => 'Pedido no actualizada'];
     }
 
-    public function leerPedido($id){
-        $pedidos = self::find($id);
+    public function leerTodosPedidos(){
+        $pedidos = self::all();
         if($pedidos){
             return  $pedidos;
         }

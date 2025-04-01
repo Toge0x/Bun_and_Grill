@@ -47,7 +47,7 @@ class UsuarioController extends Controller
     public function show($id)
     {
         $usuario = Usuario::findOrFail($id);
-        return view('usuarios.show', compact('usuario'));
+        return view('clientes', compact('usuario'));
     }
 
     public function showAll()

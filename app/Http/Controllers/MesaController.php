@@ -38,6 +38,12 @@ class MesaController extends Controller
         return view('mesas.show', compact('mesa'));
     }
 
+    public function showAll()
+    {
+        $mesa = Mesa::all();
+        return view('mesas.show', compact('mesa'));
+    }
+
     public function edit($id)
     {
         $mesa = Mesa::findOrFail($id);

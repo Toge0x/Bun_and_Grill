@@ -56,8 +56,8 @@ class Producto extends Model
     return ['message' => 'Producto no actualizada'];
     }
 
-    public function leerProducto($id){
-        $productos = self::find($id);
+    public function leerTodosProducto(){
+        $productos = self::all();
         if($productos){
             return  $productos;
         }
