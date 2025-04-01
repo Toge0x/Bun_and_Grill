@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// Importamos los controladores:
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\AlergenoController;
+use App\Http\Controllers\LineaPedidoController;
 
 Route::get('/', function () {
     return view('home');
@@ -58,10 +60,6 @@ Route::get('/admin-hamburguesas', function () {
     return view('hamburguesas');
 });
 
-
-
-
-
 /*
 // Rutas del panel de administración
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -95,3 +93,6 @@ Route::resource('mesas', MesaController::class);
 Route::resource('reservas', ReservaController::class);
 Route::resource('productos', ProductoController::class);
 
+Route::resource('pedidos', PedidoController::class);
+Route::resource('alergenos', AlergenoController::class);
+Route::resource('lineapedidos', LineaPedidoController::class);
