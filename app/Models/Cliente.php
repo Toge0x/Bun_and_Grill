@@ -35,4 +35,41 @@ class Cliente extends Model
     {
         return $this->hasOne(Usuario::class, 'email', 'email');
     }
+
+    public static function borrarClientes($id) 
+    {
+        $cliente = self::find($id); 
+        if ($cliente) {
+            $cliente->delete();
+            return ['message' => 'Cliente borrada'];
+        }
+        return ['message' => 'Cliente no encontrado'];
+    }
+
+    public static function actualizarClientes($id, $datos)
+    {
+    $cliente = self::find($id);
+    if ($cliente) {
+        $cliente->update($datos);
+        return $cliente;
+    }
+    return ['message' => 'Cliente no actualizada'];
+    }
+
+    public function leerClientes($id){
+        $cliente = self::find($id);
+        if($cliente){
+            return  $cliente;
+        }
+        return ['message' => 'Cliente no leida'];
+    }
+
+    public function crearClientes($datos)
+    {
+        $cliente = self::create($datos);
+        if($cliente){
+            return  $cliente;
+        }
+        return ['message' => 'Cliente no creada'];
+    }
 }

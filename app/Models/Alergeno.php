@@ -36,4 +36,47 @@ class Alergeno extends Model
     const AzufreYSulfitos = 'AzufreYSulfitos';
     const Altramuces = 'Altramuces';
     const Moluscos = 'Moluscos';
+
+
+
+    public static function borrarAlergenos($id) 
+    {
+        $alergenos = self::find($id); 
+        if ($alergenos) {
+            $alergenos->delete();
+            return ['message' => 'Alergeno no borrada'];
+        }
+        return ['message' => 'Alergeno no encontrado'];
+    }
+
+    public static function actualizarAlergenos($id, $datos)
+    {
+    $alergenos = self::find($id);
+    if ($alergenos) {
+        $alergenos->update($datos);
+        return $alergenos;
+    }
+    return ['message' => 'Alergeno no actualizada'];
+    }
+
+    public function leerAlergeno($id){
+        $alergenos = self::find($id);
+        if($alergenos){
+            return  $alergenos;
+        }
+        return ['message' => 'Alergeno no leida'];
+    }
+
+    public function crearAlergeno($datos)
+    {
+        $alergenos = self::create($datos);
+        if($alergenos){
+            return  $alergenos;
+        }
+        return ['message' => 'Alergeno no creada'];
+    }
+
+
 }
+
+

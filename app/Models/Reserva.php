@@ -43,4 +43,40 @@ class Reserva extends Model
     {
         // TODO: Enviar notificación al cliente
     }
+    public static function borrarReserva($id) 
+    {
+        $reservas = self::find($id); 
+        if ($reservas) {
+            $reservas->delete();
+            return ['message' => 'Reserva borrada'];
+        }
+        return ['message' => 'Reserva no encontrado'];
+    }
+
+    public static function actualizarReserva($id, $datos)
+    {
+    $reservas = self::find($id);
+    if ($reservas) {
+        $reservas->update($datos);
+        return $reservas;
+    }
+    return ['message' => 'Reserva no actualizada'];
+    }
+
+    public function leerReserva($id){
+        $reservas = self::find($id);
+        if($reservas){
+            return  $reservas;
+        }
+        return ['message' => 'Reserva no leida'];
+    }
+
+    public function crearReserva($datos)
+    {
+        $reservas = self::create($datos);
+        if($reservas){
+            return  $reservas;
+        }
+        return ['message' => 'Reserva no creada'];
+    }
 }

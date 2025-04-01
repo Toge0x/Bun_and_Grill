@@ -25,4 +25,41 @@ class Pedido extends Model
     {
         return $this->hasMany(LineaPedido::class, 'pedido_id');
     }
+
+    public static function borrarPedido($id) 
+    {
+        $pedidos = self::find($id); 
+        if ($pedidos) {
+            $pedidos->delete();
+            return ['message' => 'Pedido borrada'];
+        }
+        return ['message' => 'Pedido no encontrado'];
+    }
+
+    public static function actualizarPedido($id, $datos)
+    {
+    $pedidos = self::find($id);
+    if ($pedidos) {
+        $pedidos->update($datos);
+        return $pedidos;
+    }
+    return ['message' => 'Pedido no actualizada'];
+    }
+
+    public function leerPedido($id){
+        $pedidos = self::find($id);
+        if($pedidos){
+            return  $pedidos;
+        }
+        return ['message' => 'Pedido no leida'];
+    }
+
+    public function crearPedido($datos)
+    {
+        $pedidos = self::create($datos);
+        if($pedidos){
+            return  $pedidos;
+        }
+        return ['message' => 'Pedido no creada'];
+    }
 }
