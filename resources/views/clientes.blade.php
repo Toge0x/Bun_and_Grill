@@ -213,29 +213,30 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>Contacto</th>
-                <th>Actividad</th>
+                <th>Direccion</th>
                 <th>Fecha de registro</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
+            @foreach($usuarios as $usuario)
             <tr>
-                <td>#C001</td>
-                <td>Juan Pérez</td>
+                <td>{{$usuario->nombre}} {{$usuario->apellidos}}</td>
                 <td>
-                    <div>555-123-4567</div>
-                    <div><small>juan@example.com</small></div>
+                    <div>{{$usuario->telefono}}</div>
+                    <div><small>{{$usuario->email}}</small></div>
                 </td>
                 <td>
-                    <div class="client-stats"><i class="fas fa-calendar-alt"></i> 5 reservas</div>
-                    <div class="client-stats"><i class="fas fa-shopping-bag"></i> 8 pedidos</div>
+                    <div>{{$usuario->direccion}}</div>
+
                 </td>
-                <td>01/01/2023</td>
                 <td>
-                    <div class="action-buttons">
+                    <div>{{$usuario->created_at}}</div>
+                </td>
+                <td>
+                <div class="action-buttons">
                         <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
                             <i class="fas fa-eye"></i>
                         </a>
@@ -248,110 +249,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td>#C002</td>
-                <td>María García</td>
-                <td>
-                    <div>555-987-6543</div>
-                    <div><small>maria@example.com</small></div>
-                </td>
-                <td>
-                    <div class="client-stats"><i class="fas fa-calendar-alt"></i> 3 reservas</div>
-                    <div class="client-stats"><i class="fas fa-shopping-bag"></i> 5 pedidos</div>
-                </td>
-                <td>15/02/2023</td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#C003</td>
-                <td>Carlos Rodríguez</td>
-                <td>
-                    <div>555-456-7890</div>
-                    <div><small>carlos@example.com</small></div>
-                </td>
-                <td>
-                    <div class="client-stats"><i class="fas fa-calendar-alt"></i> 2 reservas</div>
-                    <div class="client-stats"><i class="fas fa-shopping-bag"></i> 4 pedidos</div>
-                </td>
-                <td>10/03/2023</td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#C004</td>
-                <td>Ana Martínez</td>
-                <td>
-                    <div>555-789-0123</div>
-                    <div><small>ana@example.com</small></div>
-                </td>
-                <td>
-                    <div class="client-stats"><i class="fas fa-calendar-alt"></i> 1 reserva</div>
-                    <div class="client-stats"><i class="fas fa-shopping-bag"></i> 2 pedidos</div>
-                </td>
-                <td>05/04/2023</td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#C005</td>
-                <td>Luis Sánchez</td>
-                <td>
-                    <div>555-234-5678</div>
-                    <div><small>luis@example.com</small></div>
-                </td>
-                <td>
-                    <div class="client-stats"><i class="fas fa-calendar-alt"></i> 4 reservas</div>
-                    <div class="client-stats"><i class="fas fa-shopping-bag"></i> 6 pedidos</div>
-                </td>
-                <td>20/04/2023</td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 

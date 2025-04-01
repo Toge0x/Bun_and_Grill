@@ -43,6 +43,12 @@ class ClienteController extends Controller
         return view('clientes.show', compact('cliente'));
     }
 
+    public function showAll()
+    {
+        $clientes = Cliente::all();
+        return view('clientes', compact('clientes'));
+    }
+
     public function edit($id)
     {
         $cliente = Cliente::findOrFail($id);

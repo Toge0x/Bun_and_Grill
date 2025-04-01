@@ -50,6 +50,12 @@ class UsuarioController extends Controller
         return view('usuarios.show', compact('usuario'));
     }
 
+    public function showAll()
+    {
+        $usuarios = Usuario::all();
+        return view('clientes', compact('usuarios'));
+    }
+
     public function edit($id)
     {
         $usuario = Usuario::findOrFail($id);

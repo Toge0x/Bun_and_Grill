@@ -167,13 +167,13 @@
 
     <div class="register-form-container">
         <div class="register-logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Bun & Grill Logo">
+            <img src="{{ asset('storage/images/Logo.jpg') }}" alt="Bun & Grill Logo">
         </div>
 
         <h2 class="register-title">Crea tu cuenta</h2>
 
-        {{-- Mostrar errores de validación --}} 
-        
+        {{-- Mostrar errores de validación --}}
+
         @if ($errors->any())
             <div class="alert alert-danger" style="margin-bottom: 20px; text-align: left;">
                 <ul style="padding-left: 20px; color: #e53e3e;">

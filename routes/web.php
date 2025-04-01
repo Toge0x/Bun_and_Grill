@@ -52,6 +52,8 @@ Route::get('/admin-clientes', function () {
     return view('clientes');
 });
 
+Route::get('/admin-clientes', [UsuarioController::class, 'showAll']);
+
 Route::get('/admin-hamburguesas', function () {
     return view('hamburguesas');
 });

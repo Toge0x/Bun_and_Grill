@@ -44,4 +44,49 @@ class Usuario extends Model
     {
         return false;
     }
+
+    public static function borrarUsuario($id)
+    {
+        $usuarios = self::find($id);
+        if ($usuarios) {
+            $usuarios->delete();
+            return ['message' => 'Usuario no borrada'];
+        }
+        return ['message' => 'Usuario no encontrado'];
+    }
+
+    public static function actualizarUsuario($id, $datos)
+    {
+    $usuarios = self::find($id);
+    if ($usuarios) {
+        $usuarios->update($datos);
+        return $usuarios;
+    }
+    return ['message' => 'Usuario no actualizada'];
+    }
+
+    public function leerUsuario($id){
+        $usuarios = self::find($id);
+        if($usuarios){
+            return  $usuarios;
+        }
+        return ['message' => 'Usuario no leida'];
+    }
+
+    public function leerTodosUsuarios(){
+        $usuarios = self::all();
+        if($usuarios){
+            return  $usuarios;
+        }
+        return ['message' => 'Usuario no leida'];
+    }
+
+    public function crearUsuario($datos)
+    {
+        $usuarios = self::create($datos);
+        if($usuarios){
+            return  $usuarios;
+        }
+        return ['message' => 'Usuario no creada'];
+    }
 }

@@ -35,4 +35,42 @@ class Producto extends Model
     {
         return $this->hasMany(LineaPedido::class, 'producto_id', 'idProducto');
     }
+
+    public static function borrarProducto($id) 
+    {
+        $productos = self::find($id); 
+        if ($productos) {
+            $productos->delete();
+            return ['message' => 'Producto borrada'];
+        }
+        return ['message' => 'Producto no encontrado'];
+    }
+
+    public static function actualizarProducto($id, $datos)
+    {
+    $productos = self::find($id);
+    if ($productos) {
+        $productos->update($datos);
+        return $productos;
+    }
+    return ['message' => 'Producto no actualizada'];
+    }
+
+    public function leerProducto($id){
+        $productos = self::find($id);
+        if($productos){
+            return  $productos;
+        }
+        return ['message' => 'Producto no leida'];
+    }
+
+    public function crearProducto($datos)
+    {
+        $productos = self::create($datos);
+        if($productos){
+            return  $productos;
+        }
+        return ['message' => 'Producto no creada'];
+    }
+
 }

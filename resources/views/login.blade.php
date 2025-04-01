@@ -124,7 +124,7 @@
 
     <div class="login-form-container">
         <div class="login-logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Bun & Grill Logo">
+            <img src="{{ asset('storage/images/Logo.jpg') }}" alt="Bun & Grill Logo">
         </div>
 
         <!-- para mostrar los errores -->
