@@ -7,6 +7,8 @@ use App\Models\Cliente;
 use App\Models\Mesa;
 use Illuminate\Http\Request;
 
+//git log(no hacer caso)
+
 class ReservaController extends Controller
 {
     public function index()
