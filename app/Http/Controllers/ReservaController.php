@@ -11,8 +11,8 @@ class ReservaController extends Controller
 {
     public function index()
     {
-        $reservas = Reserva::with(['cliente','mesa'])
-                           ->orderBy('fecha','desc')
+        $reservas = Reserva::with(['cliente', 'mesa'])
+                           ->orderBy('fecha', 'desc')
                            ->paginate(10);
 
         return view('reservas', compact('reservas'));
@@ -20,9 +20,9 @@ class ReservaController extends Controller
 
     public function create()
     {
-        $clientes = Cliente::orderBy('nombre','asc')->get();
-        $mesas    = Mesa::orderBy('numero','asc')->get();
-        return view('reservas.create', compact('clientes','mesas'));
+        $clientes = Cliente::orderBy('nombre', 'asc')->get();
+        $mesas    = Mesa::orderBy('numero', 'asc')->get();
+        return view('reservas.create', compact('clientes', 'mesas'));
     }
 
     public function store(Request $request)
@@ -39,26 +39,29 @@ class ReservaController extends Controller
         Reserva::create($request->all());
 
         return redirect()->route('reservas.index')
-                         ->with('success','Reserva creada correctamente.');
+                         ->with('success', 'Reserva creada correctamente.');
     }
 
     public function show($id)
     {
-        $reserva = Reserva::with(['cliente','mesa'])->findOrFail($id);
-        return view('reservas', compact('reserva'));
+        $reservas = Reserva::with(['cliente', 'mesa'])
+                           ->where('id', $id)
+                           ->get();
+        return view('reservas', compact('reservas'));
     }
 
     public function showAll()
     {
-        $reserva = Reserva::with(['cliente','mesa'])->all();
-        return view('reservas', compact('reserva'));
+        $reservas = Reserva::with(['cliente', 'mesa'])->get();
+        return view('reservas', compact('reservas'));
     }
+
     public function edit($id)
     {
-        $reserva = Reserva::findOrFail($id);
-        $clientes = Cliente::orderBy('nombre','asc')->get();
-        $mesas    = Mesa::orderBy('numero','asc')->get();
-        return view('reservas.edit', compact('reserva','clientes','mesas'));
+        $reserva  = Reserva::findOrFail($id);
+        $clientes = Cliente::orderBy('nombre', 'asc')->get();
+        $mesas    = Mesa::orderBy('numero', 'asc')->get();
+        return view('reservas.edit', compact('reserva', 'clientes', 'mesas'));
     }
 
     public function update(Request $request, $id)
@@ -77,7 +80,7 @@ class ReservaController extends Controller
         $reserva->update($request->all());
 
         return redirect()->route('reservas.index')
-                         ->with('success','Reserva actualizada correctamente.');
+                         ->with('success', 'Reserva actualizada correctamente.');
     }
 
     public function destroy($id)
@@ -86,6 +89,6 @@ class ReservaController extends Controller
         $reserva->delete();
 
         return redirect()->route('reservas.index')
-                         ->with('success','Reserva eliminada correctamente.');
+                         ->with('success', 'Reserva eliminada correctamente.');
     }
 }
