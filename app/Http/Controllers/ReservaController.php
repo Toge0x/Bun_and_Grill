@@ -7,8 +7,6 @@ use App\Models\Cliente;
 use App\Models\Mesa;
 use Illuminate\Http\Request;
 
-//git log(no hacer caso)
-
 class ReservaController extends Controller
 {
     public function index()
@@ -17,13 +15,15 @@ class ReservaController extends Controller
                            ->orderBy('fecha', 'desc')
                            ->paginate(10);
 
-        return view('reservas', compact('reservas'));
+        return view('reservas.index', compact('reservas'));
     }
 
+    
     public function create()
     {
         $clientes = Cliente::orderBy('nombre', 'asc')->get();
         $mesas    = Mesa::orderBy('numero', 'asc')->get();
+
         return view('reservas.create', compact('clientes', 'mesas'));
     }
 
@@ -49,13 +49,13 @@ class ReservaController extends Controller
         $reservas = Reserva::with(['cliente', 'mesa'])
                            ->where('id', $id)
                            ->get();
-        return view('reservas', compact('reservas'));
+        return view('reservas.show', compact('reservas'));
     }
 
     public function showAll()
     {
         $reservas = Reserva::with(['cliente', 'mesa'])->get();
-        return view('reservas', compact('reservas'));
+        return view('reservas.index', compact('reservas'));
     }
 
     public function edit($id)
@@ -63,6 +63,7 @@ class ReservaController extends Controller
         $reserva  = Reserva::findOrFail($id);
         $clientes = Cliente::orderBy('nombre', 'asc')->get();
         $mesas    = Mesa::orderBy('numero', 'asc')->get();
+
         return view('reservas.edit', compact('reserva', 'clientes', 'mesas'));
     }
 
