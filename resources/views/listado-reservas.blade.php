@@ -236,128 +236,125 @@
 @endsection
 
 @section('content')
-    <div class="actions-container">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Buscar por nombre, teléfono o email...">
-            <button class="btn btn-secondary">
-                <i class="fas fa-search"></i> Buscar
-            </button>
-        </div>
+<div class="actions-container">
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Buscar por nombre, teléfono o email...">
+        <button class="btn btn-secondary">
+            <i class="fas fa-search"></i> Buscar
+        </button>
+    </div>
 
-        <a href="/admin-reservas" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nueva Reserva
+    <a href="/admin-reservas" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Nueva Reserva
+    </a>
+</div>
+
+<div class="filters-container">
+    <div class="filter-group">
+        <label class="filter-label">Estado:</label>
+        <select class="filter-select">
+            <option value="">Todos</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="confirmada">Confirmada</option>
+            <option value="cancelada">Cancelada</option>
+            <option value="completada">Completada</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label class="filter-label">Fecha:</label>
+        <select class="filter-select">
+            <option value="">Todas</option>
+            <option value="hoy">Hoy</option>
+            <option value="manana">Mañana</option>
+            <option value="semana">Esta semana</option>
+            <option value="mes">Este mes</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label class="filter-label">Personas:</label>
+        <select class="filter-select">
+            <option value="">Todas</option>
+            <option value="1-2">1-2</option>
+            <option value="3-4">3-4</option>
+            <option value="5-6">5-6</option>
+            <option value="7+">7+</option>
+        </select>
+    </div>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Fecha y Hora</th>
+            <th>Personas</th>
+            <th>Mesa</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Juan Pérez<br><small>Tel: 555-123-4567</small></td>
+            <td>15/05/2023<br><small>20:00</small></td>
+            <td>4</td>
+            <td>5</td>
+            <td><span class="status-badge status-pendiente">Pendiente</span></td>
+            <td>
+                <div class="action-buttons">
+                    <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <button class="btn-icon btn-delete" title="Eliminar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>María García<br><small>Tel: 555-987-6543</small></td>
+            <td>15/05/2023<br><small>21:30</small></td>
+            <td>2</td>
+            <td>8</td>
+            <td><span class="status-badge status-confirmada">Confirmada</span></td>
+            <td>
+                <div class="action-buttons">
+                    <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <button class="btn-icon btn-delete" title="Eliminar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="pagination">
+    <div class="pagination-info">
+        Mostrando 1-5 de 25 reservas
+    </div>
+    <div class="pagination-buttons">
+        <a href="#" class="pagination-button disabled">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a href="#" class="pagination-button active">1</a>
+        <a href="#" class="pagination-button">2</a>
+        <a href="#" class="pagination-button">3</a>
+        <a href="#" class="pagination-button">4</a>
+        <a href="#" class="pagination-button">5</a>
+        <a href="#" class="pagination-button">
+            <i class="fas fa-chevron-right"></i>
         </a>
     </div>
-
-    <div class="filters-container">
-        <div class="filter-group">
-            <label class="filter-label">Estado:</label>
-            <select class="filter-select">
-                <option value="">Todos</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="confirmada">Confirmada</option>
-                <option value="cancelada">Cancelada</option>
-                <option value="completada">Completada</option>
-            </select>
-        </div>
-
-        <div class="filter-group">
-            <label class="filter-label">Fecha:</label>
-            <select class="filter-select">
-                <option value="">Todas</option>
-                <option value="hoy">Hoy</option>
-                <option value="manana">Mañana</option>
-                <option value="semana">Esta semana</option>
-                <option value="mes">Este mes</option>
-            </select>
-        </div>
-
-        <div class="filter-group">
-            <label class="filter-label">Personas:</label>
-            <select class="filter-select">
-                <option value="">Todas</option>
-                <option value="1-2">1-2</option>
-                <option value="3-4">3-4</option>
-                <option value="5-6">5-6</option>
-                <option value="7+">7+</option>
-            </select>
-        </div>
-    </div>
-
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Fecha y Hora</th>
-                <th>Personas</th>
-                <th>Mesa</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>#1001</td>
-                <td>Juan Pérez<br><small>Tel: 555-123-4567</small></td>
-                <td>15/05/2023<br><small>20:00</small></td>
-                <td>4</td>
-                <td>5</td>
-                <td><span class="status-badge status-pendiente">Pendiente</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#1002</td>
-                <td>María García<br><small>Tel: 555-987-6543</small></td>
-                <td>15/05/2023<br><small>21:30</small></td>
-                <td>2</td>
-                <td>8</td>
-                <td><span class="status-badge status-confirmada">Confirmada</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="pagination">
-        <div class="pagination-info">
-            Mostrando 1-5 de 25 reservas
-        </div>
-        <div class="pagination-buttons">
-            <a href="#" class="pagination-button disabled">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-            <a href="#" class="pagination-button active">1</a>
-            <a href="#" class="pagination-button">2</a>
-            <a href="#" class="pagination-button">3</a>
-            <a href="#" class="pagination-button">4</a>
-            <a href="#" class="pagination-button">5</a>
-            <a href="#" class="pagination-button">
-                <i class="fas fa-chevron-right"></i>
-            </a>
-        </div>
-    </div>
+</div>
 @endsection

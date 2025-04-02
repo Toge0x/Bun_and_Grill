@@ -36,9 +36,9 @@ class Producto extends Model
         return $this->hasMany(LineaPedido::class, 'producto_id', 'idProducto');
     }
 
-    public static function borrarProducto($id) 
+    public static function borrarProducto($id)
     {
-        $productos = self::find($id); 
+        $productos = self::find($id);
         if ($productos) {
             $productos->delete();
             return ['message' => 'Producto borrada'];
@@ -48,17 +48,18 @@ class Producto extends Model
 
     public static function actualizarProducto($id, $datos)
     {
-    $productos = self::find($id);
-    if ($productos) {
-        $productos->update($datos);
-        return $productos;
-    }
-    return ['message' => 'Producto no actualizada'];
+        $productos = self::find($id);
+        if ($productos) {
+            $productos->update($datos);
+            return $productos;
+        }
+        return ['message' => 'Producto no actualizada'];
     }
 
-    public function leerTodosProducto(){
+    public function leerTodosProducto()
+    {
         $productos = self::all();
-        if($productos){
+        if ($productos) {
             return  $productos;
         }
         return ['message' => 'Producto no leida'];
@@ -67,10 +68,9 @@ class Producto extends Model
     public function crearProducto($datos)
     {
         $productos = self::create($datos);
-        if($productos){
+        if ($productos) {
             return  $productos;
         }
         return ['message' => 'Producto no creada'];
     }
-
 }

@@ -15,11 +15,11 @@ class ClienteAlergenoSeeder extends Seeder
             'mariam@gmail.com' => ['Pescado'],
         ];
 
-        foreach($asignaciones as $email => $alergenos){
+        foreach ($asignaciones as $email => $alergenos) {
             $cliente = Cliente::where('email', $email)->first();
 
-            if($cliente){
-                foreach($alergenos as $nombre){
+            if ($cliente) {
+                foreach ($alergenos as $nombre) {
                     $alergeno = Alergeno::firstOrCreate(['nombre' => $nombre]);
                     $cliente->alergenos()->syncWithoutDetaching($alergeno->id);
                 }
