@@ -103,12 +103,14 @@
         font-size: 18px;
         font-weight: bold;
         margin-bottom: 10px;
-        padding-right: 70px; /* Espacio para el precio */
+        padding-right: 70px;
+        /* Espacio para el precio */
     }
 
     .hamburguesa-ingredients {
         margin-bottom: 15px;
-        min-height: 60px; /* Altura mínima para los ingredientes */
+        min-height: 60px;
+        /* Altura mínima para los ingredientes */
     }
 
     .ingredient-tag {
@@ -289,251 +291,201 @@
 @endsection
 
 @section('content')
-    <div class="actions-container">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Buscar hamburguesa...">
-            <button class="btn btn-secondary">
-                <i class="fas fa-search"></i> Buscar
-            </button>
-        </div>
-
-        <button class="btn btn-primary" id="addHamburguesaBtn">
-            <i class="fas fa-plus"></i> Nueva Hamburguesa
+<div class="actions-container">
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Buscar hamburguesa...">
+        <button class="btn btn-secondary">
+            <i class="fas fa-search"></i> Buscar
         </button>
     </div>
 
-    <div class="hamburguesas-grid">
-        <!-- Hamburguesa 1 -->
-        <div class="hamburguesa-card">
-            <div class="hamburguesa-price">8,50 €</div>
-            <h3 class="hamburguesa-title">Hamburguesa Clásica</h3>
-            <div class="hamburguesa-ingredients">
-                <span class="ingredient-tag">Carne de ternera</span>
-                <span class="ingredient-tag">Queso cheddar</span>
-                <span class="ingredient-tag">Lechuga</span>
-                <span class="ingredient-tag">Tomate</span>
-                <span class="ingredient-tag">Cebolla</span>
-                <span class="ingredient-tag">Salsa especial</span>
-            </div>
-            <div class="hamburguesa-actions">
-                <button class="btn btn-secondary btn-sm" onclick="deleteHamburguesa(1)">
-                    <i class="fas fa-trash"></i> Eliminar
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="editHamburguesa(1, 'Hamburguesa Clásica', ['Carne de ternera', 'Queso cheddar', 'Lechuga', 'Tomate', 'Cebolla', 'Salsa especial'], 8.50)">
-                    <i class="fas fa-edit"></i> Modificar
-                </button>
-            </div>
-        </div>
+    <button class="btn btn-primary" id="addHamburguesaBtn">
+        <i class="fas fa-plus"></i> Nueva Hamburguesa
+    </button>
+</div>
 
-        <!-- Hamburguesa 2 -->
-        <div class="hamburguesa-card">
-            <div class="hamburguesa-price">9,75 €</div>
-            <h3 class="hamburguesa-title">Hamburguesa BBQ</h3>
-            <div class="hamburguesa-ingredients">
-                <span class="ingredient-tag">Carne de ternera</span>
-                <span class="ingredient-tag">Queso ahumado</span>
-                <span class="ingredient-tag">Bacon</span>
-                <span class="ingredient-tag">Cebolla caramelizada</span>
-                <span class="ingredient-tag">Salsa BBQ</span>
-            </div>
-            <div class="hamburguesa-actions">
-                <button class="btn btn-secondary btn-sm" onclick="deleteHamburguesa(2)">
-                    <i class="fas fa-trash"></i> Eliminar
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="editHamburguesa(2, 'Hamburguesa BBQ', ['Carne de ternera', 'Queso ahumado', 'Bacon', 'Cebolla caramelizada', 'Salsa BBQ'], 9.75)">
-                    <i class="fas fa-edit"></i> Modificar
-                </button>
-            </div>
+<div class="hamburguesas-grid">
+    @foreach($productos as $hamburguesa)
+    <div class="hamburguesa-card">
+        <div class="hamburguesa-price">{{ $hamburguesa->precio }} €</div>
+        <h3 class="hamburguesa-title">{{ $hamburguesa->nombre }}</h3>
+        <div class="hamburguesa-ingredients">
+            @foreach($hamburguesa->ingredientes as $ingrediente)
+            <span class="ingredient-tag">{{ $ingrediente }}</span>
+            @endforeach
         </div>
-
-        <!-- Hamburguesa 3 -->
-        <div class="hamburguesa-card">
-            <div class="hamburguesa-price">10,50 €</div>
-            <h3 class="hamburguesa-title">Hamburguesa Vegana</h3>
-            <div class="hamburguesa-ingredients">
-                <span class="ingredient-tag">Burger de garbanzos</span>
-                <span class="ingredient-tag">Queso vegano</span>
-                <span class="ingredient-tag">Aguacate</span>
-                <span class="ingredient-tag">Rúcula</span>
-                <span class="ingredient-tag">Tomate</span>
-                <span class="ingredient-tag">Salsa de yogur</span>
-            </div>
-            <div class="hamburguesa-actions">
-                <button class="btn btn-secondary btn-sm" onclick="deleteHamburguesa(3)">
+        <div class="hamburguesa-actions">
+            <form method="POST" action="{{ route('hamburguesas.destroy', $hamburguesa->idProducto) }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-secondary btn-sm">
                     <i class="fas fa-trash"></i> Eliminar
                 </button>
-                <button class="btn btn-primary btn-sm" onclick="editHamburguesa(3, 'Hamburguesa Vegana', ['Burger de garbanzos', 'Queso vegano', 'Aguacate', 'Rúcula', 'Tomate', 'Salsa de yogur'], 10.50)">
-                    <i class="fas fa-edit"></i> Modificar
-                </button>
-            </div>
-        </div>
+            </form>
 
-        <!-- Hamburguesa 4 -->
-        <div class="hamburguesa-card">
-            <div class="hamburguesa-price">12,95 €</div>
-            <h3 class="hamburguesa-title">Hamburguesa Doble</h3>
-            <div class="hamburguesa-ingredients">
-                <span class="ingredient-tag">Doble carne de ternera</span>
-                <span class="ingredient-tag">Doble queso</span>
-                <span class="ingredient-tag">Bacon</span>
-                <span class="ingredient-tag">Huevo frito</span>
-                <span class="ingredient-tag">Lechuga</span>
-                <span class="ingredient-tag">Tomate</span>
-                <span class="ingredient-tag">Salsa especial</span>
-            </div>
-            <div class="hamburguesa-actions">
-                <button class="btn btn-secondary btn-sm" onclick="deleteHamburguesa(4)">
-                    <i class="fas fa-trash"></i> Eliminar
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="editHamburguesa(4, 'Hamburguesa Doble', ['Doble carne de ternera', 'Doble queso', 'Bacon', 'Huevo frito', 'Lechuga', 'Tomate', 'Salsa especial'], 12.95)">
-                    <i class="fas fa-edit"></i> Modificar
-                </button>
-            </div>
-        </div>
-
-        <!-- Hamburguesa 5 -->
-        <div class="hamburguesa-card">
-            <div class="hamburguesa-price">10,95 €</div>
-            <h3 class="hamburguesa-title">Hamburguesa Mexicana</h3>
-            <div class="hamburguesa-ingredients">
-                <span class="ingredient-tag">Carne de ternera</span>
-                <span class="ingredient-tag">Queso cheddar</span>
-                <span class="ingredient-tag">Guacamole</span>
-                <span class="ingredient-tag">Jalapeños</span>
-                <span class="ingredient-tag">Pico de gallo</span>
-                <span class="ingredient-tag">Nachos triturados</span>
-            </div>
-            <div class="hamburguesa-actions">
-                <button class="btn btn-secondary btn-sm" onclick="deleteHamburguesa(5)">
-                    <i class="fas fa-trash"></i> Eliminar
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="editHamburguesa(5, 'Hamburguesa Mexicana', ['Carne de ternera', 'Queso cheddar', 'Guacamole', 'Jalapeños', 'Pico de gallo', 'Nachos triturados'], 10.95)">
-                    <i class="fas fa-edit"></i> Modificar
-                </button>
-            </div>
-        </div>
-
-        <!-- Hamburguesa 6 -->
-        <div class="hamburguesa-card">
-            <div class="hamburguesa-price">9,50 €</div>
-            <h3 class="hamburguesa-title">Hamburguesa de Pollo</h3>
-            <div class="hamburguesa-ingredients">
-                <span class="ingredient-tag">Pechuga de pollo crujiente</span>
-                <span class="ingredient-tag">Queso gouda</span>
-                <span class="ingredient-tag">Lechuga</span>
-                <span class="ingredient-tag">Tomate</span>
-                <span class="ingredient-tag">Cebolla morada</span>
-                <span class="ingredient-tag">Salsa de mostaza y miel</span>
-            </div>
-            <div class="hamburguesa-actions">
-                <button class="btn btn-secondary btn-sm" onclick="deleteHamburguesa(6)">
-                    <i class="fas fa-trash"></i> Eliminar
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="editHamburguesa(6, 'Hamburguesa de Pollo', ['Pechuga de pollo crujiente', 'Queso gouda', 'Lechuga', 'Tomate', 'Cebolla morada', 'Salsa de mostaza y miel'], 9.50)">
-                    <i class="fas fa-edit"></i> Modificar
-                </button>
-            </div>
+            <button class="btn btn-primary btn-sm" onclick="editHamburguesa({{ $hamburguesa->idProducto}}, '{{ $hamburguesa->nombre }}', {{ json_encode($hamburguesa->ingredientes) }}, {{ $hamburguesa->precio }})">
+                <i class="fas fa-edit"></i> Modificar
+            </button>
         </div>
     </div>
+    @endforeach
+</div>
 
-    <!-- Modal para editar hamburguesa -->
-    <div class="modal-backdrop" id="editModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">Editar Hamburguesa</h3>
-                <button class="modal-close" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="hamburguesaForm">
-                    <input type="hidden" id="hamburguesa_id" name="hamburguesa_id">
+<!-- Modal para añadir hamburguesa -->
+<div class="modal-backdrop" id="addModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 class="modal-title">Nueva Hamburguesa</h3>
+            <button class="modal-close" onclick="closeAddModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addHamburguesaForm" action="{{ route('hamburguesas.store') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="add_nombre" class="form-label">Nombre</label>
+                    <input type="text" id="add_nombre" name="nombre" class="form-input" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-input" required>
+                <div class="form-group">
+                    <label for="add_precio" class="form-label">Precio (€)</label>
+                    <input type="number" id="add_precio" name="precio" class="form-input" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ingredientes</label>
+                    <div id="addIngredientsContainer" class="ingredients-container">
+                        <!-- Los ingredientes se añadirán dinámicamente aquí -->
                     </div>
 
-                    <div class="form-group">
-                        <label for="precio" class="form-label">Precio (€)</label>
-                        <input type="number" id="precio" name="precio" class="form-input" step="0.01" min="0" required>
+                    <div class="add-ingredient-row">
+                        <input type="text" id="addNewIngredient" class="form-input add-ingredient-input" placeholder="Nuevo ingrediente">
+                        <button type="button" class="btn btn-secondary" id="addAddIngredientBtn">
+                            <i class="fas fa-plus"></i> Añadir
+                        </button>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Ingredientes</label>
-                        <div id="ingredientsContainer" class="ingredients-container">
-                            <!-- Los ingredientes se añadirán dinámicamente aquí -->
-                        </div>
-
-                        <div class="add-ingredient-row">
-                            <input type="text" id="newIngredient" class="form-input add-ingredient-input" placeholder="Nuevo ingrediente">
-                            <button type="button" class="btn btn-secondary" id="addIngredientBtn">
-                                <i class="fas fa-plus"></i> Añadir
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancelBtn">Cancelar</button>
-                <button class="btn btn-primary" id="saveBtn">Guardar Cambios</button>
-            </div>
+                    <!-- Campos ocultos para cada ingrediente -->
+                    <div id="addIngredientsFields"></div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeAddModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="submitAddForm()">Guardar Hamburguesa</button>
         </div>
     </div>
+</div>
+
+<!-- Modal para editar hamburguesa -->
+<div class="modal-backdrop" id="editModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 class="modal-title">Editar Hamburguesa</h3>
+            <button class="modal-close" onclick="closeEditModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="editHamburguesaForm" action="" method="POST">
+                @csrf
+                <input type="hidden" id="edit_hamburguesa_id" name="hamburguesa_id">
+
+                <div class="form-group">
+                    <label for="edit_nombre" class="form-label">Nombre</label>
+                    <input type="text" id="edit_nombre" name="nombre" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit_precio" class="form-label">Precio (€)</label>
+                    <input type="number" id="edit_precio" name="precio" class="form-input" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ingredientes</label>
+                    <div id="editIngredientsContainer" class="ingredients-container">
+                        <!-- Los ingredientes se añadirán dinámicamente aquí -->
+                    </div>
+
+                    <div class="add-ingredient-row">
+                        <input type="text" id="editNewIngredient" class="form-input add-ingredient-input" placeholder="Nuevo ingrediente">
+                        <button type="button" class="btn btn-secondary" id="addEditIngredientBtn">
+                            <i class="fas fa-plus"></i> Añadir
+                        </button>
+                    </div>
+
+                    <!-- Campos ocultos para cada ingrediente -->
+                    <div id="editIngredientsFields"></div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeEditModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="submitEditForm()">Guardar Cambios</button>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
 <script>
     // Variables globales
-    let currentIngredients = [];
+    let addIngredients = [];
+    let editIngredients = [];
+
+    // Función para abrir el modal de añadir
+    document.getElementById('addHamburguesaBtn').addEventListener('click', function() {
+        // Limpiar el formulario
+        document.getElementById('addHamburguesaForm').reset();
+
+        // Limpiar ingredientes
+        addIngredients = [];
+        document.getElementById('addIngredientsContainer').innerHTML = '';
+        document.getElementById('addIngredientsFields').innerHTML = '';
+
+        // Mostrar el modal
+        document.getElementById('addModal').classList.add('show');
+    });
+
+    // Función para cerrar el modal de añadir
+    function closeAddModal() {
+        document.getElementById('addModal').classList.remove('show');
+    }
 
     // Función para abrir el modal de edición
     function editHamburguesa(id, nombre, ingredientes, precio) {
         // Establecer los valores en el formulario
-        document.getElementById('hamburguesa_id').value = id;
-        document.getElementById('nombre').value = nombre;
-        document.getElementById('precio').value = precio;
+        document.getElementById('edit_hamburguesa_id').value = id;
+        document.getElementById('edit_nombre').value = nombre;
+        document.getElementById('edit_precio').value = precio;
+
+        // Actualizar la acción del formulario
+        document.getElementById('editHamburguesaForm').action = "{{ route('hamburguesas.update', '') }}/" + id;
 
         // Limpiar y añadir los ingredientes
-        const ingredientsContainer = document.getElementById('ingredientsContainer');
+        const ingredientsContainer = document.getElementById('editIngredientsContainer');
         ingredientsContainer.innerHTML = '';
-        currentIngredients = [...ingredientes];
+        document.getElementById('editIngredientsFields').innerHTML = '';
+
+        editIngredients = [...ingredientes];
 
         // Añadir cada ingrediente al contenedor
-        currentIngredients.forEach((ingrediente, index) => {
-            addIngredientToList(ingrediente, index);
+        editIngredients.forEach((ingrediente, index) => {
+            addEditIngredientToList(ingrediente, index);
         });
 
+        // Actualizar los campos ocultos
+        updateEditIngredientFields();
+
         // Mostrar el modal
         document.getElementById('editModal').classList.add('show');
-        document.getElementById('modalTitle').textContent = 'Editar Hamburguesa';
     }
 
-    // Función para añadir una nueva hamburguesa
-    document.getElementById('addHamburguesaBtn').addEventListener('click', function() {
-        // Limpiar el formulario
-        document.getElementById('hamburguesaForm').reset();
-        document.getElementById('hamburguesa_id').value = '';
-
-        // Limpiar ingredientes
-        document.getElementById('ingredientsContainer').innerHTML = '';
-        currentIngredients = [];
-
-        // Mostrar el modal
-        document.getElementById('editModal').classList.add('show');
-        document.getElementById('modalTitle').textContent = 'Nueva Hamburguesa';
-    });
-
-    // Función para cerrar el modal
-    function closeModal() {
+    // Función para cerrar el modal de edición
+    function closeEditModal() {
         document.getElementById('editModal').classList.remove('show');
     }
 
-    // Event listeners para cerrar el modal
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    document.getElementById('cancelBtn').addEventListener('click', closeModal);
-
-    // Función para añadir un ingrediente a la lista visual
-    function addIngredientToList(ingrediente, index) {
-        const ingredientsContainer = document.getElementById('ingredientsContainer');
+    // Función para añadir un ingrediente a la lista visual (modal añadir)
+    function addAddIngredientToList(ingrediente, index) {
+        const ingredientsContainer = document.getElementById('addIngredientsContainer');
 
         const ingredientItem = document.createElement('div');
         ingredientItem.className = 'ingredient-item';
@@ -549,89 +501,182 @@
         // Añadir event listener para eliminar
         ingredientItem.querySelector('.ingredient-remove').addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
-            removeIngredient(index);
+            removeAddIngredient(index);
         });
     }
 
-    // Función para eliminar un ingrediente
-    function removeIngredient(index) {
-        currentIngredients.splice(index, 1);
-        refreshIngredientsList();
+    // Función para añadir un ingrediente a la lista visual (modal editar)
+    function addEditIngredientToList(ingrediente, index) {
+        const ingredientsContainer = document.getElementById('editIngredientsContainer');
+
+        const ingredientItem = document.createElement('div');
+        ingredientItem.className = 'ingredient-item';
+        ingredientItem.innerHTML = `
+            <span class="ingredient-text">${ingrediente}</span>
+            <button type="button" class="ingredient-remove" data-index="${index}">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+
+        ingredientsContainer.appendChild(ingredientItem);
+
+        // Añadir event listener para eliminar
+        ingredientItem.querySelector('.ingredient-remove').addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            removeEditIngredient(index);
+        });
     }
 
-    // Función para refrescar la lista de ingredientes
-    function refreshIngredientsList() {
-        const ingredientsContainer = document.getElementById('ingredientsContainer');
+    // Función para eliminar un ingrediente (modal añadir)
+    function removeAddIngredient(index) {
+        addIngredients.splice(index, 1);
+        refreshAddIngredientsList();
+    }
+
+    // Función para eliminar un ingrediente (modal editar)
+    function removeEditIngredient(index) {
+        editIngredients.splice(index, 1);
+        refreshEditIngredientsList();
+    }
+
+    // Función para refrescar la lista de ingredientes (modal añadir)
+    function refreshAddIngredientsList() {
+        const ingredientsContainer = document.getElementById('addIngredientsContainer');
         ingredientsContainer.innerHTML = '';
 
-        currentIngredients.forEach((ingrediente, index) => {
-            addIngredientToList(ingrediente, index);
+        addIngredients.forEach((ingrediente, index) => {
+            addAddIngredientToList(ingrediente, index);
+        });
+
+        // Actualizar los campos ocultos
+        updateAddIngredientFields();
+    }
+
+    // Función para refrescar la lista de ingredientes (modal editar)
+    function refreshEditIngredientsList() {
+        const ingredientsContainer = document.getElementById('editIngredientsContainer');
+        ingredientsContainer.innerHTML = '';
+
+        editIngredients.forEach((ingrediente, index) => {
+            addEditIngredientToList(ingrediente, index);
+        });
+
+        // Actualizar los campos ocultos
+        updateEditIngredientFields();
+    }
+
+    // Función para actualizar los campos ocultos de ingredientes (modal añadir)
+    function updateAddIngredientFields() {
+        const container = document.getElementById('addIngredientsFields');
+        container.innerHTML = '';
+
+        addIngredients.forEach((ingrediente, index) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = `ingredientes[${index}]`;
+            input.value = ingrediente;
+            container.appendChild(input);
         });
     }
 
-    // Event listener para añadir un nuevo ingrediente
-    document.getElementById('addIngredientBtn').addEventListener('click', function() {
-        const newIngredientInput = document.getElementById('newIngredient');
+    // Función para actualizar los campos ocultos de ingredientes (modal editar)
+    function updateEditIngredientFields() {
+        const container = document.getElementById('editIngredientsFields');
+        container.innerHTML = '';
+
+        editIngredients.forEach((ingrediente, index) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = `ingredientes[${index}]`;
+            input.value = ingrediente;
+            container.appendChild(input);
+        });
+    }
+
+    // Event listener para añadir un nuevo ingrediente (modal añadir)
+    document.getElementById('addAddIngredientBtn').addEventListener('click', function() {
+        const newIngredientInput = document.getElementById('addNewIngredient');
         const ingrediente = newIngredientInput.value.trim();
 
         if (ingrediente) {
-            currentIngredients.push(ingrediente);
-            refreshIngredientsList();
+            addIngredients.push(ingrediente);
+            refreshAddIngredientsList();
             newIngredientInput.value = '';
             newIngredientInput.focus();
         }
     });
 
-    // También permitir añadir ingrediente con Enter
-    document.getElementById('newIngredient').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            document.getElementById('addIngredientBtn').click();
+    // Event listener para añadir un nuevo ingrediente (modal editar)
+    document.getElementById('addEditIngredientBtn').addEventListener('click', function() {
+        const newIngredientInput = document.getElementById('editNewIngredient');
+        const ingrediente = newIngredientInput.value.trim();
+
+        if (ingrediente) {
+            editIngredients.push(ingrediente);
+            refreshEditIngredientsList();
+            newIngredientInput.value = '';
+            newIngredientInput.focus();
         }
     });
 
-    // Guardar los cambios
-    document.getElementById('saveBtn').addEventListener('click', function() {
-        const id = document.getElementById('hamburguesa_id').value;
-        const nombre = document.getElementById('nombre').value;
-        const precio = document.getElementById('precio').value;
+    // También permitir añadir ingrediente con Enter (modal añadir)
+    document.getElementById('addNewIngredient').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('addAddIngredientBtn').click();
+        }
+    });
+
+    // También permitir añadir ingrediente con Enter (modal editar)
+    document.getElementById('editNewIngredient').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('addEditIngredientBtn').click();
+        }
+    });
+
+    // Función para enviar el formulario de añadir
+    function submitAddForm() {
+        const nombre = document.getElementById('add_nombre').value;
+        const precio = document.getElementById('add_precio').value;
 
         if (!nombre || !precio) {
             alert('Por favor, completa todos los campos obligatorios.');
             return;
         }
 
-        if (currentIngredients.length === 0) {
+        if (addIngredients.length === 0) {
             alert('Debes añadir al menos un ingrediente.');
             return;
         }
 
-        // Aquí normalmente enviarías los datos al servidor
-        // Por ahora, solo mostraremos un mensaje y cerraremos el modal
-        console.log('Guardando hamburguesa:', {
-            id: id || 'nueva',
-            nombre,
-            precio,
-            ingredientes: currentIngredients
-        });
+        // Actualizar los campos ocultos antes de enviar
+        updateAddIngredientFields();
 
-        alert('Hamburguesa guardada correctamente.');
-        closeModal();
+        // Enviar el formulario
+        document.getElementById('addHamburguesaForm').submit();
+    }
 
-        // En una aplicación real, aquí harías una petición AJAX
-        // y luego actualizarías la UI o recargarías la página
-    });
+    // Función para enviar el formulario de editar
+    function submitEditForm() {
+        const nombre = document.getElementById('edit_nombre').value;
+        const precio = document.getElementById('edit_precio').value;
 
-    // Función para eliminar una hamburguesa
-    function deleteHamburguesa(id) {
-        if (confirm('¿Estás seguro de que deseas eliminar esta hamburguesa?')) {
-            // Aquí normalmente enviarías una petición al servidor
-            console.log('Eliminando hamburguesa con ID:', id);
-            alert('Hamburguesa eliminada correctamente.');
-
-            // En una aplicación real, aquí harías una petición AJAX
-            // y luego actualizarías la UI o recargarías la página
+        if (!nombre || !precio) {
+            alert('Por favor, completa todos los campos obligatorios.');
+            return;
         }
+
+        if (editIngredients.length === 0) {
+            alert('Debes añadir al menos un ingrediente.');
+            return;
+        }
+
+        // Actualizar los campos ocultos antes de enviar
+        updateEditIngredientFields();
+
+        // Enviar el formulario
+        document.getElementById('editHamburguesaForm').submit();
     }
 </script>
 @endsection
