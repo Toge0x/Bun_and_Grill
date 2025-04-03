@@ -31,7 +31,7 @@ class PedidoController extends Controller
         ]);
         Pedido::create($request->all());
         return redirect()->route('pedidos')
-                         ->with('success', 'Pedido creado correctamente.');
+            ->with('success', 'Pedido creado correctamente.');
     }
 
     public function show($id)
@@ -42,8 +42,8 @@ class PedidoController extends Controller
 
     public function showAll()
     {
-        $pedido = Pedido::with('cliente')->all();
-        return view('pedidos', compact('pedido'));
+        $pedidos = Pedido::with('cliente')->get();
+        return view('pedidos', compact('pedidos'));
     }
 
     public function edit($id)
@@ -66,7 +66,7 @@ class PedidoController extends Controller
         $pedido->update($request->all());
 
         return redirect()->route('pedidos')
-                         ->with('success', 'Pedido actualizado correctamente.');
+            ->with('success', 'Pedido actualizado correctamente.');
     }
 
     public function destroy($id)
@@ -74,7 +74,6 @@ class PedidoController extends Controller
         $pedido = Pedido::findOrFail($id);
         $pedido->delete();
         return redirect()->route('pedidos')
-                         ->with('success', 'Pedido eliminado correctamente.');
+            ->with('success', 'Pedido eliminado correctamente.');
     }
 }
-

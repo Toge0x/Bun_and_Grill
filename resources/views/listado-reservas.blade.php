@@ -323,46 +323,6 @@
             </div>
         </td>
         @endforeach
-        <tr>
-            <td>Juan Pérez<br><small>Tel: 555-123-4567</small></td>
-            <td>15/05/2023<br><small>20:00</small></td>
-            <td>4</td>
-            <td>5</td>
-            <td><span class="status-badge status-pendiente">Pendiente</span></td>
-            <td>
-                <div class="action-buttons">
-                    <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
-                        <i class="fas fa-eye"></i>
-                    </a>
-                    <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <button class="btn-icon btn-delete" title="Eliminar">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>María García<br><small>Tel: 555-987-6543</small></td>
-            <td>15/05/2023<br><small>21:30</small></td>
-            <td>2</td>
-            <td>8</td>
-            <td><span class="status-badge status-confirmada">Confirmada</span></td>
-            <td>
-                <div class="action-buttons">
-                    <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
-                        <i class="fas fa-eye"></i>
-                    </a>
-                    <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <button class="btn-icon btn-delete" title="Eliminar">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
     </tbody>
 </table>
 

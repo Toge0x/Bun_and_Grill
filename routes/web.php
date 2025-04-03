@@ -52,6 +52,8 @@ Route::get('/admin-pedidos', function () {
     return view('pedidos');
 });
 
+Route::get('/admin-pedidos', [PedidoController::class, 'showAll'])->name('admin-pedidos');
+
 Route::get('/admin-clientes', function () {
     return view('clientes');
 });

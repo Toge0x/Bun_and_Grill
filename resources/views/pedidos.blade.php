@@ -247,168 +247,103 @@
 @endsection
 
 @section('content')
-    <div class="actions-container">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Buscar por ID, cliente o productos...">
-            <button class="btn btn-secondary">
-                <i class="fas fa-search"></i> Buscar
-            </button>
-        </div>
+<div class="actions-container">
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Buscar por ID, cliente o productos...">
+        <button class="btn btn-secondary">
+            <i class="fas fa-search"></i> Buscar
+        </button>
+    </div>
 
-        <a href="/admin-pedidos" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nuevo Pedido
+    <a href="/admin-pedidos" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Nuevo Pedido
+    </a>
+</div>
+
+<div class="filters-container">
+    <div class="filter-group">
+        <label class="filter-label">Estado:</label>
+        <select class="filter-select">
+            <option value="">Todos</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="preparacion">En preparación</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label class="filter-label">Fecha:</label>
+        <select class="filter-select">
+            <option value="">Todas</option>
+            <option value="hoy">Hoy</option>
+            <option value="ayer">Ayer</option>
+            <option value="semana">Esta semana</option>
+            <option value="mes">Este mes</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label class="filter-label">Tipo:</label>
+        <select class="filter-select">
+            <option value="">Todos</option>
+            <option value="local">En local</option>
+            <option value="llevar">Para llevar</option>
+            <option value="domicilio">A domicilio</option>
+        </select>
+    </div>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <!-- th>Productos</th> -->
+            <th>Total</th>
+            <th>Fecha y Hora</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($pedidos as $pedido)
+        <td>{{ $pedido->cliente_email }}</td>
+        <td>{{ $pedido->total }}</td>
+        <td>{{ $pedido->fecha }}</td>
+        <td><span class="status-badge status-preparacion">{{ $pedido->estado }}</span></td>
+        <td>
+            <div class="action-buttons">
+                <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
+                    <i class="fas fa-eye"></i>
+                </a>
+                <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <button class="btn-icon btn-delete" title="Eliminar">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </td>
+        @endforeach
+    </tbody>
+</table>
+
+<div class="pagination">
+    <div class="pagination-info">
+        Mostrando 1-5 de 30 pedidos
+    </div>
+    <div class="pagination-buttons">
+        <a href="#" class="pagination-button disabled">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a href="#" class="pagination-button active">1</a>
+        <a href="#" class="pagination-button">2</a>
+        <a href="#" class="pagination-button">3</a>
+        <a href="#" class="pagination-button">4</a>
+        <a href="#" class="pagination-button">5</a>
+        <a href="#" class="pagination-button">
+            <i class="fas fa-chevron-right"></i>
         </a>
     </div>
-
-    <div class="filters-container">
-        <div class="filter-group">
-            <label class="filter-label">Estado:</label>
-            <select class="filter-select">
-                <option value="">Todos</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="preparacion">En preparación</option>
-                <option value="entregado">Entregado</option>
-                <option value="cancelado">Cancelado</option>
-            </select>
-        </div>
-
-        <div class="filter-group">
-            <label class="filter-label">Fecha:</label>
-            <select class="filter-select">
-                <option value="">Todas</option>
-                <option value="hoy">Hoy</option>
-                <option value="ayer">Ayer</option>
-                <option value="semana">Esta semana</option>
-                <option value="mes">Este mes</option>
-            </select>
-        </div>
-
-        <div class="filter-group">
-            <label class="filter-label">Tipo:</label>
-            <select class="filter-select">
-                <option value="">Todos</option>
-                <option value="local">En local</option>
-                <option value="llevar">Para llevar</option>
-                <option value="domicilio">A domicilio</option>
-            </select>
-        </div>
-    </div>
-
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Productos</th>
-                <th>Total</th>
-                <th>Fecha y Hora</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>#P1089</td>
-                <td>Juan Pérez<br><small>Tel: 555-123-4567</small></td>
-                <td>
-                    <div>2 Hamburguesas, 1 Refresco</div>
-                    <div class="order-items">
-                        <span>• Hamburguesa Clásica x1</span>
-                        <span>• Hamburguesa del Mes x1</span>
-                        <span>• Refresco Cola x1</span>
-                    </div>
-                </td>
-                <td>35.50€</td>
-                <td>15/05/2023<br><small>19:30</small></td>
-                <td><span class="status-badge status-preparacion">En preparación</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#P1088</td>
-                <td>María García<br><small>Tel: 555-987-6543</small></td>
-                <td>
-                    <div>1 Hamburguesa del mes, 2 Papas</div>
-                    <div class="order-items">
-                        <span>• Hamburguesa del Mes x1</span>
-                        <span>• Papas Fritas Grandes x2</span>
-                    </div>
-                </td>
-                <td>28.75€</td>
-                <td>15/05/2023<br><small>18:45</small></td>
-                <td><span class="status-badge status-entregado">Entregado</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>#P1087</td>
-                <td>Carlos Rodríguez<br><small>Tel: 555-456-7890</small></td>
-                <td>
-                    <div>3 Hamburguesas, 3 Refrescos</div>
-                    <div class="order-items">
-                        <span>• Hamburguesa Clásica x2</span>
-                        <span>• Hamburguesa Vegana x1</span>
-                        <span>• Refresco Cola x3</span>
-                    </div>
-                </td>
-                <td>52.25€</td>
-                <td>15/05/2023<br><small>18:15</small></td>
-                <td><span class="status-badge status-entregado">Entregado</span></td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="pagination">
-        <div class="pagination-info">
-            Mostrando 1-5 de 30 pedidos
-        </div>
-        <div class="pagination-buttons">
-            <a href="#" class="pagination-button disabled">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-            <a href="#" class="pagination-button active">1</a>
-            <a href="#" class="pagination-button">2</a>
-            <a href="#" class="pagination-button">3</a>
-            <a href="#" class="pagination-button">4</a>
-            <a href="#" class="pagination-button">5</a>
-            <a href="#" class="pagination-button">
-                <i class="fas fa-chevron-right"></i>
-            </a>
-        </div>
-    </div>
+</div>
 @endsection
