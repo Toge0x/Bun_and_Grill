@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="hero-section">
-    <h1 class="hero-title">RESERVAS</h1>
+    <h1 class="hero-title">HAZ TU PEDIDO</h1>
 </div>
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8">
-            @include('form-reservas')
+    <div class="row">
+        <div class="col-lg-12">
+            @include('form-pedidos')
         </div>
     </div>
 </div>
@@ -18,7 +18,7 @@
 <style>
     .hero-section {
         position: relative;
-        height: 500px;
+        height: 400px;
         /*background-image: url('{{ asset('images/restaurant-bg.jpg') }}');*/
         background-size: cover;
         background-position: center;
@@ -45,7 +45,6 @@
         text-align: center;
     }
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 
 @section('scripts')
