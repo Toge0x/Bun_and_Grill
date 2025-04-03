@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -193,6 +194,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @yield('styles')
 </head>
+
 <body>
     <div class="admin-container">
         <!-- Sidebar -->
@@ -201,7 +203,7 @@
                 <img src="{{ asset('images/logo.png') }}" alt="Bun & Grill">
             </div>
             <nav class="sidebar-menu">
-                <a href="{{ route('admin-reservas') }}" class="menu-item {{ request()->routeIs('admin.reservas*') ? 'active' : '' }}">
+                <a href="{{ route('reservas.index') }}" class="menu-item {{ request()->routeIs('admin.reservas*') ? 'active' : '' }}">
                     <i class="fas fa-calendar-alt"></i>
                     <span>Reservas</span>
                 </a>
@@ -235,7 +237,7 @@
                         <div class="user-role">Administrador</div>
                     </div>
                     <a href="/logout" class="logout-btn"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Cerrar sesión
                     </a>
                     <form id="logout-form" action="/logout" method="POST" style="display: none;">
@@ -258,4 +260,5 @@
     </script>
     @yield('scripts')
 </body>
+
 </html>

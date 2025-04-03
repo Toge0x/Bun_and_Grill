@@ -10,7 +10,7 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        $clientes = Cliente::orderBy('id','desc')->paginate(10);
+        $clientes = Cliente::orderBy('id', 'desc')->paginate(10);
         return view('clientes.index', compact('clientes'));
     }
 
@@ -34,7 +34,7 @@ class ClienteController extends Controller
         ]);
 
         return redirect()->route('clientes.index')
-                         ->with('success', 'Cliente creado correctamente.');
+            ->with('success', 'Cliente creado correctamente.');
     }
 
     public function show($id)
@@ -49,6 +49,8 @@ class ClienteController extends Controller
         return view('clientes', compact('clientes'));
     }
 
+
+
     public function edit($id)
     {
         $cliente = Cliente::findOrFail($id);
@@ -61,7 +63,7 @@ class ClienteController extends Controller
 
         $request->validate([
             'nombre' => 'required',
-            'email'  => 'required|email|unique:clientes,email,'.$id,
+            'email'  => 'required|email|unique:clientes,email,' . $id,
         ]);
 
         $cliente->nombre = $request->nombre;
@@ -73,7 +75,7 @@ class ClienteController extends Controller
         $cliente->save();
 
         return redirect()->route('clientes.index')
-                         ->with('success', 'Cliente actualizado correctamente.');
+            ->with('success', 'Cliente actualizado correctamente.');
     }
 
     public function destroy($id)
@@ -82,6 +84,6 @@ class ClienteController extends Controller
         $cliente->delete();
 
         return redirect()->route('clientes.index')
-                         ->with('success', 'Cliente eliminado correctamente.');
+            ->with('success', 'Cliente eliminado correctamente.');
     }
 }

@@ -238,10 +238,12 @@
 @section('content')
 <div class="actions-container">
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Buscar por nombre, teléfono o email...">
-        <button class="btn btn-secondary">
-            <i class="fas fa-search"></i> Buscar
-        </button>
+        <form action="{{ route('reservas.index') }}" method="GET">
+            <input type="text" name="search" class="search-input" placeholder="Buscar por nombre, teléfono o email..." value="{{ request('search') }}">
+            <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-search"></i> Buscar
+            </button>
+        </form>
     </div>
 
     <a href="/admin-reservas" class="btn btn-primary">
@@ -250,38 +252,44 @@
 </div>
 
 <div class="filters-container">
-    <div class="filter-group">
-        <label class="filter-label">Estado:</label>
-        <select class="filter-select">
-            <option value="">Todos</option>
-            <option value="pendiente">Pendiente</option>
-            <option value="confirmada">Confirmada</option>
-            <option value="cancelada">Cancelada</option>
-            <option value="completada">Completada</option>
-        </select>
-    </div>
+    <form action="{{ route('reservas.index') }}" method="GET" id="filters-form">
+        <input type="hidden" name="search" value="{{ request('search') }}">
+        <!-- Mas tarde
+        <div class="filter-group">
+            <label class="filter-label">Estado:</label>
+            <select class="filter-select" name="estado" onchange="document.getElementById('filters-form').submit()">
+                <option value="">Todos</option>
+                <option value="pendiente" {{ request('estado') == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                <option value="confirmada" {{ request('estado') == 'confirmada' ? 'selected' : '' }}>Confirmada</option>
+                <option value="cancelada" {{ request('estado') == 'cancelada' ? 'selected' : '' }}>Cancelada</option>
+                <option value="completada" {{ request('estado') == 'completada' ? 'selected' : '' }}>Completada</option>
+            </select>
+        </div>
 
-    <div class="filter-group">
-        <label class="filter-label">Fecha:</label>
-        <select class="filter-select">
-            <option value="">Todas</option>
-            <option value="hoy">Hoy</option>
-            <option value="manana">Mañana</option>
-            <option value="semana">Esta semana</option>
-            <option value="mes">Este mes</option>
-        </select>
-    </div>
+        <div class="filter-group">
+            <label class="filter-label">Personas:</label>
+            <select class="filter-select" name="personas" onchange="document.getElementById('filters-form').submit()">
+                <option value="">Todas</option>
+                <option value="1-2" {{ request('personas') == '1-2' ? 'selected' : '' }}>1-2</option>
+                <option value="3-4" {{ request('personas') == '3-4' ? 'selected' : '' }}>3-4</option>
+                <option value="5-6" {{ request('personas') == '5-6' ? 'selected' : '' }}>5-6</option>
+                <option value="7+" {{ request('personas') == '7+' ? 'selected' : '' }}>7+</option>
+            </select>
+        </div> -->
 
-    <div class="filter-group">
-        <label class="filter-label">Personas:</label>
-        <select class="filter-select">
-            <option value="">Todas</option>
-            <option value="1-2">1-2</option>
-            <option value="3-4">3-4</option>
-            <option value="5-6">5-6</option>
-            <option value="7+">7+</option>
-        </select>
-    </div>
+        <div class="filter-group">
+            <label class="filter-label">Fecha:</label>
+            <select class="filter-select" name="fecha" onchange="document.getElementById('filters-form').submit()">
+                <option value="">Todas</option>
+                <option value="hoy" {{ request('fecha') == 'hoy' ? 'selected' : '' }}>Hoy</option>
+                <option value="manana" {{ request('fecha') == 'manana' ? 'selected' : '' }}>Mañana</option>
+                <option value="semana" {{ request('fecha') == 'semana' ? 'selected' : '' }}>Esta semana</option>
+                <option value="mes" {{ request('fecha') == 'mes' ? 'selected' : '' }}>Este mes</option>
+            </select>
+        </div>
+
+
+    </form>
 </div>
 
 <table class="data-table">
@@ -330,20 +338,20 @@
 
 <div class="pagination">
     <div class="pagination-info">
-        Mostrando 1-5 de 25 reservas
+        Mostrando {{ $reservas->firstItem() ?? 0 }}-{{ $reservas->lastItem() ?? 0 }} de {{ $reservas->total() }} reservas
     </div>
     <div class="pagination-buttons">
-        <a href="#" class="pagination-button disabled">
+        <a href="{{ $reservas->appends(request()->except('page'))->previousPageUrl() }}" class="pagination-button {{ $reservas->onFirstPage() ? 'disabled' : '' }}">
             <i class="fas fa-chevron-left"></i>
         </a>
-        <a href="#" class="pagination-button active">1</a>
-        <a href="#" class="pagination-button">2</a>
-        <a href="#" class="pagination-button">3</a>
-        <a href="#" class="pagination-button">4</a>
-        <a href="#" class="pagination-button">5</a>
-        <a href="#" class="pagination-button">
-            <i class="fas fa-chevron-right"></i>
-        </a>
+
+        @for ($i = 1; $i <= $reservas->lastPage(); $i++)
+            <a href="{{ $reservas->appends(request()->except('page'))->url($i) }}" class="pagination-button {{ $reservas->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
+            @endfor
+
+            <a href="{{ $reservas->appends(request()->except('page'))->nextPageUrl() }}" class="pagination-button {{ !$reservas->hasMorePages() ? 'disabled' : '' }}">
+                <i class="fas fa-chevron-right"></i>
+            </a>
     </div>
 </div>
 @endsection

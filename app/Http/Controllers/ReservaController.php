@@ -9,13 +9,74 @@ use Illuminate\Http\Request;
 
 class ReservaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $reservas = Reserva::with(['cliente', 'mesa'])
-            ->orderBy('fecha', 'desc')
-            ->paginate(10);
+        $query = Reserva::query(); // Ajusta esto al nombre de tu modelo si es diferente
 
-        return view('reservas.index', compact('reservas'));
+        // Búsqueda
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('cliente_email', 'like', "%{$search}%");
+                // Añade más campos de búsqueda si es necesario
+            });
+        }
+
+        // Filtro por estado
+        if ($request->has('estado') && $request->input('estado') != '') {
+            $query->where('estado', $request->input('estado'));
+        }
+
+        // Filtro por fecha
+        if ($request->has('fecha') && $request->input('fecha') != '') {
+            $fecha = $request->input('fecha');
+
+            switch ($fecha) {
+                case 'hoy':
+                    $query->whereDate('fechaReserva', now()->toDateString());
+                    break;
+                case 'manana':
+                    $query->whereDate('fechaReserva', now()->addDay()->toDateString());
+                    break;
+                case 'semana':
+                    $query->whereBetween('fechaReserva', [
+                        now()->startOfWeek()->toDateString(),
+                        now()->endOfWeek()->toDateString()
+                    ]);
+                    break;
+                case 'mes':
+                    $query->whereBetween('fechaReserva', [
+                        now()->startOfMonth()->toDateString(),
+                        now()->endOfMonth()->toDateString()
+                    ]);
+                    break;
+            }
+        }
+
+        // Filtro por número de personas
+        if ($request->has('personas') && $request->input('personas') != '') {
+            $personas = $request->input('personas');
+
+            switch ($personas) {
+                case '1-2':
+                    $query->whereBetween('personas', [1, 2]);
+                    break;
+                case '3-4':
+                    $query->whereBetween('personas', [3, 4]);
+                    break;
+                case '5-6':
+                    $query->whereBetween('personas', [5, 6]);
+                    break;
+                case '7+':
+                    $query->where('personas', '>=', 7);
+                    break;
+            }
+        }
+
+        // Obtener resultados paginados - 5 por página
+        $reservas = $query->paginate(5);
+
+        return view('listado-reservas', compact('reservas'));
     }
 
 

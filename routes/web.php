@@ -42,23 +42,15 @@ Route::get('/registro', function () {
 
 Route::post('/registro', [UsuarioController::class, 'store']);
 
-Route::get('/admin', function () {
-    return view('listado-reservas');
-})->name('admin-reservas');
-
-Route::get('/admin', [ReservaController::class, 'showAll'])->name('admin-reservas');
+Route::get('/admin-reservas', [ReservaController::class, 'index'])->name('reservas.index');
 
 Route::get('/admin-pedidos', function () {
     return view('pedidos');
 });
 
-Route::get('/admin-pedidos', [PedidoController::class, 'showAll'])->name('admin-pedidos');
+Route::get('/admin-pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
 
-Route::get('/admin-clientes', function () {
-    return view('clientes');
-});
-
-Route::get('/admin-clientes', [UsuarioController::class, 'showAll']);
+Route::get('/admin-clientes', [UsuarioController::class, 'index'])->name('usuarios.index');
 
 /*
 // Esto se puede eliminar, ya que se usa la siguiente ruta

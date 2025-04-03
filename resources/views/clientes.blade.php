@@ -197,77 +197,80 @@
 @endsection
 
 @section('content')
-    <div class="actions-container">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Buscar por nombre, teléfono o email...">
-            <button class="btn btn-secondary">
+<div class="actions-container">
+    <div class="search-container">
+        <form action="{{ route('usuarios.index') }}" method="GET">
+            <input type="text" name="search" class="search-input" placeholder="Buscar por nombre, teléfono o email..." value="{{ request('search') }}">
+            <button type="submit" class="btn btn-secondary">
                 <i class="fas fa-search"></i> Buscar
             </button>
-        </div>
-
-        <a href="/admin-clientes" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nuevo Cliente
-        </a>
+        </form>
     </div>
 
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Contacto</th>
-                <th>Direccion</th>
-                <th>Fecha de registro</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($usuarios as $usuario)
-            <tr>
-                <td>{{$usuario->nombre}} {{$usuario->apellidos}}</td>
-                <td>
-                    <div>{{$usuario->telefono}}</div>
-                    <div><small>{{$usuario->email}}</small></div>
-                </td>
-                <td>
-                    <div>{{$usuario->direccion}}</div>
+    <a href="/admin-clientes" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Nuevo Cliente
+    </a>
+</div>
 
-                </td>
-                <td>
-                    <div>{{$usuario->created_at}}</div>
-                </td>
-                <td>
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Direccion</th>
+            <th>Fecha de registro</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($usuarios as $usuario)
+        <tr>
+            <td>{{$usuario->nombre}} {{$usuario->apellidos}}</td>
+            <td>
+                <div>{{$usuario->telefono}}</div>
+                <div><small>{{$usuario->email}}</small></div>
+            </td>
+            <td>
+                <div>{{$usuario->direccion}}</div>
+
+            </td>
+            <td>
+                <div>{{$usuario->created_at}}</div>
+            </td>
+            <td>
                 <div class="action-buttons">
-                        <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn-icon btn-delete" title="Eliminar">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    <a href="/admin-clientes" class="btn-icon btn-view" title="Ver detalles">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="/admin-clientes" class="btn-icon btn-edit" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <button class="btn-icon btn-delete" title="Eliminar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
-    <div class="pagination">
-        <div class="pagination-info">
-            Mostrando 1-5 de 20 clientes
-        </div>
-        <div class="pagination-buttons">
-            <a href="#" class="pagination-button disabled">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-            <a href="#" class="pagination-button active">1</a>
-            <a href="#" class="pagination-button">2</a>
-            <a href="#" class="pagination-button">3</a>
-            <a href="#" class="pagination-button">4</a>
-            <a href="#" class="pagination-button">
+<div class="pagination">
+    <div class="pagination-info">
+        Mostrando {{ $usuarios->firstItem() ?? 0 }}-{{ $usuarios->lastItem() ?? 0 }} de {{ $usuarios->total() }} clientes
+    </div>
+    <div class="pagination-buttons">
+        <a href="{{ $usuarios->previousPageUrl() }}" class="pagination-button {{ $usuarios->onFirstPage() ? 'disabled' : '' }}">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+
+        @for ($i = 1; $i <= $usuarios->lastPage(); $i++)
+            <a href="{{ $usuarios->url($i) }}" class="pagination-button {{ $usuarios->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
+            @endfor
+
+            <a href="{{ $usuarios->nextPageUrl() }}" class="pagination-button {{ !$usuarios->hasMorePages() ? 'disabled' : '' }}">
                 <i class="fas fa-chevron-right"></i>
             </a>
-        </div>
     </div>
+</div>
 @endsection

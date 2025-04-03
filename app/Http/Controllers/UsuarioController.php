@@ -12,10 +12,25 @@ use Illuminate\Support\Facades\Hash;
 class UsuarioController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $usuarios = Usuario::orderBy('id','desc')->paginate(10);
-        return view('usuarios.index', compact('usuarios'));
+        $query = Usuario::query(); // Ajusta esto al nombre de tu modelo si es diferente
+
+        // Añadir funcionalidad de búsqueda
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'like', "%{$search}%")
+                    ->orWhere('apellidos', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('telefono', 'like', "%{$search}%");
+            });
+        }
+
+        // Obtener resultados paginados - 5 por página
+        $usuarios = $query->paginate(5);
+
+        return view('clientes', compact('usuarios'));
     }
 
     public function create()
@@ -56,6 +71,8 @@ class UsuarioController extends Controller
         return view('clientes', compact('usuarios'));
     }
 
+
+
     public function edit($id)
     {
         $usuario = Usuario::findOrFail($id);
@@ -68,7 +85,7 @@ class UsuarioController extends Controller
 
         $request->validate([
             'nombre' => 'required',
-            'email'  => 'required|email|unique:usuarios,email,'.$id,
+            'email'  => 'required|email|unique:usuarios,email,' . $id,
         ]);
 
         $usuario->nombre = $request->nombre;
@@ -80,7 +97,7 @@ class UsuarioController extends Controller
         $usuario->save();
 
         return redirect()->route('usuarios.index')
-                         ->with('success','Usuario actualizado correctamente.');
+            ->with('success', 'Usuario actualizado correctamente.');
     }
 
     public function destroy($id)
@@ -89,7 +106,7 @@ class UsuarioController extends Controller
         $usuario->delete();
 
         return redirect()->route('usuarios.index')
-                         ->with('success','Usuario eliminado correctamente.');
+            ->with('success', 'Usuario eliminado correctamente.');
     }
 
 
@@ -105,6 +122,4 @@ class UsuarioController extends Controller
 
         return back()->with('success', 'Login exitoso');    // simplemente pasa la validación
     }
-
-
 }

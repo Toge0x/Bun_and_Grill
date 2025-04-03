@@ -249,10 +249,12 @@
 @section('content')
 <div class="actions-container">
     <div class="search-container">
-        <input type="text" class="search-input" placeholder="Buscar por ID, cliente o productos...">
-        <button class="btn btn-secondary">
-            <i class="fas fa-search"></i> Buscar
-        </button>
+        <form action="{{ route('pedidos.index') }}" method="GET">
+            <input type="text" name="search" class="search-input" placeholder="Buscar por ID, cliente o productos..." value="{{ request('search') }}">
+            <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-search"></i> Buscar
+            </button>
+        </form>
     </div>
 
     <a href="/admin-pedidos" class="btn btn-primary">
@@ -261,37 +263,43 @@
 </div>
 
 <div class="filters-container">
-    <div class="filter-group">
-        <label class="filter-label">Estado:</label>
-        <select class="filter-select">
-            <option value="">Todos</option>
-            <option value="pendiente">Pendiente</option>
-            <option value="preparacion">En preparación</option>
-            <option value="entregado">Entregado</option>
-            <option value="cancelado">Cancelado</option>
-        </select>
-    </div>
+    <form action="{{ route('pedidos.index') }}" method="GET" id="filters-form">
+        <input type="hidden" name="search" value="{{ request('search') }}">
+        <!-- Mas tarde TODO
+        <div class="filter-group">
+            <label class="filter-label">Estado:</label>
+            <select class="filter-select" name="estado" onchange="document.getElementById('filters-form').submit()">
+                <option value="">Todos</option>
+                <option value="pendiente" {{ request('estado') == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                <option value="preparacion" {{ request('estado') == 'preparacion' ? 'selected' : '' }}>En preparación</option>
+                <option value="entregado" {{ request('estado') == 'entregado' ? 'selected' : '' }}>Entregado</option>
+                <option value="cancelado" {{ request('estado') == 'cancelado' ? 'selected' : '' }}>Cancelado</option>
+            </select>
+        </div>
 
-    <div class="filter-group">
-        <label class="filter-label">Fecha:</label>
-        <select class="filter-select">
-            <option value="">Todas</option>
-            <option value="hoy">Hoy</option>
-            <option value="ayer">Ayer</option>
-            <option value="semana">Esta semana</option>
-            <option value="mes">Este mes</option>
-        </select>
-    </div>
+        <div class="filter-group">
+            <label class="filter-label">Tipo:</label>
+            <select class="filter-select" name="tipo" onchange="document.getElementById('filters-form').submit()">
+                <option value="">Todos</option>
+                <option value="local" {{ request('tipo') == 'local' ? 'selected' : '' }}>En local</option>
+                <option value="llevar" {{ request('tipo') == 'llevar' ? 'selected' : '' }}>Para llevar</option>
+                <option value="domicilio" {{ request('tipo') == 'domicilio' ? 'selected' : '' }}>A domicilio</option>
+            </select>
+        </div> -->
 
-    <div class="filter-group">
-        <label class="filter-label">Tipo:</label>
-        <select class="filter-select">
-            <option value="">Todos</option>
-            <option value="local">En local</option>
-            <option value="llevar">Para llevar</option>
-            <option value="domicilio">A domicilio</option>
-        </select>
-    </div>
+        <div class="filter-group">
+            <label class="filter-label">Fecha:</label>
+            <select class="filter-select" name="fecha" onchange="document.getElementById('filters-form').submit()">
+                <option value="">Todas</option>
+                <option value="hoy" {{ request('fecha') == 'hoy' ? 'selected' : '' }}>Hoy</option>
+                <option value="ayer" {{ request('fecha') == 'ayer' ? 'selected' : '' }}>Ayer</option>
+                <option value="semana" {{ request('fecha') == 'semana' ? 'selected' : '' }}>Esta semana</option>
+                <option value="mes" {{ request('fecha') == 'mes' ? 'selected' : '' }}>Este mes</option>
+            </select>
+        </div>
+
+
+    </form>
 </div>
 
 <table class="data-table">
@@ -311,7 +319,7 @@
             <td>{{ $pedido->cliente_email }}</td>
             <td>{{ $pedido->total }}</td>
             <td>{{ $pedido->fecha }}</td>
-            <td><span class="status-badge status-preparacion">{{ $pedido->estado }}</span></td>
+            <td><span class="status-badge status-{{ strtolower($pedido->estado) }}">{{ $pedido->estado }}</span></td>
             <td>
                 <div class="action-buttons">
                     <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
@@ -332,20 +340,20 @@
 
 <div class="pagination">
     <div class="pagination-info">
-        Mostrando 1-5 de 30 pedidos
+        Mostrando {{ $pedidos->firstItem() ?? 0 }}-{{ $pedidos->lastItem() ?? 0 }} de {{ $pedidos->total() }} pedidos
     </div>
     <div class="pagination-buttons">
-        <a href="#" class="pagination-button disabled">
+        <a href="{{ $pedidos->appends(request()->except('page'))->previousPageUrl() }}" class="pagination-button {{ $pedidos->onFirstPage() ? 'disabled' : '' }}">
             <i class="fas fa-chevron-left"></i>
         </a>
-        <a href="#" class="pagination-button active">1</a>
-        <a href="#" class="pagination-button">2</a>
-        <a href="#" class="pagination-button">3</a>
-        <a href="#" class="pagination-button">4</a>
-        <a href="#" class="pagination-button">5</a>
-        <a href="#" class="pagination-button">
-            <i class="fas fa-chevron-right"></i>
-        </a>
+
+        @for ($i = 1; $i <= $pedidos->lastPage(); $i++)
+            <a href="{{ $pedidos->appends(request()->except('page'))->url($i) }}" class="pagination-button {{ $pedidos->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
+            @endfor
+
+            <a href="{{ $pedidos->appends(request()->except('page'))->nextPageUrl() }}" class="pagination-button {{ !$pedidos->hasMorePages() ? 'disabled' : '' }}">
+                <i class="fas fa-chevron-right"></i>
+            </a>
     </div>
 </div>
 @endsection

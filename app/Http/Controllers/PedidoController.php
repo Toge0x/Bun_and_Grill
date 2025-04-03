@@ -8,10 +8,59 @@ use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Cargar los pedidos con su cliente
-        $pedidos = Pedido::with('cliente')->orderBy('fecha', 'desc')->paginate(10);
+        $query = Pedido::query(); // Ajusta esto al nombre de tu modelo si es diferente
+
+        // Búsqueda
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('cliente_email', 'like', "%{$search}%")
+                    ->orWhere('id', 'like', "%{$search}%");
+                // Añade más campos de búsqueda si es necesario
+            });
+        }
+
+        // Filtro por estado
+        if ($request->has('estado') && $request->input('estado') != '') {
+            $query->where('estado', $request->input('estado'));
+        }
+
+        // Filtro por fecha
+        if ($request->has('fecha') && $request->input('fecha') != '') {
+            $fecha = $request->input('fecha');
+
+            switch ($fecha) {
+                case 'hoy':
+                    $query->whereDate('fecha', now()->toDateString());
+                    break;
+                case 'ayer':
+                    $query->whereDate('fecha', now()->subDay()->toDateString());
+                    break;
+                case 'semana':
+                    $query->whereBetween('fecha', [
+                        now()->startOfWeek()->toDateString(),
+                        now()->endOfWeek()->toDateString()
+                    ]);
+                    break;
+                case 'mes':
+                    $query->whereBetween('fecha', [
+                        now()->startOfMonth()->toDateString(),
+                        now()->endOfMonth()->toDateString()
+                    ]);
+                    break;
+            }
+        }
+
+        // Filtro por tipo
+        if ($request->has('tipo') && $request->input('tipo') != '') {
+            $query->where('tipo', $request->input('tipo'));
+        }
+
+        // Obtener resultados paginados - 5 por página
+        $pedidos = $query->paginate(5);
+
         return view('pedidos', compact('pedidos'));
     }
 
