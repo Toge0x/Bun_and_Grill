@@ -46,7 +46,7 @@ Route::get('/admin', function () {
     return view('listado-reservas');
 })->name('admin-reservas');
 
-//Route::get('/admin', [ReservaController::class, 'showAll']);
+Route::get('/admin', [ReservaController::class, 'showAll'])->name('admin-reservas');
 
 Route::get('/admin-pedidos', function () {
     return view('pedidos');

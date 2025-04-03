@@ -12,18 +12,17 @@ class ReservaController extends Controller
     public function index()
     {
         $reservas = Reserva::with(['cliente', 'mesa'])
-                           ->orderBy('fecha', 'desc')
-                           ->paginate(10);
+            ->orderBy('fecha', 'desc')
+            ->paginate(10);
 
         return view('reservas.index', compact('reservas'));
     }
 
-    
+
     public function create()
     {
         $clientes = Cliente::orderBy('nombre', 'asc')->get();
         $mesas    = Mesa::orderBy('numero', 'asc')->get();
-
         return view('reservas.create', compact('clientes', 'mesas'));
     }
 
@@ -41,29 +40,28 @@ class ReservaController extends Controller
         Reserva::create($request->all());
 
         return redirect()->route('reservas.index')
-                         ->with('success', 'Reserva creada correctamente.');
+            ->with('success', 'Reserva creada correctamente.');
     }
 
     public function show($id)
     {
         $reservas = Reserva::with(['cliente', 'mesa'])
-                           ->where('id', $id)
-                           ->get();
-        return view('reservas.show', compact('reservas'));
+            ->where('id', $id)
+            ->get();
+        return view('reservas', compact('reservas'));
     }
 
     public function showAll()
     {
         $reservas = Reserva::with(['cliente', 'mesa'])->get();
-        return view('reservas.index', compact('reservas'));
+        return view('listado-reservas', compact('reservas'));
     }
 
     public function edit($id)
     {
-        $reserva  = Reserva::findOrFail($id);
+        $reserva = Reserva::findOrFail($id);
         $clientes = Cliente::orderBy('nombre', 'asc')->get();
         $mesas    = Mesa::orderBy('numero', 'asc')->get();
-
         return view('reservas.edit', compact('reserva', 'clientes', 'mesas'));
     }
 
@@ -83,7 +81,7 @@ class ReservaController extends Controller
         $reserva->update($request->all());
 
         return redirect()->route('reservas.index')
-                         ->with('success', 'Reserva actualizada correctamente.');
+            ->with('success', 'Reserva actualizada correctamente.');
     }
 
     public function destroy($id)
@@ -92,6 +90,6 @@ class ReservaController extends Controller
         $reserva->delete();
 
         return redirect()->route('reservas.index')
-                         ->with('success', 'Reserva eliminada correctamente.');
+            ->with('success', 'Reserva eliminada correctamente.');
     }
 }
