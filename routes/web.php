@@ -52,13 +52,6 @@ Route::get('/admin-pedidos', [PedidoController::class, 'index'])->name('pedidos.
 
 Route::get('/admin-clientes', [UsuarioController::class, 'index'])->name('usuarios.index');
 
-/*
-// Esto se puede eliminar, ya que se usa la siguiente ruta
-Route::get('/admin-hamburguesas', function () {
-    return view('hamburguesas');
-});
-*/
-
 Route::get('/admin-hamburguesas', [ProductoController::class, 'showAll'])->name('hamburguesas');
 
 Route::delete('/admin-hamburguesas-delete/{id}', [ProductoController::class, 'destroy'])->name('hamburguesas.destroy');
@@ -66,33 +59,6 @@ Route::delete('/admin-hamburguesas-delete/{id}', [ProductoController::class, 'de
 Route::post('/admin-hamburguesas', [ProductoController::class, 'store'])->name('hamburguesas.store');
 
 Route::post('/admin-hamburguesas-update/{id}', [ProductoController::class, 'update'])->name('hamburguesas.update');
-
-/*
-// Rutas del panel de administración
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-    // Dashboard
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
-
-    // Reservas
-    Route::resource('reservas', 'ReservaController');
-
-    // Clientes
-    Route::resource('clientes', 'ClienteController');
-
-    // Pedidos
-    Route::resource('pedidos', 'PedidoController');
-
-    // Hamburguesas
-    Route::resource('hamburguesas', 'HamburguesaController');
-
-    // Configuración
-    Route::get('configuracion', function () {
-        return view('admin.configuracion');
-    })->name('configuracion');
-});
-*/
 
 Route::resource('clientes', ClienteController::class);
 Route::resource('usuarios', UsuarioController::class);
