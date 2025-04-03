@@ -13,44 +13,36 @@ class PedidoSeeder extends Seeder
 {
     public function run(): void
     {
-        $total = 0;     // para visualizar el total en el pedido no en las lineas de pedido (nuevo en UML)
+        $clientes = Cliente::all();
 
-        $cliente = Cliente::where('email', 'pacop@gmail.com')->first();     // consulta del cliente
-        if (!$cliente) {
-            return;
-        }
+        foreach ($clientes as $cliente) {
+            $total = 0;
 
-        $pedido = Pedido::create([                          // crear el pedido
-            'cliente_email' => $cliente->email,
-            'fecha' => Carbon::now()->toDateString(),
-            'estado' => 'Pendiente',
-            'total' => 0,
-        ]);
-        
-        $clasica = Producto::where('nombre', 'Clásica')->first();
-        $quesada = Producto::where('nombre', 'Quesada')->first();
-
-        if($clasica){                               // crear las lineas de pedido
-            $linea = LineaPedido::create([
-                'pedido_id' => $pedido->id,
-                'producto_id' => $clasica->idProducto,
-                'cantidad' => 2,
-                'subtotal' => $clasica->precio * 2,
+            $pedido = Pedido::create([
+                'cliente_email' => $cliente->email,
+                'fecha' => Carbon::now()->toDateString(),
+                'estado' => 'Pendiente',
+                'total' => 0,
             ]);
-            $total += $linea->subtotal;
+
+            $productos = Producto::inRandomOrder()->take(rand(1, 3))->get();
+
+            foreach ($productos as $producto) {
+                $cantidad = rand(1, 5);
+                $subtotal = $producto->precio * $cantidad;
+
+                LineaPedido::create([
+                    'pedido_id' => $pedido->id,
+                    'producto_id' => $producto->idProducto,
+                    'cantidad' => $cantidad,
+                    'subtotal' => $subtotal,
+                ]);
+
+                $total += $subtotal;
+            }
+
+            $pedido->total = $total;
+            $pedido->save();
         }
-        
-        if ($quesada) {
-            $linea = LineaPedido::create([
-                'pedido_id' => $pedido->id,
-                'producto_id' => $quesada->idProducto,
-                'cantidad' => 1,
-                'subtotal' => $quesada->precio * 1,
-            ]);
-            $total += $linea->subtotal;
-        }
-        
-        $pedido->total = $total;
-        $pedido->save();
     }
 }

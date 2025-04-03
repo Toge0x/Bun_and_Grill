@@ -181,16 +181,6 @@
 
         {{-- Mostrar errores de validación --}}
 
-        @if ($errors->any())
-        <div class="alert alert-danger" style="margin-bottom: 20px; text-align: left;">
-            <ul style="padding-left: 20px; color: #e53e3e;">
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-
         <!-- Cambiar más adelante el action del formulario -->
         <form method="POST" action="{{ route('registro') }}">
             @csrf

@@ -307,23 +307,25 @@
     </thead>
     <tbody>
         @foreach ($pedidos as $pedido)
-        <td>{{ $pedido->cliente_email }}</td>
-        <td>{{ $pedido->total }}</td>
-        <td>{{ $pedido->fecha }}</td>
-        <td><span class="status-badge status-preparacion">{{ $pedido->estado }}</span></td>
-        <td>
-            <div class="action-buttons">
-                <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
-                    <i class="fas fa-eye"></i>
-                </a>
-                <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <button class="btn-icon btn-delete" title="Eliminar">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        </td>
+        <tr>
+            <td>{{ $pedido->cliente_email }}</td>
+            <td>{{ $pedido->total }}</td>
+            <td>{{ $pedido->fecha }}</td>
+            <td><span class="status-badge status-preparacion">{{ $pedido->estado }}</span></td>
+            <td>
+                <div class="action-buttons">
+                    <a href="/admin-pedidos" class="btn-icon btn-view" title="Ver detalles">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="/admin-pedidos" class="btn-icon btn-edit" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <button class="btn-icon btn-delete" title="Eliminar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
         @endforeach
     </tbody>
 </table>

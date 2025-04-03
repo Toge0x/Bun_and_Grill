@@ -12,20 +12,24 @@ class ReservaSeeder extends Seeder
 {
     public function run(): void
     {
-        $cliente = Cliente::where('email', 'pacop@gmail.com')->first();     // asegurarse de que existen el cliente y la mesa
-        $mesa = Mesa::where('capacidad', '>=', 4)->first();         // primera mesa con capacidad >= 4
+        $clientes = Cliente::inRandomOrder()->take(10)->get();
+        $mesas = Mesa::where('capacidad', '>=', 2)->get();
 
-        if($cliente && $mesa){
+        if ($clientes->isEmpty() || $mesas->isEmpty()) {
+            echo "No se pudieron crear reservas: faltan clientes o mesas.\n";
+            return;
+        }
+
+        foreach ($clientes as $cliente) {
+            $mesa = $mesas->random();
             Reserva::create([
                 'cliente_email' => $cliente->email,
                 'mesa_id' => $mesa->mesa_id,
-                'fechaReserva' => Carbon::now()->toDateString(),
-                'horaReserva' => Carbon::now()->toTimeString(),
-                'duracion' => 30,
-                'estado' => 'Reservada'
+                'fechaReserva' => Carbon::now()->addDays(rand(1, 30))->toDateString(),
+                'horaReserva' => Carbon::now()->addHours(rand(12, 21))->toTimeString(),
+                'duracion' => rand(30, 120),
+                'estado' => 'Reservada',
             ]);
-        }else{
-            echo "No se pudo crear la reserva: cliente o mesa no encontrada.\n";
         }
     }
 }

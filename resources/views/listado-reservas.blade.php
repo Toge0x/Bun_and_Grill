@@ -289,39 +289,41 @@
         <tr>
             <th>Cliente</th>
             <th>Fecha y Hora</th>
-            <th>Personas</th>
+            <!-- <th>Personas</th>
             <th>Mesa</th>
-            <th>Estado</th>
+            <th>Estado</th> -->
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @foreach($reservas as $reserva)
-        <td>
-            <small>
-                {{ $reserva->cliente_email}}
-            </small>
-        </td>
-        <td>
-            {{ $reserva->fechaReserva }}
-            <br>
-            <small>
-                {{ $reserva->horaReserva }}
-            </small>
-        </td>
-        <td>
-            <div class="action-buttons">
-                <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
-                    <i class="fas fa-eye"></i>
-                </a>
-                <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <button class="btn-icon btn-delete" title="Eliminar">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        </td>
+        <tr>
+            <td>
+                <small>
+                    {{ $reserva->cliente_email}}
+                </small>
+            </td>
+            <td>
+                {{ $reserva->fechaReserva }}
+                <br>
+                <small>
+                    {{ $reserva->horaReserva }}
+                </small>
+            </td>
+            <td>
+                <div class="action-buttons">
+                    <a href="/admin-reservas" class="btn-icon btn-view" title="Ver detalles">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="/admin-reservas" class="btn-icon btn-edit" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <button class="btn-icon btn-delete" title="Eliminar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
         @endforeach
     </tbody>
 </table>
