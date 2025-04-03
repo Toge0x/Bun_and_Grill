@@ -20,11 +20,16 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('../images/hero-background.jpg');
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.8);
         z-index: -1;
+        overflow: hidden;
+    }
+
+    .login-background img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: brightness(0.8);
     }
 
     .login-form-container {
@@ -102,11 +107,12 @@
     }
 
     .registro-link {
-    margin-top: 20px;
-    display: block;
-    color: #666;
-    font-size: 14px;
-}
+        margin-top: 20px;
+        display: block;
+        color: #666;
+        font-size: 14px;
+    }
+
     .registro-link a {
         color: #f0b000;
         text-decoration: underline;
@@ -120,7 +126,9 @@
 
 @section('content')
 <div class="login-container">
-    <div class="login-background"></div>
+    <div class="login-background">
+        <img src="{{ asset('storage/images/loginDSS.png') }}" alt="Entrada al restaurante Bun & Grill">
+    </div>
 
     <div class="login-form-container">
         <div class="login-logo">
@@ -129,13 +137,13 @@
 
         <!-- para mostrar los errores -->
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         <form method="POST" action="/login">
@@ -150,10 +158,9 @@
                     class="form-input"
                     placeholder="example@email.com"
                     required
-                    autofocus
-                >
+                    autofocus>
                 @error('email')
-                    <span class="error-message">{{ $message }}</span>
+                <span class="error-message">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -165,10 +172,9 @@
                     name="password"
                     class="form-input"
                     placeholder="••••••••••••••"
-                    required
-                >
+                    required>
                 @error('password')
-                    <span class="error-message">{{ $message }}</span>
+                <span class="error-message">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -179,9 +185,9 @@
             </div>
 
             @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" class="forgot-password">
-                    ¿Olvidaste tu contraseña?
-                </a>
+            <a href="{{ route('password.request') }}" class="forgot-password">
+                ¿Olvidaste tu contraseña?
+            </a>
             @endif
         </form>
     </div>

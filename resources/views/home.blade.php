@@ -44,11 +44,16 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('../assets/loginDSS.png');
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.7);
         z-index: -1;
+        overflow: hidden;
+    }
+
+    .hero-background img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: brightness(0.7);
     }
 
     .hero-content {
@@ -64,6 +69,7 @@
     }
 
     .hero-logo img {
+        border-radius: 20px;
         max-width: 100%;
         width: 400px;
     }
@@ -182,48 +188,51 @@
 @endsection
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-background"></div>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-background">
+        <img src="{{ asset('storage/images/loginDSS.png') }}" alt="Entrada al restaurante Bun & Grill">
+    </div>
 
-        <div class="hero-content">
-            <div class="hero-logo">
-                <img src="{{ asset('images/logo-large.png') }}" alt="Bun & Grill">
-            </div>
-
-            <a href="/reservas" class="reserva-btn">
-                RESERVA TU SITIO
-            </a>
+    <div class="hero-content">
+        <div class="hero-logo">
+            <img src="{{ asset('storage/images/Logo.jpg') }}" alt="Bun & Grill">
         </div>
-    </section>
 
-    <!-- Hamburguesa del Mes Section -->
-    <section class="hamburguesa-section">
-        <div class="container">
-            <div class="hamburguesa-content">
-                <div class="hamburguesa-info">
-                    <h2 class="section-title">HAMBURGUESA DEL MES: "NOMBRE"</h2>
-                    <p class="section-description">Descripcion de la Hamburguesa del Mes</p>
-                    <a href="/hamburguesa-del-mes" class="descubre-btn">
-                        DESCÚBRELA
-                    </a>
-                </div>
-                <div class="hamburguesa-image">
-                    <img src="{{ asset('images/hamburguesa-mes.jpg') }}" alt="Hamburguesa del Mes">
-                </div>
-            </div>
-        </div>
-    </section>
+        <a href="/reservas" class="reserva-btn">
+            RESERVA TU SITIO
+        </a>
+    </div>
+</section>
 
-    <!-- Carta Section -->
-    <section class="carta-section">
-        <div class="container">
-            <h2 class="section-title centered">CARTA</h2>
-            <div class="carta-button-container">
-                <a href="/carta" class="carta-btn">
-                    VISITA NUESTRA CARTA
+<!-- Hamburguesa del Mes Section -->
+<section class="hamburguesa-section">
+    <div class="container">
+        <div class="hamburguesa-content">
+            <div class="hamburguesa-info">
+                <h2 class="section-title">HAMBURGUESA DEL MES:</h2>
+                <h2 class="section-title">SMASH QUESADA</h2>
+                <p class="section-description">Hamburguesa con carne aplastada en la plancha caliente para lograr una costra crujiente, jugosa por dentro, con queso derretido encima, servida en un pan suave con los acompañamientos clásicos.</p>
+                <a href="/hamburguesa-del-mes" class="descubre-btn">
+                    DESCÚBRELA
                 </a>
             </div>
+            <div class="hamburguesa-image">
+                <img src="{{ asset('storage/images/smashDSS.jpg') }}" alt="Hamburguesa del Mes">
+            </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<!-- Carta Section -->
+<section class="carta-section">
+    <div class="container">
+        <h2 class="section-title centered">CARTA</h2>
+        <div class="carta-button-container">
+            <a href="/carta" class="carta-btn">
+                VISITA NUESTRA CARTA
+            </a>
+        </div>
+    </div>
+</section>
 @endsection

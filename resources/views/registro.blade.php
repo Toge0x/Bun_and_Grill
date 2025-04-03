@@ -4,166 +4,173 @@
 
 @section('styles')
 <style>
-/* Estilos para la página de registro */
-.register-container {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
+    /* Estilos para la página de registro */
+    .register-container {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
 
-.register-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../images/hero-background.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.8);
-    z-index: -1;
-}
+    .register-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+    }
 
-.register-form-container {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 600px;
-    padding: 40px 30px;
-    text-align: center;
-}
-
-.register-logo {
-    margin-bottom: 30px;
-}
-
-.register-logo img {
-    width: 150px;
-    height: auto;
-}
-
-.register-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #2d3748;
-    margin-bottom: 25px;
-}
-
-.form-row {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-    flex: 1;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #333;
-}
-
-.form-input {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-.form-input:focus {
-    outline: none;
-    border-color: #f0b000;
-}
-
-.form-select {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-    background-color: white;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 12px;
-}
-
-.form-select:focus {
-    outline: none;
-    border-color: #f0b000;
-}
-
-.register-button {
-    width: 100%;
-    background-color: #2d3748;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px;
-}
-
-.register-button:hover {
-    background-color: #1a202c;
-}
-
-.login-link {
-    margin-top: 20px;
-    display: block;
-    color: #666;
-    font-size: 14px;
-}
-
-.login-link a {
-    color: #f0b000;
-    text-decoration: underline;
-}
-
-.login-link a:hover {
-    color: #e0a500;
-}
-
-.error-message {
-    color: #e53e3e;
-    font-size: 14px;
-    margin-top: 5px;
-    display: block;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .form-row {
-        flex-direction: column;
-        gap: 0;
+    .register-background img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: brightness(0.8);
     }
 
     .register-form-container {
-        padding: 30px 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 600px;
+        padding: 40px 30px;
+        text-align: center;
     }
-}
+
+    .register-logo {
+        margin-bottom: 30px;
+    }
+
+    .register-logo img {
+        width: 150px;
+        height: auto;
+    }
+
+    .register-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 25px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+        flex: 1;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #f0b000;
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+        background-color: white;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 12px;
+    }
+
+    .form-select:focus {
+        outline: none;
+        border-color: #f0b000;
+    }
+
+    .register-button {
+        width: 100%;
+        background-color: #2d3748;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+    }
+
+    .register-button:hover {
+        background-color: #1a202c;
+    }
+
+    .login-link {
+        margin-top: 20px;
+        display: block;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .login-link a {
+        color: #f0b000;
+        text-decoration: underline;
+    }
+
+    .login-link a:hover {
+        color: #e0a500;
+    }
+
+    .error-message {
+        color: #e53e3e;
+        font-size: 14px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .register-form-container {
+            padding: 30px 20px;
+        }
+    }
 </style>
 @endsection
 
 @section('content')
 <div class="register-container">
-    <div class="register-background"></div>
+    <div class="register-background">
+        <img src="{{ asset('storage/images/loginDSS.png') }}" alt="Entrada al restaurante Bun & Grill">
+    </div>
 
     <div class="register-form-container">
         <div class="register-logo">
@@ -175,13 +182,13 @@
         {{-- Mostrar errores de validación --}}
 
         @if ($errors->any())
-            <div class="alert alert-danger" style="margin-bottom: 20px; text-align: left;">
-                <ul style="padding-left: 20px; color: #e53e3e;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-danger" style="margin-bottom: 20px; text-align: left;">
+            <ul style="padding-left: 20px; color: #e53e3e;">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         <!-- Cambiar más adelante el action del formulario -->
@@ -198,10 +205,9 @@
                         class="form-input"
                         value="{{ old('nombre') }}"
                         required
-                        autofocus
-                    >
+                        autofocus>
                     @error('nombre')
-                        <span class="error-message">{{ $message }}</span>
+                    <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -213,10 +219,9 @@
                         name="apellidos"
                         class="form-input"
                         value="{{ old('apellidos') }}"
-                        required
-                    >
+                        required>
                     @error('apellidos')
-                        <span class="error-message">{{ $message }}</span>
+                    <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
@@ -230,10 +235,9 @@
                     class="form-input"
                     value="{{ old('email') }}"
                     placeholder="example@email.com"
-                    required
-                >
+                    required>
                 @error('email')
-                    <span class="error-message">{{ $message }}</span>
+                <span class="error-message">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -246,10 +250,9 @@
                         name="password"
                         class="form-input"
                         placeholder="••••••••••••••"
-                        required
-                    >
+                        required>
                     @error('password')
-                        <span class="error-message">{{ $message }}</span>
+                    <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -261,8 +264,7 @@
                         name="password_confirmation"
                         class="form-input"
                         placeholder="••••••••••••••"
-                        required
-                    >
+                        required>
                 </div>
             </div>
 
@@ -275,10 +277,9 @@
                         name="telefono"
                         class="form-input"
                         value="{{ old('telefono') }}"
-                        placeholder="123-456-789"
-                    >
+                        placeholder="123-456-789">
                     @error('telefono')
-                        <span class="error-message">{{ $message }}</span>
+                    <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -292,7 +293,7 @@
                         <option value="prefiero_no_decir" {{ old('sexo') == 'prefiero_no_decir' ? 'selected' : '' }}>Prefiero no decir</option>
                     </select>
                     @error('sexo')
-                        <span class="error-message">{{ $message }}</span>
+                    <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
@@ -305,10 +306,9 @@
                     name="direccion"
                     class="form-input"
                     value="{{ old('direccion') }}"
-                    placeholder="Calle, número, código postal, ciudad"
-                >
+                    placeholder="Calle, número, código postal, ciudad">
                 @error('direccion')
-                    <span class="error-message">{{ $message }}</span>
+                <span class="error-message">{{ $message }}</span>
                 @enderror
             </div>
 
