@@ -199,7 +199,7 @@
             <img src="{{ asset('storage/images/Logo.jpg') }}" alt="Bun & Grill">
         </div>
 
-        <a href="/reservas" class="reserva-btn">
+        <a href="{{ route('form-reservas') }}" class="reserva-btn">
             RESERVA TU SITIO
         </a>
     </div>

@@ -123,8 +123,8 @@
     <div class="nav-links">
         <a href="/hamburguesa-del-mes" class="nav-link">Hamburgusa del Mes</a>
         <a href="/carta" class="nav-link">Carta</a>
-        <a href="/reservas" class="nav-link">Reservas</a>
-        <a href="/usuario-pedido" class="nav-link">Haz tu pedido</a>
+        <a href="{{ route('form-reservas') }}" class="nav-link">Reservas</a>
+        <a href="{{ route('form-pedidos') }}" class="nav-link">Haz tu pedido</a>
         <a href="/login" class="login-btn">LOGIN</a>
     </div>
 

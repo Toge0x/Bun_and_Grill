@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reserva;
-use App\Models\Cliente;
-use App\Models\Mesa;
 use Illuminate\Http\Request;
+use App\Models\Reserva;
+use App\Models\Mesa;
+use App\Models\Cliente;
+use Illuminate\Support\Facades\DB;
 
 class ReservaController extends Controller
 {
@@ -80,77 +81,179 @@ class ReservaController extends Controller
     }
 
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        $clientes = Cliente::orderBy('nombre', 'asc')->get();
-        $mesas    = Mesa::orderBy('numero', 'asc')->get();
-        return view('reservas.create', compact('clientes', 'mesas'));
+        return view('form-reservas');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'fecha'        => 'required|date',
-            'hora'         => 'required',
-            'num_personas' => 'required|integer|min:1',
-            'estado'       => 'required|in:pendiente,confirmada,cancelada',
-            'cliente_id'   => 'required|exists:clientes,id',
-            'mesa_id'      => 'required|exists:mesas,id'
+            'fechaReserva' => 'required|date',
+            'horaReserva' => 'required|date_format:H:i',
+            'personas' => 'required|integer|min:1|max:20',
+            'zona' => 'required|string|in:Interior,Exterior',
+            'nombre' => 'required|string|max:255',
+            'telefono' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'comentarios' => 'nullable|string'
         ]);
 
-        Reserva::create($request->all());
+        // Iniciar transacción
+        DB::beginTransaction();
 
-        return redirect()->route('reservas.index')
-            ->with('success', 'Reserva creada correctamente.');
+        try {
+            // Verificar si existe un usuario con ese email
+            $usuario = \App\Models\Usuario::where('email', $request->email)->first();
+
+            // Si no existe el usuario, crearlo primero
+            if (!$usuario) {
+                $usuario = new \App\Models\Usuario();
+                $usuario->email = $request->email;
+                $usuario->nombre = $request->nombre;
+                $usuario->password = bcrypt('password_temporal'); // Asignar una contraseña temporal
+                $usuario->save();
+            }
+
+            // Ahora podemos crear o actualizar el cliente
+            $cliente = Cliente::firstOrCreate(
+                ['email' => $request->email],
+                [
+                    'nombre' => $request->nombre,
+                    'telefono' => $request->telefono
+                ]
+            );
+
+            // Buscar mesas disponibles
+            $mesasDisponibles = $this->buscarMesasDisponibles(
+                $request->fechaReserva,
+                $request->horaReserva,
+                $request->zona,
+                $request->personas
+            );
+
+            if ($mesasDisponibles->isEmpty()) {
+                return redirect()->back()->withInput()->withErrors(['No hay mesas disponibles para la fecha, hora y zona seleccionadas. Por favor, seleccione otra opción.']);
+            }
+
+            // Seleccionar la mesa más adecuada (la de menor capacidad que cumpla con los requisitos)
+            $mesa = $mesasDisponibles->sortBy('capacidad')->first();
+
+            // Crear la reserva - Asegurarse de que el estado esté entre comillas
+            $reserva = new Reserva();
+            $reserva->cliente_email = $cliente->email;
+            $reserva->mesa_id = $mesa->mesa_id;
+            $reserva->fechaReserva = $request->fechaReserva;
+            $reserva->horaReserva = $request->horaReserva;
+            $reserva->duracion = 2; // 2 horas por defecto
+            $reserva->estado = 'Reservada'; // Cambiado a minúsculas para evitar problemas con ENUM
+            $reserva->save();
+
+            // Confirmar transacción
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Reserva realizada correctamente. Te enviaremos un email de confirmación.');
+        } catch (\Exception $e) {
+            // Revertir transacción en caso de error
+            DB::rollBack();
+
+            return redirect()->back()->withInput()->withErrors(['Error al procesar la reserva: ' . $e->getMessage()]);
+        }
     }
 
-    public function show($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $reservas = Reserva::with(['cliente', 'mesa'])
-            ->where('id', $id)
-            ->get();
-        return view('reservas', compact('reservas'));
+        $reserva = Reserva::with(['cliente', 'mesa'])->findOrFail($id);
+        return view('reserva-detalle', compact('reserva'));
     }
 
-    public function showAll()
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        $reservas = Reserva::with(['cliente', 'mesa'])->get();
-        return view('listado-reservas', compact('reservas'));
+        $reserva = Reserva::with(['cliente', 'mesa'])->findOrFail($id);
+        return view('reserva-edit', compact('reserva'));
     }
 
-    public function edit($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
-        $reserva = Reserva::findOrFail($id);
-        $clientes = Cliente::orderBy('nombre', 'asc')->get();
-        $mesas    = Mesa::orderBy('numero', 'asc')->get();
-        return view('reservas.edit', compact('reserva', 'clientes', 'mesas'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $reserva = Reserva::findOrFail($id);
-
         $request->validate([
-            'fecha'        => 'required|date',
-            'hora'         => 'required',
-            'num_personas' => 'required|integer|min:1',
-            'estado'       => 'required|in:pendiente,confirmada,cancelada',
-            'cliente_id'   => 'required|exists:clientes,id',
-            'mesa_id'      => 'required|exists:mesas,id'
+            'estado' => 'required|string|in:pendiente,confirmada,cancelada,completada'
         ]);
 
-        $reserva->update($request->all());
+        $reserva = Reserva::findOrFail($id);
+        $reserva->estado = $request->estado;
+        $reserva->save();
 
-        return redirect()->route('reservas.index')
-            ->with('success', 'Reserva actualizada correctamente.');
+        return redirect()->route('reservas.index')->with('success', 'Estado de la reserva actualizado correctamente');
     }
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $reserva = Reserva::findOrFail($id);
         $reserva->delete();
 
-        return redirect()->route('reservas.index')
-            ->with('success', 'Reserva eliminada correctamente.');
+        return redirect()->route('reservas.index')->with('success', 'Reserva eliminada correctamente');
+    }
+
+    /**
+     * Buscar mesas disponibles para la fecha, hora y zona especificadas.
+     */
+    private function buscarMesasDisponibles($fecha, $hora, $zona, $personas)
+    {
+        // Obtener todas las mesas de la zona especificada con capacidad suficiente
+        $mesas = Mesa::where('estado', 'Disponible')
+            ->where('capacidad', '>=', $personas)
+            ->get();
+
+        if ($mesas->isEmpty()) {
+            return collect();
+        }
+
+        // Calcular el rango horario de la reserva (2 horas por defecto)
+        $horaInicio = date('H:i', strtotime($hora));
+        $horaFin = date('H:i', strtotime($hora . ' +2 hours'));
+
+        // Obtener las reservas existentes para la fecha especificada
+        $reservasExistentes = Reserva::where('fechaReserva', $fecha)
+            ->where('estado', '!=', 'cancelada')
+            ->get();
+
+        // Filtrar las mesas que ya están reservadas en ese horario
+        $mesasDisponibles = $mesas->filter(function ($mesa) use ($reservasExistentes, $horaInicio, $horaFin) {
+            foreach ($reservasExistentes as $reserva) {
+                $reservaInicio = date('H:i', strtotime($reserva->horaReserva));
+                $reservaFin = date('H:i', strtotime($reserva->horaReserva . ' +' . $reserva->duracion . ' hours'));
+
+                // Verificar si hay solapamiento de horarios
+                if (
+                    $mesa->mesa_id == $reserva->mesa_id &&
+                    (($horaInicio >= $reservaInicio && $horaInicio < $reservaFin) ||
+                        ($horaFin > $reservaInicio && $horaFin <= $reservaFin) ||
+                        ($horaInicio <= $reservaInicio && $horaFin >= $reservaFin))
+                ) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        return $mesasDisponibles;
     }
 }

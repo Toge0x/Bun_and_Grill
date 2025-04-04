@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pedido;
 use App\Models\Cliente;
+use App\Models\Producto;
+use App\Models\LineaPedido;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PedidoController extends Controller
 {
@@ -64,65 +67,158 @@ class PedidoController extends Controller
         return view('pedidos', compact('pedidos'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('pedidos.create');
+        // Obtener todos los productos
+        $productos = Producto::all();
+
+        // Agrupar productos por categoría (en este caso usamos un array simple)
+        $categorias = ['Hamburguesas', 'Entrantes', 'Bebidas', 'Postres'];
+
+        // Asignar productos a categorías (simulado)
+        $productosPorCategoria = [];
+        foreach ($categorias as $categoria) {
+            $productosPorCategoria[$categoria] = $productos->filter(function ($producto) use ($categoria) {
+                // Aquí deberías tener una lógica real para filtrar por categoría
+                // Por ahora asignamos aleatoriamente
+                return true;
+            });
+        }
+
+        return view('form-pedidos', [
+            'categorias' => $categorias,
+            'productos' => $productosPorCategoria
+        ]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        // Validación de datos
+        // Validar la solicitud
         $request->validate([
-            'cliente_email' => 'required|exists:clientes,email', // Cliente debe existir
-            'fecha'         => 'required|date',
-            'estado'        => 'required|string',
-            'total'         => 'required|numeric|min:0'
-        ]);
-        Pedido::create($request->all());
-        return redirect()->route('pedidos')
-            ->with('success', 'Pedido creado correctamente.');
-    }
-
-    public function show($id)
-    {
-        $pedido = Pedido::with('cliente')->findOrFail($id);
-        return view('pedidos', compact('pedido'));
-    }
-
-    public function showAll()
-    {
-        $pedidos = Pedido::with('cliente')->get();
-        return view('pedidos', compact('pedidos'));
-    }
-
-    public function edit($id)
-    {
-        $pedido = Pedido::findOrFail($id);
-        return view('pedidos.edit', compact('pedido'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $pedido = Pedido::findOrFail($id);
-
-        $request->validate([
-            'cliente_email' => 'required|exists:clientes,email',
-            'fecha'         => 'required|date',
-            'estado'        => 'required|string',
-            'total'         => 'required|numeric|min:0'
+            'pedido.cliente_email' => 'required|email',
+            'pedido.fecha' => 'required|date',
+            'pedido.estado' => 'required|string',
+            'pedido.total' => 'required|numeric',
+            'cliente.email' => 'required|email',
+            'cliente.nombre' => 'required|string',
+            'cliente.telefono' => 'required|string',
+            'lineas' => 'required|array',
+            'lineas.*.producto_id' => 'required|exists:productos,idProducto',
+            'lineas.*.cantidad' => 'required|integer|min:1',
+            'lineas.*.subtotal' => 'required|numeric'
         ]);
 
-        $pedido->update($request->all());
+        // Iniciar transacción
+        DB::beginTransaction();
 
-        return redirect()->route('pedidos')
-            ->with('success', 'Pedido actualizado correctamente.');
+        try {
+            // Verificar si existe un usuario con ese email
+            $usuario = \App\Models\Usuario::where('email', $request->input('cliente.email'))->first();
+
+            // Si no existe el usuario, crearlo primero
+            if (!$usuario) {
+                $usuario = new \App\Models\Usuario();
+                $usuario->email = $request->input('cliente.email');
+                $usuario->nombre = $request->input('cliente.nombre');
+                $usuario->password = bcrypt('password_temporal'); // Asignar una contraseña temporal
+                $usuario->save();
+            }
+
+            // Ahora podemos crear o actualizar el cliente
+            $cliente = Cliente::firstOrCreate(
+                ['email' => $request->input('cliente.email')],
+                [
+                    'nombre' => $request->input('cliente.nombre'),
+                    'telefono' => $request->input('cliente.telefono'),
+                    'direccion' => $request->input('cliente.direccion')
+                ]
+            );
+
+            // Crear el pedido
+            $pedido = new Pedido();
+            $pedido->cliente_email = $request->input('pedido.cliente_email');
+            $pedido->fecha = $request->input('pedido.fecha');
+            $pedido->estado = $request->input('pedido.estado');
+            $pedido->total = $request->input('pedido.total');
+            $pedido->save();
+
+            // Crear las líneas de pedido
+            foreach ($request->input('lineas') as $linea) {
+                $lineaPedido = new LineaPedido();
+                $lineaPedido->pedido_id = $pedido->id;
+                $lineaPedido->producto_id = $linea['producto_id'];
+                $lineaPedido->cantidad = $linea['cantidad'];
+                $lineaPedido->subtotal = $linea['subtotal'];
+                $lineaPedido->save();
+            }
+
+            // Confirmar transacción
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Pedido creado correctamente',
+                'pedido_id' => $pedido->id
+            ]);
+        } catch (\Exception $e) {
+            // Revertir transacción en caso de error
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al crear el pedido: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function destroy($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $pedido = Pedido::with(['cliente', 'lineas.producto'])->findOrFail($id);
+        return view('pedido-detalle', compact('pedido'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $pedido = Pedido::with(['cliente', 'lineas.producto'])->findOrFail($id);
+        return view('pedido-edit', compact('pedido'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'estado' => 'required|string|in:pendiente,en_preparacion,en_reparto,entregado,cancelado'
+        ]);
+
+        $pedido = Pedido::findOrFail($id);
+        $pedido->estado = $request->estado;
+        $pedido->save();
+
+        return redirect()->route('pedidos.index')->with('success', 'Estado del pedido actualizado correctamente');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $pedido = Pedido::findOrFail($id);
         $pedido->delete();
-        return redirect()->route('pedidos')
-            ->with('success', 'Pedido eliminado correctamente.');
+
+        return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado correctamente');
     }
 }

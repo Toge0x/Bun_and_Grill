@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <title>@yield('title')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         /* Estilos globales básicos */
         * {
@@ -22,6 +24,7 @@
     </style>
     @yield('styles')
 </head>
+
 <body>
     <header>
         @include('components.navbar')
@@ -34,5 +37,15 @@
     <footer>
         @include('components.footer')
     </footer>
+
+    <!-- Scripts base -->
+    <script>
+        // Scripts globales aquí
+    </script>
+
+    <!-- Scripts específicos de cada página -->
+    @yield('scripts')
+
 </body>
+
 </html>

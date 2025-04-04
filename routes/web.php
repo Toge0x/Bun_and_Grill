@@ -16,20 +16,23 @@ Route::get('/', function () {
 
 Route::get('/hamburguesa-del-mes', function () {
     return view('hamburguesa-del-mes');
-});
+})->name('hamburguesa-del-mes');
 
 Route::get('/carta', function () {
     return view('carta');
 })->name('carta');
 
-Route::get('/reservas', function () {
-    return view('reservas');
-});
+// Reservas routes
+Route::get('/form-reservas', [ReservaController::class, 'create'])->name('form-reservas');
+Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');
+Route::get('/admin-reservas', [ReservaController::class, 'index'])->name('reservas.index');
 
-Route::get('/usuario-pedido', function () {
-    return view('usuario-pedido');
-});
+// Pedidos routes
+Route::get('/form-pedidos', [PedidoController::class, 'create'])->name('form-pedidos');
+Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
+Route::get('/admin-pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
 
+// Authentication routes
 Route::get('/login', function () {
     return view('login');
 })->name('login');
@@ -42,30 +45,20 @@ Route::get('/registro', function () {
 
 Route::post('/registro', [UsuarioController::class, 'store']);
 
-Route::get('/admin-reservas', [ReservaController::class, 'index'])->name('reservas.index');
-
-Route::get('/admin-pedidos', function () {
-    return view('pedidos');
-});
-
-Route::get('/admin-pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
-
+// Admin routes
 Route::get('/admin-clientes', [UsuarioController::class, 'index'])->name('usuarios.index');
 
 Route::get('/admin-hamburguesas', [ProductoController::class, 'showAll'])->name('hamburguesas');
-
 Route::delete('/admin-hamburguesas-delete/{id}', [ProductoController::class, 'destroy'])->name('hamburguesas.destroy');
-
 Route::post('/admin-hamburguesas', [ProductoController::class, 'store'])->name('hamburguesas.store');
-
 Route::post('/admin-hamburguesas-update/{id}', [ProductoController::class, 'update'])->name('hamburguesas.update');
 
+// Resource routes
 Route::resource('clientes', ClienteController::class);
 Route::resource('usuarios', UsuarioController::class);
 Route::resource('mesas', MesaController::class);
 Route::resource('reservas', ReservaController::class);
 Route::resource('productos', ProductoController::class);
-
 Route::resource('pedidos', PedidoController::class);
 Route::resource('alergenos', AlergenoController::class);
 Route::resource('lineapedidos', LineaPedidoController::class);
