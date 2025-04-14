@@ -121,7 +121,9 @@
     </div>
 
     <div class="nav-links">
-        <a href="/hamburguesa-del-mes" class="nav-link">Hamburgusa del Mes</a>
+        <a href="{{ route('about-us') }}" class="nav-link">Conócenos</a>
+        <a href="{{ route('form-contacto') }}" class="nav-link">Contáctanos</a>
+        <a href="/hamburguesa-del-mes" class="nav-link">Hamburguesa del Mes</a>
         <a href="/carta" class="nav-link">Carta</a>
         <a href="{{ route('form-reservas') }}" class="nav-link">Reservas</a>
         <a href="{{ route('form-pedidos') }}" class="nav-link">Haz tu pedido</a>

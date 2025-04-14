@@ -14,6 +14,16 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/about-us', function () {
+    return view('about-us');
+})->name('about-us');
+
+// Contact routes
+Route::get('/contact', function () {
+    return view('form-contacto');
+})->name('form-contacto');
+Route::post('/contacto/enviar', [ContactoController::class, 'enviar'])->name('contacto.enviar');
+
 Route::get('/hamburguesa-del-mes', function () {
     return view('hamburguesa-del-mes');
 })->name('hamburguesa-del-mes');
