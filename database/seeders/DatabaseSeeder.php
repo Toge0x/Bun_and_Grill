@@ -20,6 +20,13 @@ class DatabaseSeeder extends Seeder
             ReservaSeeder::class,
             ProductoSeeder::class,
             PedidoSeeder::class,
+            AdministradorSeeder::class,
+            UbicacionSeeder::class,
+            RestauranteSeeder::class,
+            CartaSeeder::class,
+            CategoriaSeeder::class,
+            ValoracionSeeder::class,
+            InfoPagoSeeder::class,
         ]);
     }
 

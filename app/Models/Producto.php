@@ -31,6 +31,12 @@ class Producto extends Model
         return $this->hasMany(Valoracion::class, 'producto_id', 'idProducto');
     }
 
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'idCategoria');
+    }
+
+
     public function lineasPedido()
     {
         return $this->hasMany(LineaPedido::class, 'producto_id', 'idProducto');
