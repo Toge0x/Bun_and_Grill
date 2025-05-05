@@ -280,7 +280,7 @@
 
         <div class="about-grid">
             <div class="about-image">
-                <img src="/img/about-1.jpg" alt="Bun & Grill Interior">
+                <img src="{{ asset('storage/images/loginDSS.png') }}" alt="Bun & Grill Interior">
             </div>
             <div class="about-content">
                 <h3>Nuestra Historia</h3>
@@ -296,7 +296,7 @@
                 <p>Nos esforzamos por ofrecer opciones para todos, incluyendo alternativas vegetarianas y veganas que no renuncian al sabor. Nuestro compromiso es sorprender a cada cliente con sabores únicos y una experiencia memorable.</p>
             </div>
             <div class="about-image">
-                <img src="/img/about-2.jpg" alt="Nuestras hamburguesas">
+                <img src="{{ asset('storage/images/cartaDSS.jpg') }}" alt="Nuestras hamburguesas">
             </div>
         </div>
     </div>
@@ -344,36 +344,24 @@
 
         <div class="team-grid">
             <div class="team-member">
-                <div class="team-photo">
-                    <img src="/img/chef-1.jpg" alt="Carlos Martínez">
-                </div>
                 <h3 class="team-name">Carlos Martínez</h3>
                 <p class="team-position">Chef Principal</p>
                 <p class="team-bio">Con más de 15 años de experiencia, Carlos es el creador de nuestras recetas más emblemáticas. Su pasión por la gastronomía y su creatividad son el alma de Bun & Grill.</p>
             </div>
 
             <div class="team-member">
-                <div class="team-photo">
-                    <img src="/img/chef-2.jpg" alt="Laura Sánchez">
-                </div>
                 <h3 class="team-name">Laura Sánchez</h3>
                 <p class="team-position">Jefa de Cocina</p>
                 <p class="team-bio">Especialista en cocina de autor, Laura aporta un toque de innovación a nuestras hamburguesas. Su dedicación a la calidad es inquebrantable.</p>
             </div>
 
             <div class="team-member">
-                <div class="team-photo">
-                    <img src="/img/manager.jpg" alt="Miguel Rodríguez">
-                </div>
                 <h3 class="team-name">Miguel Rodríguez</h3>
                 <p class="team-position">Gerente</p>
                 <p class="team-bio">Miguel se asegura de que cada cliente viva una experiencia excepcional. Su atención al detalle y calidez son la clave de nuestro servicio.</p>
             </div>
 
             <div class="team-member">
-                <div class="team-photo">
-                    <img src="/img/baker.jpg" alt="Ana López">
-                </div>
                 <h3 class="team-name">Ana López</h3>
                 <p class="team-position">Panadera</p>
                 <p class="team-bio">Ana elabora diariamente nuestro pan artesanal. Su maestría y dedicación son fundamentales para el sabor único de nuestras hamburguesas.</p>

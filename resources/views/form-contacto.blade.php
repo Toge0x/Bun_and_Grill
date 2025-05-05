@@ -388,15 +388,6 @@
                     <div class="info-icon">
                         <i class="fas fa-share-alt"></i>
                     </div>
-                    <div class="info-content">
-                        <h3>Síguenos</h3>
-                        <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -497,40 +488,38 @@
         <p class="section-subtitle">Respuestas a las dudas más comunes</p>
 
         <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">¿Hacen entregas a domicilio?</div>
-                <div class="faq-answer">
-                    <p>Sí, realizamos entregas a domicilio en un radio de 5 km desde nuestro local. También puedes hacer tu pedido para recoger en el restaurante. Consulta nuestra sección de "Haz tu pedido" para más información.</p>
-                </div>
-            </div>
+            <details open class="faq-item">
+                <summary class="faq-question">¿Hacen entregas a domicilio?</summary>
+                <p>Sí, realizamos entregas a domicilio en un radio de 5 km desde nuestro local. También puedes hacer tu pedido para recoger en el restaurante. Consulta nuestra sección de "Haz tu pedido" para más información.</p>
+            </details>
 
-            <div class="faq-item">
-                <div class="faq-question">¿Es necesario reservar mesa?</div>
-                <div class="faq-answer">
-                    <p>Recomendamos reservar, especialmente los fines de semana y festivos, ya que solemos tener mucha afluencia. Puedes hacer tu reserva online a través de nuestra web o llamando por teléfono.</p>
-                </div>
-            </div>
+            <details class="faq-item">
+                <summary class="faq-question">¿Es necesario reservar mesa?</summary>
 
-            <div class="faq-item">
-                <div class="faq-question">¿Tienen opciones vegetarianas o veganas?</div>
-                <div class="faq-answer">
-                    <p>¡Por supuesto! Contamos con varias opciones vegetarianas y veganas en nuestra carta. Nuestras hamburguesas vegetales están elaboradas con ingredientes frescos y de alta calidad para garantizar el mejor sabor.</p>
-                </div>
-            </div>
+                <p>Recomendamos reservar, especialmente los fines de semana y festivos, ya que solemos tener mucha afluencia. Puedes hacer tu reserva online a través de nuestra web o llamando por teléfono.</p>
 
-            <div class="faq-item">
-                <div class="faq-question">¿Se pueden celebrar eventos o cumpleaños?</div>
-                <div class="faq-answer">
-                    <p>Sí, disponemos de un espacio reservado para eventos y celebraciones. Contáctanos para más información sobre disponibilidad y menús especiales para grupos.</p>
-                </div>
-            </div>
+            </details>
 
-            <div class="faq-item">
-                <div class="faq-question">¿Tienen menú infantil?</div>
-                <div class="faq-answer">
-                    <p>Sí, contamos con un menú especial para los más pequeños que incluye hamburguesa, patatas fritas y bebida. También disponemos de tronas y material para colorear.</p>
-                </div>
-            </div>
+            <details class="faq-item">
+                <summary class="faq-question">¿Tienen opciones vegetarianas o veganas?</summary>
+
+                <p>¡Por supuesto! Contamos con varias opciones vegetarianas y veganas en nuestra carta. Nuestras hamburguesas vegetales están elaboradas con ingredientes frescos y de alta calidad para garantizar el mejor sabor.</p>
+
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">¿Se pueden celebrar eventos o cumpleaños?</summary>
+
+                <p>Sí, disponemos de un espacio reservado para eventos y celebraciones. Contáctanos para más información sobre disponibilidad y menús especiales para grupos.</p>
+
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">¿Tienen menú infantil?</summary>
+
+                <p>Sí, contamos con un menú especial para los más pequeños que incluye hamburguesa, patatas fritas y bebida. También disponemos de tronas y material para colorear.</p>
+
+            </details>
         </div>
     </div>
 </section>
