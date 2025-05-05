@@ -404,21 +404,21 @@
 <!-- Filtros de categoría -->
 <div class="category-filters">
     <button class="category-btn active" data-category="all">Todos</button>
-    <button class="category-btn" data-category="hamburguesas">Hamburguesas</button>
-    <button class="category-btn" data-category="entrantes">Entrantes</button>
-    <button class="category-btn" data-category="bebidas">Bebidas</button>
-    <button class="category-btn" data-category="postres">Postres</button>
+    <button class="category-btn" data-category="1">Hamburguesas</button>
+    <button class="category-btn" data-category="2">Entrantes</button>
+    <button class="category-btn" data-category="3">Bebidas</button>
+    <button class="category-btn" data-category="4">Postres</button>
 </div>
 
 <!-- Contenedor para productos agrupados por categoría -->
 <div id="productsContainer">
     <!-- Sección de hamburguesas -->
-    <div class="category-section" data-category="hamburguesas">
+    <div class="category-section" data-category="1">
         <h2 class="category-header">Hamburguesas</h2>
         <div class="hamburguesas-grid">
             @foreach($productos as $producto)
-            @if($producto->categoria == 'hamburguesas')
-            <div class="hamburguesa-card" data-category="{{ $producto->categoria }}" data-name="{{ strtolower($producto->nombre) }}">
+            @if($producto->idCategoria == '1')
+            <div class="hamburguesa-card" data-category="{{ $producto->idCategoria }}" data-name="{{ strtolower($producto->nombre) }}">
                 <div class="hamburguesa-price">{{ $producto->precio }} €</div>
                 <h3 class="hamburguesa-title">{{ $producto->nombre }}</h3>
                 <div class="hamburguesa-ingredients">
@@ -459,12 +459,12 @@
     </div>
 
     <!-- Sección de entrantes -->
-    <div class="category-section" data-category="entrantes">
+    <div class="category-section" data-category="2">
         <h2 class="category-header">Entrantes</h2>
         <div class="hamburguesas-grid">
             @foreach($productos as $producto)
-            @if($producto->categoria == 'entrantes')
-            <div class="hamburguesa-card" data-category="{{ $producto->categoria }}" data-name="{{ strtolower($producto->nombre) }}">
+            @if($producto->idCategoria == '2')
+            <div class="hamburguesa-card" data-category="{{ $producto->idCategoria }}" data-name="{{ strtolower($producto->nombre) }}">
                 <div class="hamburguesa-price">{{ $producto->precio }} €</div>
                 <h3 class="hamburguesa-title">{{ $producto->nombre }}</h3>
                 <div class="hamburguesa-ingredients">
@@ -505,12 +505,12 @@
     </div>
 
     <!-- Sección de bebidas -->
-    <div class="category-section" data-category="bebidas">
+    <div class="category-section" data-category="3">
         <h2 class="category-header">Bebidas</h2>
         <div class="hamburguesas-grid">
             @foreach($productos as $producto)
-            @if($producto->categoria == 'bebidas')
-            <div class="hamburguesa-card" data-category="{{ $producto->categoria }}" data-name="{{ strtolower($producto->nombre) }}">
+            @if($producto->idCategoria == '3')
+            <div class="hamburguesa-card" data-category="{{ $producto->idCategoria }}" data-name="{{ strtolower($producto->nombre) }}">
                 <div class="hamburguesa-price">{{ $producto->precio }} €</div>
                 <h3 class="hamburguesa-title">{{ $producto->nombre }}</h3>
                 <div class="hamburguesa-ingredients">
@@ -551,12 +551,12 @@
     </div>
 
     <!-- Sección de postres -->
-    <div class="category-section" data-category="postres">
+    <div class="category-section" data-category="4">
         <h2 class="category-header">Postres</h2>
         <div class="hamburguesas-grid">
             @foreach($productos as $producto)
-            @if($producto->categoria == 'postres')
-            <div class="hamburguesa-card" data-category="{{ $producto->categoria }}" data-name="{{ strtolower($producto->nombre) }}">
+            @if($producto->idCategoria == '4')
+            <div class="hamburguesa-card" data-category="{{ $producto->idCategoria }}" data-name="{{ strtolower($producto->nombre) }}">
                 <div class="hamburguesa-price">{{ $producto->precio }} €</div>
                 <h3 class="hamburguesa-title">{{ $producto->nombre }}</h3>
                 <div class="hamburguesa-ingredients">
@@ -626,10 +626,10 @@
                     <label for="add_categoria" class="form-label">Categoría</label>
                     <select id="add_categoria" name="categoria" class="form-select" required>
                         <option value="">Selecciona una categoría</option>
-                        <option value="hamburguesas">Hamburguesas</option>
-                        <option value="entrantes">Entrantes</option>
-                        <option value="bebidas">Bebidas</option>
-                        <option value="postres">Postres</option>
+                        <option value="1">Hamburguesas</option>
+                        <option value="2">Entrantes</option>
+                        <option value="3">Bebidas</option>
+                        <option value="4">Postres</option>
                     </select>
                 </div>
 
@@ -789,475 +789,482 @@
     // Función para abrir el modal de edición
     function editHamburguesa(id, nombre, ingredientes, precio, alergenos, categoria) {
         // Establecer los valores en el formulario
-        document.getElementById('  categoria) {
-            // Establecer los valores en el formulario
-            document.getElementById('edit_hamburguesa_id').value = id; document.getElementById('edit_nombre').value = nombre; document.getElementById('edit_precio').value = precio; document.getElementById('edit_categoria').value = categoria;
 
-            // Actualizar la acción del formulario
-            document.getElementById('editHamburguesaForm').action = "{{ route('hamburguesas.update', '') }}/" + id;
+        // Establecer los valores en el formulario
+        document.getElementById('edit_hamburguesa_id').value = id;
+        document.getElementById('edit_nombre').value = nombre;
+        document.getElementById('edit_precio').value = precio;
+        document.getElementById('edit_categoria').value = categoria;
 
-            // Limpiar y añadir los ingredientes
-            const ingredientsContainer = document.getElementById('editIngredientsContainer'); ingredientsContainer.innerHTML = ''; document.getElementById('editIngredientsFields').innerHTML = '';
+        // Actualizar la acción del formulario
+        document.getElementById('editHamburguesaForm').action = "{{ route('hamburguesas.update', '') }}/" + id;
 
-            editIngredients = [...ingredientes];
+        // Limpiar y añadir los ingredientes
+        const ingredientsContainer = document.getElementById('editIngredientsContainer');
+        ingredientsContainer.innerHTML = '';
+        document.getElementById('editIngredientsFields').innerHTML = '';
 
-            // Añadir cada ingrediente al contenedor
-            editIngredients.forEach((ingrediente, index) => {
-                addEditIngredientToList(ingrediente, index);
-            });
+        editIngredients = [...ingredientes];
 
-            // Actualizar los campos ocultos de ingredientes
-            updateEditIngredientFields();
+        // Añadir cada ingrediente al contenedor
+        editIngredients.forEach((ingrediente, index) => {
+            addEditIngredientToList(ingrediente, index);
+        });
 
-            // Limpiar y añadir los alérgenos
-            const allergensContainer = document.getElementById('editAllergensContainer'); allergensContainer.innerHTML = ''; document.getElementById('editAllergensFields').innerHTML = '';
+        // Actualizar los campos ocultos de ingredientes
+        updateEditIngredientFields();
 
-            editAllergens = Array.isArray(alergenos) ? [...alergenos] : [];
+        // Limpiar y añadir los alérgenos
+        const allergensContainer = document.getElementById('editAllergensContainer');
+        allergensContainer.innerHTML = '';
+        document.getElementById('editAllergensFields').innerHTML = '';
 
-            // Añadir cada alérgeno al contenedor
-            editAllergens.forEach((alergeno, index) => {
-                addEditAllergenToList(alergeno, index);
-            });
+        editAllergens = Array.isArray(alergenos) ? [...alergenos] : [];
 
-            // Actualizar los campos ocultos de alérgenos
-            updateEditAllergenFields();
+        // Añadir cada alérgeno al contenedor
+        editAllergens.forEach((alergeno, index) => {
+            addEditAllergenToList(alergeno, index);
+        });
 
-            // Mostrar el modal
-            document.getElementById('editModal').classList.add('show');
-        }
+        // Actualizar los campos ocultos de alérgenos
+        updateEditAllergenFields();
 
-        // Función para cerrar el modal de edición
-        function closeEditModal() {
-            document.getElementById('editModal').classList.remove('show');
-        }
+        // Mostrar el modal
+        document.getElementById('editModal').classList.add('show');
+    }
 
-        // Función para añadir un ingrediente a la lista visual (modal añadir)
-        function addAddIngredientToList(ingrediente, index) {
-            const ingredientsContainer = document.getElementById('addIngredientsContainer');
+    // Función para cerrar el modal de edición
+    function closeEditModal() {
+        document.getElementById('editModal').classList.remove('show');
+    }
 
-            const ingredientItem = document.createElement('div');
-            ingredientItem.className = 'ingredient-item';
-            ingredientItem.innerHTML = `
+    // Función para añadir un ingrediente a la lista visual (modal añadir)
+    function addAddIngredientToList(ingrediente, index) {
+        const ingredientsContainer = document.getElementById('addIngredientsContainer');
+
+        const ingredientItem = document.createElement('div');
+        ingredientItem.className = 'ingredient-item';
+        ingredientItem.innerHTML = `
             <span class="ingredient-text">${ingrediente}</span>
             <button type="button" class="ingredient-remove" data-index="${index}">
                 <i class="fas fa-times"></i>
             </button>
         `;
 
-            ingredientsContainer.appendChild(ingredientItem);
+        ingredientsContainer.appendChild(ingredientItem);
 
-            // Añadir event listener para eliminar
-            ingredientItem.querySelector('.ingredient-remove').addEventListener('click', function() {
-                const index = parseInt(this.getAttribute('data-index'));
-                removeAddIngredient(index);
-            });
-        }
+        // Añadir event listener para eliminar
+        ingredientItem.querySelector('.ingredient-remove').addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            removeAddIngredient(index);
+        });
+    }
 
-        // Función para añadir un ingrediente a la lista visual (modal editar)
-        function addEditIngredientToList(ingrediente, index) {
-            const ingredientsContainer = document.getElementById('editIngredientsContainer');
+    // Función para añadir un ingrediente a la lista visual (modal editar)
+    function addEditIngredientToList(ingrediente, index) {
+        const ingredientsContainer = document.getElementById('editIngredientsContainer');
 
-            const ingredientItem = document.createElement('div');
-            ingredientItem.className = 'ingredient-item';
-            ingredientItem.innerHTML = `
+        const ingredientItem = document.createElement('div');
+        ingredientItem.className = 'ingredient-item';
+        ingredientItem.innerHTML = `
             <span class="ingredient-text">${ingrediente}</span>
             <button type="button" class="ingredient-remove" data-index="${index}">
                 <i class="fas fa-times"></i>
             </button>
         `;
 
-            ingredientsContainer.appendChild(ingredientItem);
+        ingredientsContainer.appendChild(ingredientItem);
 
-            // Añadir event listener para eliminar
-            ingredientItem.querySelector('.ingredient-remove').addEventListener('click', function() {
-                const index = parseInt(this.getAttribute('data-index'));
-                removeEditIngredient(index);
-            });
-        }
+        // Añadir event listener para eliminar
+        ingredientItem.querySelector('.ingredient-remove').addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            removeEditIngredient(index);
+        });
+    }
 
-        // Función para añadir un alérgeno a la lista visual (modal añadir)
-        function addAddAllergenToList(alergeno, index) {
-            const allergensContainer = document.getElementById('addAllergensContainer');
+    // Función para añadir un alérgeno a la lista visual (modal añadir)
+    function addAddAllergenToList(alergeno, index) {
+        const allergensContainer = document.getElementById('addAllergensContainer');
 
-            const allergenItem = document.createElement('div');
-            allergenItem.className = 'allergen-item';
-            allergenItem.innerHTML = `
+        const allergenItem = document.createElement('div');
+        allergenItem.className = 'allergen-item';
+        allergenItem.innerHTML = `
             <span class="allergen-text">${alergeno}</span>
             <button type="button" class="allergen-remove" data-index="${index}">
                 <i class="fas fa-times"></i>
             </button>
         `;
 
-            allergensContainer.appendChild(allergenItem);
+        allergensContainer.appendChild(allergenItem);
 
-            // Añadir event listener para eliminar
-            allergenItem.querySelector('.allergen-remove').addEventListener('click', function() {
-                const index = parseInt(this.getAttribute('data-index'));
-                removeAddAllergen(index);
-            });
-        }
+        // Añadir event listener para eliminar
+        allergenItem.querySelector('.allergen-remove').addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            removeAddAllergen(index);
+        });
+    }
 
-        // Función para añadir un alérgeno a la lista visual (modal editar)
-        function addEditAllergenToList(alergeno, index) {
-            const allergensContainer = document.getElementById('editAllergensContainer');
+    // Función para añadir un alérgeno a la lista visual (modal editar)
+    function addEditAllergenToList(alergeno, index) {
+        const allergensContainer = document.getElementById('editAllergensContainer');
 
-            const allergenItem = document.createElement('div');
-            allergenItem.className = 'allergen-item';
-            allergenItem.innerHTML = `
+        const allergenItem = document.createElement('div');
+        allergenItem.className = 'allergen-item';
+        allergenItem.innerHTML = `
             <span class="allergen-text">${alergeno}</span>
             <button type="button" class="allergen-remove" data-index="${index}">
                 <i class="fas fa-times"></i>
             </button>
         `;
 
-            allergensContainer.appendChild(allergenItem);
+        allergensContainer.appendChild(allergenItem);
 
-            // Añadir event listener para eliminar
-            allergenItem.querySelector('.allergen-remove').addEventListener('click', function() {
-                const index = parseInt(this.getAttribute('data-index'));
-                removeEditAllergen(index);
-            });
-        }
+        // Añadir event listener para eliminar
+        allergenItem.querySelector('.allergen-remove').addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            removeEditAllergen(index);
+        });
+    }
 
-        // Función para eliminar un ingrediente (modal añadir)
-        function removeAddIngredient(index) {
-            addIngredients.splice(index, 1);
+    // Función para eliminar un ingrediente (modal añadir)
+    function removeAddIngredient(index) {
+        addIngredients.splice(index, 1);
+        refreshAddIngredientsList();
+    }
+
+    // Función para eliminar un ingrediente (modal editar)
+    function removeEditIngredient(index) {
+        editIngredients.splice(index, 1);
+        refreshEditIngredientsList();
+    }
+
+    // Función para eliminar un alérgeno (modal añadir)
+    function removeAddAllergen(index) {
+        addAllergens.splice(index, 1);
+        refreshAddAllergensList();
+    }
+
+    // Función para eliminar un alérgeno (modal editar)
+    function removeEditAllergen(index) {
+        editAllergens.splice(index, 1);
+        refreshEditAllergensList();
+    }
+
+    // Función para refrescar la lista de ingredientes (modal añadir)
+    function refreshAddIngredientsList() {
+        const ingredientsContainer = document.getElementById('addIngredientsContainer');
+        ingredientsContainer.innerHTML = '';
+
+        addIngredients.forEach((ingrediente, index) => {
+            addAddIngredientToList(ingrediente, index);
+        });
+
+        // Actualizar los campos ocultos
+        updateAddIngredientFields();
+    }
+
+    // Función para refrescar la lista de ingredientes (modal editar)
+    function refreshEditIngredientsList() {
+        const ingredientsContainer = document.getElementById('editIngredientsContainer');
+        ingredientsContainer.innerHTML = '';
+
+        editIngredients.forEach((ingrediente, index) => {
+            addEditIngredientToList(ingrediente, index);
+        });
+
+        // Actualizar los campos ocultos
+        updateEditIngredientFields();
+    }
+
+    // Función para refrescar la lista de alérgenos (modal añadir)
+    function refreshAddAllergensList() {
+        const allergensContainer = document.getElementById('addAllergensContainer');
+        allergensContainer.innerHTML = '';
+
+        addAllergens.forEach((alergeno, index) => {
+            addAddAllergenToList(alergeno, index);
+        });
+
+        // Actualizar los campos ocultos
+        updateAddAllergenFields();
+    }
+
+    // Función para refrescar la lista de alérgenos (modal editar)
+    function refreshEditAllergensList() {
+        const allergensContainer = document.getElementById('editAllergensContainer');
+        allergensContainer.innerHTML = '';
+
+        editAllergens.forEach((alergeno, index) => {
+            addEditAllergenToList(alergeno, index);
+        });
+
+        // Actualizar los campos ocultos
+        updateEditAllergenFields();
+    }
+
+    // Función para actualizar los campos ocultos de ingredientes (modal añadir)
+    function updateAddIngredientFields() {
+        const container = document.getElementById('addIngredientsFields');
+        container.innerHTML = '';
+
+        addIngredients.forEach((ingrediente, index) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = `ingredientes[${index}]`;
+            input.value = ingrediente;
+            container.appendChild(input);
+        });
+    }
+
+    // Función para actualizar los campos ocultos de ingredientes (modal editar)
+    function updateEditIngredientFields() {
+        const container = document.getElementById('editIngredientsFields');
+        container.innerHTML = '';
+
+        editIngredients.forEach((ingrediente, index) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = `ingredientes[${index}]`;
+            input.value = ingrediente;
+            container.appendChild(input);
+        });
+    }
+
+    // Función para actualizar los campos ocultos de alérgenos (modal añadir)
+    function updateAddAllergenFields() {
+        const container = document.getElementById('addAllergensFields');
+        container.innerHTML = '';
+
+        addAllergens.forEach((alergeno, index) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = `alergenos[${index}]`;
+            input.value = alergeno;
+            container.appendChild(input);
+        });
+    }
+
+    // Función para actualizar los campos ocultos de alérgenos (modal editar)
+    function updateEditAllergenFields() {
+        const container = document.getElementById('editAllergensFields');
+        container.innerHTML = '';
+
+        editAllergens.forEach((alergeno, index) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = `alergenos[${index}]`;
+            input.value = alergeno;
+            container.appendChild(input);
+        });
+    }
+
+    // Event listener para añadir un nuevo ingrediente (modal añadir)
+    document.getElementById('addAddIngredientBtn').addEventListener('click', function() {
+        const newIngredientInput = document.getElementById('addNewIngredient');
+        const ingrediente = newIngredientInput.value.trim();
+
+        if (ingrediente) {
+            addIngredients.push(ingrediente);
             refreshAddIngredientsList();
+            newIngredientInput.value = '';
+            newIngredientInput.focus();
         }
+    });
 
-        // Función para eliminar un ingrediente (modal editar)
-        function removeEditIngredient(index) {
-            editIngredients.splice(index, 1);
+    // Event listener para añadir un nuevo ingrediente (modal editar)
+    document.getElementById('addEditIngredientBtn').addEventListener('click', function() {
+        const newIngredientInput = document.getElementById('editNewIngredient');
+        const ingrediente = newIngredientInput.value.trim();
+
+        if (ingrediente) {
+            editIngredients.push(ingrediente);
             refreshEditIngredientsList();
+            newIngredientInput.value = '';
+            newIngredientInput.focus();
         }
+    });
 
-        // Función para eliminar un alérgeno (modal añadir)
-        function removeAddAllergen(index) {
-            addAllergens.splice(index, 1);
+    // Event listener para añadir un nuevo alérgeno (modal añadir)
+    document.getElementById('addAddAllergenBtn').addEventListener('click', function() {
+        const newAllergenInput = document.getElementById('addNewAllergen');
+        const alergeno = newAllergenInput.value.trim();
+
+        if (alergeno) {
+            addAllergens.push(alergeno);
             refreshAddAllergensList();
+            newAllergenInput.value = '';
+            newAllergenInput.focus();
         }
+    });
 
-        // Función para eliminar un alérgeno (modal editar)
-        function removeEditAllergen(index) {
-            editAllergens.splice(index, 1);
+    // Event listener para añadir un nuevo alérgeno (modal editar)
+    document.getElementById('addEditAllergenBtn').addEventListener('click', function() {
+        const newAllergenInput = document.getElementById('editNewAllergen');
+        const alergeno = newAllergenInput.value.trim();
+
+        if (alergeno) {
+            editAllergens.push(alergeno);
             refreshEditAllergensList();
+            newAllergenInput.value = '';
+            newAllergenInput.focus();
+        }
+    });
+
+    // También permitir añadir ingrediente con Enter (modal añadir)
+    document.getElementById('addNewIngredient').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('addAddIngredientBtn').click();
+        }
+    });
+
+    // También permitir añadir ingrediente con Enter (modal editar)
+    document.getElementById('editNewIngredient').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('addEditIngredientBtn').click();
+        }
+    });
+
+    // También permitir añadir alérgeno con Enter (modal añadir)
+    document.getElementById('addNewAllergen').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('addAddAllergenBtn').click();
+        }
+    });
+
+    // También permitir añadir alérgeno con Enter (modal editar)
+    document.getElementById('editNewAllergen').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('addEditAllergenBtn').click();
+        }
+    });
+
+    // Función para enviar el formulario de añadir
+    function submitAddForm() {
+        const nombre = document.getElementById('add_nombre').value;
+        const precio = document.getElementById('add_precio').value;
+        const categoria = document.getElementById('add_categoria').value;
+
+        if (!nombre || !precio || !categoria) {
+            alert('Por favor, completa todos los campos obligatorios.');
+            return;
         }
 
-        // Función para refrescar la lista de ingredientes (modal añadir)
-        function refreshAddIngredientsList() {
-            const ingredientsContainer = document.getElementById('addIngredientsContainer');
-            ingredientsContainer.innerHTML = '';
+        if (addIngredients.length === 0) {
+            alert('Debes añadir al menos un ingrediente.');
+            return;
+        }
 
-            addIngredients.forEach((ingrediente, index) => {
-                addAddIngredientToList(ingrediente, index);
+        // Actualizar los campos ocultos antes de enviar
+        updateAddIngredientFields();
+        updateAddAllergenFields();
+
+        // Enviar el formulario
+        document.getElementById('addHamburguesaForm').submit();
+    }
+
+    // Función para enviar el formulario de editar
+    function submitEditForm() {
+        const nombre = document.getElementById('edit_nombre').value;
+        const precio = document.getElementById('edit_precio').value;
+        const categoria = document.getElementById('edit_categoria').value;
+
+        if (!nombre || !precio || !categoria) {
+            alert('Por favor, completa todos los campos obligatorios.');
+            return;
+        }
+
+        if (editIngredients.length === 0) {
+            alert('Debes añadir al menos un ingrediente.');
+            return;
+        }
+
+        // Actualizar los campos ocultos antes de enviar
+        updateEditIngredientFields();
+        updateEditAllergenFields();
+
+        // Enviar el formulario
+        document.getElementById('editHamburguesaForm').submit();
+    }
+
+    // Filtrado por categoría
+    document.querySelectorAll('.category-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            // Actualizar botón activo
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            this.classList.add('active');
 
-            // Actualizar los campos ocultos
-            updateAddIngredientFields();
-        }
+            // Obtener categoría seleccionada
+            currentCategory = this.getAttribute('data-category');
 
-        // Función para refrescar la lista de ingredientes (modal editar)
-        function refreshEditIngredientsList() {
-            const ingredientsContainer = document.getElementById('editIngredientsContainer');
-            ingredientsContainer.innerHTML = '';
-
-            editIngredients.forEach((ingrediente, index) => {
-                addEditIngredientToList(ingrediente, index);
-            });
-
-            // Actualizar los campos ocultos
-            updateEditIngredientFields();
-        }
-
-        // Función para refrescar la lista de alérgenos (modal añadir)
-        function refreshAddAllergensList() {
-            const allergensContainer = document.getElementById('addAllergensContainer');
-            allergensContainer.innerHTML = '';
-
-            addAllergens.forEach((alergeno, index) => {
-                addAddAllergenToList(alergeno, index);
-            });
-
-            // Actualizar los campos ocultos
-            updateAddAllergenFields();
-        }
-
-        // Función para refrescar la lista de alérgenos (modal editar)
-        function refreshEditAllergensList() {
-            const allergensContainer = document.getElementById('editAllergensContainer');
-            allergensContainer.innerHTML = '';
-
-            editAllergens.forEach((alergeno, index) => {
-                addEditAllergenToList(alergeno, index);
-            });
-
-            // Actualizar los campos ocultos
-            updateEditAllergenFields();
-        }
-
-        // Función para actualizar los campos ocultos de ingredientes (modal añadir)
-        function updateAddIngredientFields() {
-            const container = document.getElementById('addIngredientsFields');
-            container.innerHTML = '';
-
-            addIngredients.forEach((ingrediente, index) => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `ingredientes[${index}]`;
-                input.value = ingrediente;
-                container.appendChild(input);
-            });
-        }
-
-        // Función para actualizar los campos ocultos de ingredientes (modal editar)
-        function updateEditIngredientFields() {
-            const container = document.getElementById('editIngredientsFields');
-            container.innerHTML = '';
-
-            editIngredients.forEach((ingrediente, index) => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `ingredientes[${index}]`;
-                input.value = ingrediente;
-                container.appendChild(input);
-            });
-        }
-
-        // Función para actualizar los campos ocultos de alérgenos (modal añadir)
-        function updateAddAllergenFields() {
-            const container = document.getElementById('addAllergensFields');
-            container.innerHTML = '';
-
-            addAllergens.forEach((alergeno, index) => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `alergenos[${index}]`;
-                input.value = alergeno;
-                container.appendChild(input);
-            });
-        }
-
-        // Función para actualizar los campos ocultos de alérgenos (modal editar)
-        function updateEditAllergenFields() {
-            const container = document.getElementById('editAllergensFields');
-            container.innerHTML = '';
-
-            editAllergens.forEach((alergeno, index) => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `alergenos[${index}]`;
-                input.value = alergeno;
-                container.appendChild(input);
-            });
-        }
-
-        // Event listener para añadir un nuevo ingrediente (modal añadir)
-        document.getElementById('addAddIngredientBtn').addEventListener('click', function() {
-            const newIngredientInput = document.getElementById('addNewIngredient');
-            const ingrediente = newIngredientInput.value.trim();
-
-            if (ingrediente) {
-                addIngredients.push(ingrediente);
-                refreshAddIngredientsList();
-                newIngredientInput.value = '';
-                newIngredientInput.focus();
-            }
-        });
-
-        // Event listener para añadir un nuevo ingrediente (modal editar)
-        document.getElementById('addEditIngredientBtn').addEventListener('click', function() {
-            const newIngredientInput = document.getElementById('editNewIngredient');
-            const ingrediente = newIngredientInput.value.trim();
-
-            if (ingrediente) {
-                editIngredients.push(ingrediente);
-                refreshEditIngredientsList();
-                newIngredientInput.value = '';
-                newIngredientInput.focus();
-            }
-        });
-
-        // Event listener para añadir un nuevo alérgeno (modal añadir)
-        document.getElementById('addAddAllergenBtn').addEventListener('click', function() {
-            const newAllergenInput = document.getElementById('addNewAllergen');
-            const alergeno = newAllergenInput.value.trim();
-
-            if (alergeno) {
-                addAllergens.push(alergeno);
-                refreshAddAllergensList();
-                newAllergenInput.value = '';
-                newAllergenInput.focus();
-            }
-        });
-
-        // Event listener para añadir un nuevo alérgeno (modal editar)
-        document.getElementById('addEditAllergenBtn').addEventListener('click', function() {
-            const newAllergenInput = document.getElementById('editNewAllergen');
-            const alergeno = newAllergenInput.value.trim();
-
-            if (alergeno) {
-                editAllergens.push(alergeno);
-                refreshEditAllergensList();
-                newAllergenInput.value = '';
-                newAllergenInput.focus();
-            }
-        });
-
-        // También permitir añadir ingrediente con Enter (modal añadir)
-        document.getElementById('addNewIngredient').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                document.getElementById('addAddIngredientBtn').click();
-            }
-        });
-
-        // También permitir añadir ingrediente con Enter (modal editar)
-        document.getElementById('editNewIngredient').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                document.getElementById('addEditIngredientBtn').click();
-            }
-        });
-
-        // También permitir añadir alérgeno con Enter (modal añadir)
-        document.getElementById('addNewAllergen').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                document.getElementById('addAddAllergenBtn').click();
-            }
-        });
-
-        // También permitir añadir alérgeno con Enter (modal editar)
-        document.getElementById('editNewAllergen').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                document.getElementById('addEditAllergenBtn').click();
-            }
-        });
-
-        // Función para enviar el formulario de añadir
-        function submitAddForm() {
-            const nombre = document.getElementById('add_nombre').value;
-            const precio = document.getElementById('add_precio').value;
-            const categoria = document.getElementById('add_categoria').value;
-
-            if (!nombre || !precio || !categoria) {
-                alert('Por favor, completa todos los campos obligatorios.');
-                return;
-            }
-
-            if (addIngredients.length === 0) {
-                alert('Debes añadir al menos un ingrediente.');
-                return;
-            }
-
-            // Actualizar los campos ocultos antes de enviar
-            updateAddIngredientFields();
-            updateAddAllergenFields();
-
-            // Enviar el formulario
-            document.getElementById('addHamburguesaForm').submit();
-        }
-
-        // Función para enviar el formulario de editar
-        function submitEditForm() {
-            const nombre = document.getElementById('edit_nombre').value;
-            const precio = document.getElementById('edit_precio').value;
-            const categoria = document.getElementById('edit_categoria').value;
-
-            if (!nombre || !precio || !categoria) {
-                alert('Por favor, completa todos los campos obligatorios.');
-                return;
-            }
-
-            if (editIngredients.length === 0) {
-                alert('Debes añadir al menos un ingrediente.');
-                return;
-            }
-
-            // Actualizar los campos ocultos antes de enviar
-            updateEditIngredientFields();
-            updateEditAllergenFields();
-
-            // Enviar el formulario
-            document.getElementById('editHamburguesaForm').submit();
-        }
-
-        // Filtrado por categoría
-        document.querySelectorAll('.category-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                // Actualizar botón activo
-                document.querySelectorAll('.category-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                this.classList.add('active');
-
-                // Obtener categoría seleccionada
-                currentCategory = this.getAttribute('data-category');
-
-                // Aplicar filtros
-                applyFilters();
-            });
-        });
-
-        // Búsqueda de productos
-        document.getElementById('searchButton').addEventListener('click', function() {
-            searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            // Aplicar filtros
             applyFilters();
         });
+    });
 
-        // También permitir buscar con Enter
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                document.getElementById('searchButton').click();
+    // Búsqueda de productos
+    document.getElementById('searchButton').addEventListener('click', function() {
+        searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+        applyFilters();
+    });
+
+    // También permitir buscar con Enter
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('searchButton').click();
+        }
+    });
+
+    // Función para aplicar filtros (categoría y búsqueda)
+    function applyFilters() {
+        let hasVisibleProducts = false;
+
+        // Si la categoría es "all", mostrar todas las secciones
+        if (currentCategory === 'all') {
+            document.querySelectorAll('.category-section').forEach(section => {
+                section.style.display = 'block';
+            });
+        } else {
+            // Mostrar solo la sección de la categoría seleccionada
+            document.querySelectorAll('.category-section').forEach(section => {
+                if (section.getAttribute('data-category') === currentCategory) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+
+        // Filtrar productos por término de búsqueda
+        document.querySelectorAll('.hamburguesa-card').forEach(card => {
+            const cardName = card.getAttribute('data-name');
+            const cardCategory = card.getAttribute('data-category');
+
+            // Verificar si el producto coincide con la búsqueda y la categoría
+            const matchesSearch = searchTerm === '' || cardName.includes(searchTerm);
+            const matchesCategory = currentCategory === 'all' || cardCategory === currentCategory;
+
+            if (matchesSearch && matchesCategory) {
+                card.style.display = 'block';
+                hasVisibleProducts = true;
+            } else {
+                card.style.display = 'none';
             }
         });
 
-        // Función para aplicar filtros (categoría y búsqueda)
-        function applyFilters() {
-            let hasVisibleProducts = false;
-
-            // Si la categoría es "all", mostrar todas las secciones
-            if (currentCategory === 'all') {
-                document.querySelectorAll('.category-section').forEach(section => {
-                    section.style.display = 'block';
-                });
-            } else {
-                // Mostrar solo la sección de la categoría seleccionada
-                document.querySelectorAll('.category-section').forEach(section => {
-                    if (section.getAttribute('data-category') === currentCategory) {
-                        section.style.display = 'block';
-                    } else {
-                        section.style.display = 'none';
-                    }
-                });
-            }
-
-            // Filtrar productos por término de búsqueda
-            document.querySelectorAll('.hamburguesa-card').forEach(card => {
-                const cardName = card.getAttribute('data-name');
-                const cardCategory = card.getAttribute('data-category');
-
-                // Verificar si el producto coincide con la búsqueda y la categoría
-                const matchesSearch = searchTerm === '' || cardName.includes(searchTerm);
-                const matchesCategory = currentCategory === 'all' || cardCategory === currentCategory;
-
-                if (matchesSearch && matchesCategory) {
-                    card.style.display = 'block';
-                    hasVisibleProducts = true;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Mostrar mensaje si no hay resultados
-            const noResultsElement = document.getElementById('noResults');
-            if (!hasVisibleProducts) {
-                noResultsElement.style.display = 'block';
-            } else {
-                noResultsElement.style.display = 'none';
-            }
+        // Mostrar mensaje si no hay resultados
+        const noResultsElement = document.getElementById('noResults');
+        if (!hasVisibleProducts) {
+            noResultsElement.style.display = 'block';
+        } else {
+            noResultsElement.style.display = 'none';
         }
+    }
 </script>
 @endsection

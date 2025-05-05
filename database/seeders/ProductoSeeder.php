@@ -132,6 +132,72 @@ class ProductoSeeder extends Seeder
                 'precio' => 11.90,
                 'imagen' => null,
             ],
+            [
+                'nombre' => 'Fingers de Pollo',
+                'ingredientes' => [
+                    'Tiras de pollo empanizadas',
+                    'Salsa de mostaza y miel',
+                    'Lechuga',
+                    'Tomate',
+                ],
+                'precio' => 6.50,
+                'imagen' => null,
+            ],
+            [
+                'nombre' => 'Aros de Cebolla',
+                'ingredientes' => [
+                    'Cebolla rebozada y frita',
+                    'Salsa de ajo',
+                ],
+                'precio' => 4.50,
+                'imagen' => null,
+            ],
+            [
+                'nombre' => 'Patatas Fritas',
+                'ingredientes' => [
+                    'Papas fritas crujientes',
+                    'Sal',
+                ],
+                'precio' => 3.00,
+                'imagen' => null,
+            ],
+            [
+                'nombre' => 'Cerveza Artesanal',
+                'ingredientes' => [
+                    'Cerveza de elaboración local',
+                ],
+                'precio' => 4.00,
+                'imagen' => null,
+            ],
+            [
+                'nombre' => 'Refresco',
+                'ingredientes' => [
+                    'Bebida carbonatada',
+                ],
+                'precio' => 2.50,
+                'imagen' => null,
+            ],
+            [
+                'nombre' => 'Batido de Chocolate',
+                'ingredientes' => [
+                    'Leche',
+                    'Helado de chocolate',
+                    'Sirope de chocolate',
+                ],
+                'precio' => 5.00,
+                'imagen' => null,
+            ],
+            [
+                'nombre' => 'Tarta de Queso',
+                'ingredientes' => [
+                    'Base de galleta',
+                    'Relleno de queso crema',
+                    'Mermelada de frutas del bosque',
+                ],
+                'precio' => 4.50,
+                'imagen' => null,
+            ]
+
         ];
 
         foreach ($productos as $data) {

@@ -12,22 +12,22 @@ class CategoriaSeeder extends Seeder
     {
         // Crear categorías asociadas a la carta 1
         $hamburguesas = Categoria::firstOrCreate([
-            'nombre' => 'Hamburguesas',
+            'nombre' => 'hamburguesas',
             'idCarta' => 1
         ]);
 
-        $veggies = Categoria::firstOrCreate([
-            'nombre' => 'Vegetarianas',
+        $entrantes = Categoria::firstOrCreate([
+            'nombre' => 'entrantes',
             'idCarta' => 1
         ]);
 
-        $pollo = Categoria::firstOrCreate([
-            'nombre' => 'Pollo',
+        $bebidas = Categoria::firstOrCreate([
+            'nombre' => 'bebidas',
             'idCarta' => 1
         ]);
 
-        $especiales = Categoria::firstOrCreate([
-            'nombre' => 'Especiales',
+        $postres = Categoria::firstOrCreate([
+            'nombre' => 'postres',
             'idCarta' => 1
         ]);
 
@@ -38,11 +38,18 @@ class CategoriaSeeder extends Seeder
             'BBQ Crunch' => $hamburguesas->id,
             'Picante Extreme' => $hamburguesas->id,
             'Doble Bacon' => $hamburguesas->id,
-            'Trufa Deluxe' => $especiales->id,
-            'Especial de la Casa' => $especiales->id,
-            'Veggie Delight' => $veggies->id,
-            'Pollo Crispy' => $pollo->id,
-            'Smoky BBQ' => $especiales->id,
+            'Trufa Deluxe' => $hamburguesas->id,
+            'Especial de la Casa' => $hamburguesas->id,
+            'Veggie Delight' => $hamburguesas->id,
+            'Pollo Crispy' => $hamburguesas->id,
+            'Smoky BBQ' => $hamburguesas->id,
+            'Fingers de Pollo' => $entrantes->id,
+            'Aros de Cebolla' => $entrantes->id,
+            'Patatas Fritas' => $entrantes->id,
+            'Cerveza Artesanal' => $bebidas->id,
+            'Refresco' => $bebidas->id,
+            'Batido de Chocolate' => $postres->id,
+            'Tarta de Queso' => $postres->id,
         ];
 
         foreach ($mapeo as $nombre => $idCategoria) {
