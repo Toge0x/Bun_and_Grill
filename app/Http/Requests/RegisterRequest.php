@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -14,29 +16,25 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre'   => 'required|string|max:255',
-            'apellidos'=> 'required|string|max:255',
-            'email'    => 'required|email|unique:usuarios,email|max:255', // Validación de email único
-            'password' => [
-                'required',
-                'string',
-                'min:8',
-                'regex:/[A-Z]/',    // una mayuscula
-                'regex:/[0-9]/',    // un numero
-                'confirmed',        // debe coincidir con password_confirmationm
-            ],
-            'telefono' => 'nullable|string|max:15',
-            'direccion'=> 'nullable|string|max:255',
-            'sexo'     => 'nullable|string|max:50',
+            'nombre'    => ['required','string','max:255'],
+            'apellidos' => ['required','string','max:255'],
+            'email'     => ['required','email','max:255','unique:usuarios,email'],
+            'password'  => ['required','confirmed', Password::min(8)->letters()->numbers()],
+            'telefono'  => ['nullable','string','max:15'],
+            'direccion' => ['nullable','string','max:255'],
+            'sexo'      => ['nullable', Rule::in(['Masculino','Femenino','Otro'])],
         ];
     }
 
     public function messages()
     {
         return [
-            'email.unique' => 'Este correo electrónico ya está registrado.',
-            'password.regex' => 'La contraseña debe contener al menos una letra mayúscula y un dígito.',
+            'email.unique'       => 'Este correo ya está en uso.',
+            'password.min'       => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.letters'   => 'La contraseña debe incluir al menos una letra.',
+            'password.numbers'   => 'La contraseña debe incluir al menos un número.',
             'password.confirmed' => 'Las contraseñas no coinciden.',
+            'sexo.in'            => 'El valor de sexo seleccionado no es válido.',
         ];
     }
 }
