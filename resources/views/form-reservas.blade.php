@@ -11,15 +11,6 @@
     <div class="reservation-content">
         <h2 class="section-title">HAZ TU RESERVA</h2>
 
-        @guest
-        <div class="alert-info">
-            Para hacer una reserva necesitas 
-            <a href="{{ route('login') }}">iniciar sesión</a>.
-        </div>
-        @endguest
-
-
-        @auth
         <form action="{{ route('reservas.store') }}" method="POST" class="reservation-form">
             @csrf
 
@@ -90,7 +81,6 @@
                 <button type="submit" class="btn-primary">RESERVAR AHORA</button>
             </div>
         </form>
-        @endauth
     </div>
 </div>
 
