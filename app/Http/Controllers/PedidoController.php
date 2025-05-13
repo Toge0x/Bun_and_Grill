@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class PedidoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only('store');
+    }
+
     public function index(Request $request)
     {
         $query = Pedido::query(); // Ajusta esto al nombre de tu modelo si es diferente
