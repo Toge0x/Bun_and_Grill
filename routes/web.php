@@ -72,3 +72,45 @@ Route::resource('productos', ProductoController::class);
 Route::resource('pedidos', PedidoController::class);
 Route::resource('alergenos', AlergenoController::class);
 Route::resource('lineapedidos', LineaPedidoController::class);
+
+// -------------------------------
+//   RESERVAS
+// -------------------------------
+
+// Mostrar formulario (sólo usuarios autenticados)
+Route::get('/form-reservas', [ReservaController::class, 'create'])
+     ->name('form-reservas')
+     ->middleware('auth');
+
+// Procesar envío (sólo usuarios autenticados)
+Route::post('/reservas', [ReservaController::class, 'store'])
+     ->name('reservas.store')
+     ->middleware('auth');
+
+// Listado admin (público o protegido según tu lógica)
+Route::get('/admin-reservas', [ReservaController::class, 'index'])->name('reservas.index');
+
+// Resource complementario (omitimos create y store porque ya están arriba)
+Route::resource('reservas', ReservaController::class)
+     ->except(['create','store']);
+
+// -------------------------------
+//   PEDIDOS
+// -------------------------------
+
+// Mostrar formulario (sólo usuarios autenticados)
+Route::get('/form-pedidos', [PedidoController::class, 'create'])
+     ->name('form-pedidos')
+     ->middleware('auth');
+
+// Procesar envío (sólo usuarios autenticados)
+Route::post('/pedidos', [PedidoController::class, 'store'])
+     ->name('pedidos.store')
+     ->middleware('auth');
+
+// Listado admin
+Route::get('/admin-pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
+
+// Resource complementario (omitimos create y store porque ya están arriba)
+Route::resource('pedidos', PedidoController::class)
+     ->except(['create','store']);
