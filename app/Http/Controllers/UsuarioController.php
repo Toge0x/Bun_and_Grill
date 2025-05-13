@@ -8,8 +8,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-
 
 class UsuarioController extends Controller
 {
@@ -111,32 +109,17 @@ class UsuarioController extends Controller
             ->with('success', 'Usuario eliminado correctamente.');
     }
 
+
     public function checkLogin(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
+        $usuario = Usuario::where('email', $request->email)->first();
 
-        if (! Auth::attempt($credentials)) {
-            return back()
-                ->withErrors(['email' => 'Credenciales incorrectas.'])
-                ->withInput(); // mantiene el email escrito
+        if (!$usuario || !Hash::check($request->password, $usuario->password)) {
+            return back()->withErrors([
+                'email' => 'Credenciales incorrectas.'
+            ])->withInput();                    // mantienes el email escrito
         }
 
-        // Si llegas aquí, las credenciales son buenas:
-        $request->session()->regenerate();
-
-        // Redirige al usuario donde quiera ir (o al form-reservas)
-        return redirect()->intended(route('form-reservas'));
+        return back()->with('success', 'Login exitoso');    // simplemente pasa la validación
     }
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('home');
-    }
-
-
 }
