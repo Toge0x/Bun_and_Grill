@@ -47,7 +47,7 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-Route::post('/login', [UsuarioController::class, 'checkLogin']);
+Route::post('/login', [UsuarioController::class, 'checkLogin']) ->name('login.attempt');;
 
 Route::get('/registro', function () {
     return view('registro');
@@ -56,12 +56,13 @@ Route::get('/registro', function () {
 Route::post('/registro', [UsuarioController::class, 'store']);
 
 // Admin routes
-Route::get('/admin-clientes', [UsuarioController::class, 'index'])->name('usuarios.index');
-
-Route::get('/admin-hamburguesas', [ProductoController::class, 'showAll'])->name('hamburguesas');
-Route::delete('/admin-hamburguesas-delete/{id}', [ProductoController::class, 'destroy'])->name('hamburguesas.destroy');
-Route::post('/admin-hamburguesas', [ProductoController::class, 'store'])->name('hamburguesas.store');
-Route::post('/admin-hamburguesas-update/{id}', [ProductoController::class, 'update'])->name('hamburguesas.update');
+Route::middleware(['auth', 'admin.only'])->group(function () {
+    Route::get('/admin-clientes', [UsuarioController::class, 'index'])->name('usuarios.index');
+    Route::get('/admin-hamburguesas', [ProductoController::class, 'showAll'])->name('hamburguesas');
+    Route::delete('/admin-hamburguesas-delete/{id}', [ProductoController::class, 'destroy'])->name('hamburguesas.destroy');
+    Route::post('/admin-hamburguesas', [ProductoController::class, 'store'])->name('hamburguesas.store');
+    Route::post('/admin-hamburguesas-update/{id}', [ProductoController::class, 'update'])->name('hamburguesas.update');
+});
 
 // Resource routes
 Route::resource('clientes', ClienteController::class);
