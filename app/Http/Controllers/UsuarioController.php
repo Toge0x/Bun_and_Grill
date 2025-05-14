@@ -128,7 +128,7 @@ public function checkLogin(LoginRequest $request)
             'apellidos' => $usuario->apellidos,
         ]
     ]);
- 
+  
     return redirect()->route('home');
 }
 
