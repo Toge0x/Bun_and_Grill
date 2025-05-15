@@ -44,7 +44,7 @@ class Alergeno extends Model
         $alergenos = self::find($id); 
         if ($alergenos) {
             $alergenos->delete();
-            return ['message' => 'Alergeno borrada'];
+            return ['message' => 'Alergeno no borrada'];
         }
         return ['message' => 'Alergeno no encontrado'];
     }

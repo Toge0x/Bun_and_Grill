@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Usuario;
 use App\Models\Cliente;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 
 class UsuarioController extends Controller
@@ -111,32 +111,26 @@ class UsuarioController extends Controller
             ->with('success', 'Usuario eliminado correctamente.');
     }
 
-    public function checkLogin(LoginRequest $request)
-    {
-        $credentials = $request->only('email', 'password');
+public function checkLogin(LoginRequest $request)
+{
+    $usuario = Usuario::where('email', $request->email)->first();
 
-        if (! Auth::attempt($credentials)) {
-            return back()
-                ->withErrors(['email' => 'Credenciales incorrectas.'])
-                ->withInput(); // mantiene el email escrito
-        }
-
-        // Si llegas aquí, las credenciales son buenas:
-        $request->session()->regenerate();
-
-        // Redirige al usuario donde quiera ir (o al form-reservas)
-        return redirect()->intended(route('form-reservas'));
+    if (! $usuario || ! Hash::check($request->password, $usuario->password)) {
+        return back()
+            ->withErrors(['email' => 'Credenciales incorrectas.'])
+            ->withInput();
     }
 
-    public function logout(Request $request)
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('home');
-    }
+    session([
+        'logged_user' => [
+            'email'     => $usuario->email,
+            'nombre'    => $usuario->nombre,
+            'apellidos' => $usuario->apellidos,
+        ]
+    ]);
+  
+    return redirect()->route('home');
+}
 
 
 }

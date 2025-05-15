@@ -135,7 +135,7 @@
             <img src="{{ asset('storage/images/Logo.jpg') }}" alt="Bun & Grill Logo">
         </div>
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="/login">
             @csrf
 
             <div class="form-group">
@@ -147,8 +147,7 @@
                     class="form-input"
                     placeholder="example@email.com"
                     required
-                    autofocus
-                    value="{{ old('email') }}">
+                    autofocus>
                 @error('email')
                 <span class="error-message">{{ $message }}</span>
                 @enderror

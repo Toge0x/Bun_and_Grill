@@ -96,17 +96,8 @@
 
                     <hr>
 
-                @guest
-                    <div class="alert-info">
-                        Para realizar un pedido necesitas 
-                        <a href="{{ route('login') }}">iniciar sesión</a>.
-                    </div>
-                @endguest
-
-                @auth
                     <form id="checkout-form" class="checkout-form">
                         @csrf
-
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" id="nombre" name="nombre" required>
@@ -128,7 +119,11 @@
                             REALIZAR PEDIDO
                         </button>
                     </form>
-                @endauth
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Modal de confirmación -->
 <div class="modal" id="confirmationModal">

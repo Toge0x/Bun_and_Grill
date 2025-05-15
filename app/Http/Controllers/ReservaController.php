@@ -10,12 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReservaController extends Controller
 {
-
-     public function __construct()
-    {
-        $this->middleware('auth')->only('store');
-    }
-
     public function index(Request $request)
     {
         $query = Reserva::query(); // Ajusta esto al nombre de tu modelo si es diferente
