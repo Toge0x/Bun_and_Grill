@@ -35,12 +35,11 @@ Route::get('/carta', function () {
 // Reservas routes
 Route::get('/form-reservas', [ReservaController::class, 'create'])->name('form-reservas');
 Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');
-Route::get('/admin-reservas', [ReservaController::class, 'index'])->name('reservas.index');
 
 // Pedidos routes
 Route::get('/form-pedidos', [PedidoController::class, 'create'])->name('form-pedidos');
 Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
-Route::get('/admin-pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
+
 
 // Authentication routes
 Route::get('/login', function () {
@@ -56,13 +55,14 @@ Route::get('/registro', function () {
 Route::post('/registro', [UsuarioController::class, 'store']);
 
 // Admin routes
-Route::middleware(['auth', 'admin.only'])->group(function () {
-    Route::get('/admin-clientes', [UsuarioController::class, 'index'])->name('usuarios.index');
-    Route::get('/admin-hamburguesas', [ProductoController::class, 'showAll'])->name('hamburguesas');
-    Route::delete('/admin-hamburguesas-delete/{id}', [ProductoController::class, 'destroy'])->name('hamburguesas.destroy');
-    Route::post('/admin-hamburguesas', [ProductoController::class, 'store'])->name('hamburguesas.store');
-    Route::post('/admin-hamburguesas-update/{id}', [ProductoController::class, 'update'])->name('hamburguesas.update');
-});
+Route::get('/admin-pedidos', [PedidoController::class, 'index'])->middleware('admin.only')->name('pedidos.index');
+Route::get('/admin-reservas', [ReservaController::class, 'index'])->middleware('admin.only')->name('reservas.index');
+Route::get('/admin-clientes', [UsuarioController::class, 'index'])->middleware('admin.only')->name('usuarios.index');
+Route::get('/admin-hamburguesas', [ProductoController::class, 'showAll'])->middleware('admin.only')->name('hamburguesas');
+Route::delete('/admin-hamburguesas-delete/{id}', [ProductoController::class, 'destroy'])->middleware('admin.only')->name('hamburguesas.destroy');
+Route::post('/admin-hamburguesas', [ProductoController::class, 'store'])->middleware('admin.only')->name('hamburguesas.store');
+Route::post('/admin-hamburguesas-update/{id}', [ProductoController::class, 'update'])->middleware('admin.only')->name('hamburguesas.update');
+
 
 // Resource routes
 Route::resource('clientes', ClienteController::class);
