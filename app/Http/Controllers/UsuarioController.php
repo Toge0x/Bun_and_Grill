@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Usuario;
 use App\Models\Cliente;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
 
 class UsuarioController extends Controller
 {
@@ -109,17 +111,26 @@ class UsuarioController extends Controller
             ->with('success', 'Usuario eliminado correctamente.');
     }
 
+public function checkLogin(LoginRequest $request)
+{
+    $usuario = Usuario::where('email', $request->email)->first();
 
-    public function checkLogin(LoginRequest $request)
-    {
-        $usuario = Usuario::where('email', $request->email)->first();
-
-        if (!$usuario || !Hash::check($request->password, $usuario->password)) {
-            return back()->withErrors([
-                'email' => 'Credenciales incorrectas.'
-            ])->withInput();                    // mantienes el email escrito
-        }
-
-        return back()->with('success', 'Login exitoso');    // simplemente pasa la validación
+    if (! $usuario || ! Hash::check($request->password, $usuario->password)) {
+        return back()
+            ->withErrors(['email' => 'Credenciales incorrectas.'])
+            ->withInput();
     }
+
+    session([
+        'logged_user' => [
+            'email'     => $usuario->email,
+            'nombre'    => $usuario->nombre,
+            'apellidos' => $usuario->apellidos,
+        ]
+    ]);
+  
+    return redirect()->route('home');
+}
+
+
 }
