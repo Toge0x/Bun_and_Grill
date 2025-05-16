@@ -45,8 +45,9 @@ Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store
 Route::get('/login', function () {
     return view('login');
 })->name('login');
+Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
-Route::post('/login', [UsuarioController::class, 'checkLogin']) ->name('login.attempt');;
+Route::post('/login', [UsuarioController::class, 'checkLogin'])->name('login.attempt');;
 
 Route::get('/registro', function () {
     return view('registro');

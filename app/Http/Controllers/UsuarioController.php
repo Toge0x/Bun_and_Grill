@@ -42,7 +42,8 @@ class UsuarioController extends Controller
 
     public function store(RegisterRequest $request)
     {
-        $usuario = Usuario::create([        // validado en RegisterRequest ya podemos crearlo directamente
+        $usuario = new Usuario();
+        $usuario = $usuario->crearUsuario([        // validado en RegisterRequest ya podemos crearlo directamente
             'nombre'     => $request->nombre,
             'apellidos'  => $request->apellidos,
             'email'      => $request->email,
@@ -55,6 +56,14 @@ class UsuarioController extends Controller
         Cliente::create([
             'email'   => $usuario->email,
             'puntos'  => 0,
+        ]);
+
+        session([
+            'logged_user' => [
+                'email'     => $usuario->email,
+                'nombre'    => $usuario->nombre,
+                'apellidos' => $usuario->apellidos,
+            ]
         ]);
 
         return redirect()->route('home')->with('success', '¡Registro completado correctamente!');
@@ -111,26 +120,35 @@ class UsuarioController extends Controller
             ->with('success', 'Usuario eliminado correctamente.');
     }
 
-public function checkLogin(LoginRequest $request)
-{
-    $usuario = Usuario::where('email', $request->email)->first();
+    public function checkLogin(LoginRequest $request)
+    {
+        $usuario = Usuario::where('email', $request->email)->first();
 
-    if (! $usuario || ! Hash::check($request->password, $usuario->password)) {
-        return back()
-            ->withErrors(['email' => 'Credenciales incorrectas.'])
-            ->withInput();
+        if (! $usuario || ! Hash::check($request->password, $usuario->password)) {
+            return back()
+                ->withErrors(['email' => 'Credenciales incorrectas.'])
+                ->withInput();
+        }
+
+        session([
+            'logged_user' => [
+                'email'     => $usuario->email,
+                'nombre'    => $usuario->nombre,
+                'apellidos' => $usuario->apellidos,
+            ]
+        ]);
+
+        return redirect()->route('home');
     }
 
-    session([
-        'logged_user' => [
-            'email'     => $usuario->email,
-            'nombre'    => $usuario->nombre,
-            'apellidos' => $usuario->apellidos,
-        ]
-    ]);
-  
-    return redirect()->route('home');
-}
+    public function logout(Request $request)
+    {
+        // Limpiar solo la información del usuario de la sesión
+        $request->session()->forget('logged_user');
 
+        // Opcional: regenerar el token de sesión por seguridad
+        $request->session()->regenerateToken();
 
+        return redirect('/');
+    }
 }

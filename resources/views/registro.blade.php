@@ -277,9 +277,9 @@
                     <label for="sexo" class="form-label">Sexo</label>
                     <select id="sexo" name="sexo" class="form-select">
                         <option value="">Seleccionar</option>
-                        <option value="masculino" {{ old('sexo') == 'masculino' ? 'selected' : '' }}>Masculino</option>
-                        <option value="femenino" {{ old('sexo') == 'femenino' ? 'selected' : '' }}>Femenino</option>
-                        <option value="otro" {{ old('sexo') == 'otro' ? 'selected' : '' }}>Otro</option>
+                        <option value="Masculino" {{ old('sexo') == 'masculino' ? 'selected' : '' }}>Masculino</option>
+                        <option value="Femenino" {{ old('sexo') == 'femenino' ? 'selected' : '' }}>Femenino</option>
+                        <option value="Otro" {{ old('sexo') == 'otro' ? 'selected' : '' }}>Otro</option>
                         <option value="prefiero_no_decir" {{ old('sexo') == 'prefiero_no_decir' ? 'selected' : '' }}>Prefiero no decir</option>
                     </select>
                     @error('sexo')

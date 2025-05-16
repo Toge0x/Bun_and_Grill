@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Genero {
+class Genero
+{
     const Masculino = 'Masculino';
     const Femenino = 'Femenino';
     const Otro = 'Otro';
@@ -57,25 +58,27 @@ class Usuario extends Model
 
     public static function actualizarUsuario($id, $datos)
     {
-    $usuarios = self::find($id);
-    if ($usuarios) {
-        $usuarios->update($datos);
-        return $usuarios;
-    }
-    return ['message' => 'Usuario no actualizada'];
+        $usuarios = self::find($id);
+        if ($usuarios) {
+            $usuarios->update($datos);
+            return $usuarios;
+        }
+        return ['message' => 'Usuario no actualizada'];
     }
 
-    public function leerUsuario($id){
+    public function leerUsuario($id)
+    {
         $usuarios = self::find($id);
-        if($usuarios){
+        if ($usuarios) {
             return  $usuarios;
         }
         return ['message' => 'Usuario no leida'];
     }
 
-    public function leerTodosUsuarios(){
+    public function leerTodosUsuarios()
+    {
         $usuarios = self::all();
-        if($usuarios){
+        if ($usuarios) {
             return  $usuarios;
         }
         return ['message' => 'Usuario no leida'];
@@ -84,7 +87,7 @@ class Usuario extends Model
     public function crearUsuario($datos)
     {
         $usuarios = self::create($datos);
-        if($usuarios){
+        if ($usuarios) {
             return  $usuarios;
         }
         return ['message' => 'Usuario no creada'];

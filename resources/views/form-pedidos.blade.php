@@ -146,7 +146,9 @@
         </div>
     </div>
 </div>
+@endsection
 
+@section('styles')
 <style>
     /* Estilos generales */
     * {
@@ -656,7 +658,76 @@
     .close-btn:hover {
         transform: scale(1.2);
     }
+
+    /* Estilos para categorías */
+    .category-tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .category-tabs::-webkit-scrollbar {
+        height: 5px;
+    }
+
+    .category-tabs::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 5px;
+    }
+
+    .tab-link {
+        white-space: nowrap;
+        padding: 10px 20px;
+        margin-right: 5px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        border: 1px solid #ddd;
+    }
+
+    .tab-link:hover {
+        background-color: #f0f0f0;
+    }
+
+    .tab-link.active {
+        background-color: #2d3748;
+        color: white;
+        border-color: #2d3748;
+    }
+
+    /* Animación para cambio de categorías */
+    .tab-pane {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .tab-pane.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Notificación */
+    .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #28a745;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 4px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s, transform 0.3s;
+        font-size: 16px;
+        font-weight: bold;
+    }
 </style>
+@endsection
 
 @section('scripts')
 <script>
@@ -668,14 +739,16 @@
         const tabPanes = document.querySelectorAll('.tab-pane');
 
         tabLinks.forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevenir comportamiento por defecto
+
                 // Remove active class from all tabs
                 tabLinks.forEach(tab => tab.classList.remove('active'));
                 tabPanes.forEach(pane => pane.classList.remove('active'));
 
                 // Add active class to current tab
                 this.classList.add('active');
-                const target = this.getAttribute('data-bs-target').replace('#', '');
+                const target = this.getAttribute('data-bs-target').substring(1);
                 document.getElementById(target).classList.add('active');
             });
         });
@@ -695,17 +768,13 @@
         // Actualizar carrito al cargar la página
         updateCart();
 
-        // Añadir producto al carrito
+        // Añadir producto al carrito - Corregido para que funcione correctamente
         document.querySelectorAll('.add-to-cart').forEach(button => {
-            console.log('Botón encontrado:', button);
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('Botón clickeado');
-
+            button.addEventListener('click', function() { // Usar función normal en lugar de función flecha
                 // Obtén los datos del producto desde los atributos del botón
-                const productId = this.dataset.id;
-                const productName = this.dataset.nombre;
-                const productPrice = parseFloat(this.dataset.precio);
+                const productId = this.getAttribute('data-id');
+                const productName = this.getAttribute('data-nombre');
+                const productPrice = parseFloat(this.getAttribute('data-precio'));
 
                 console.log('Producto:', productId, productName, productPrice);
 
@@ -799,62 +868,7 @@
                 realizarPedidoBtn.disabled = false;
 
                 // Añadir event listeners a los botones de cantidad
-                document.querySelectorAll('.decrease-quantity').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const cartItem = this.closest('.cart-item');
-                        const productId = cartItem.dataset.id;
-                        const item = cart.find(item => item.id === productId);
-
-                        if (item.quantity > 1) {
-                            item.quantity -= 1;
-                            showNotification(`Cantidad de ${item.name} actualizada`);
-                        } else {
-                            cart = cart.filter(item => item.id !== productId);
-                            showNotification(`${item.name} eliminado del carrito`);
-                        }
-
-                        // Guardar carrito en localStorage
-                        localStorage.setItem('cart', JSON.stringify(cart));
-
-                        // Actualizar carrito
-                        updateCart();
-                    });
-                });
-
-                document.querySelectorAll('.increase-quantity').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const cartItem = this.closest('.cart-item');
-                        const productId = cartItem.dataset.id;
-                        const item = cart.find(item => item.id === productId);
-
-                        item.quantity += 1;
-                        showNotification(`Cantidad de ${item.name} actualizada`);
-
-                        // Guardar carrito en localStorage
-                        localStorage.setItem('cart', JSON.stringify(cart));
-
-                        // Actualizar carrito
-                        updateCart();
-                    });
-                });
-
-                // Añadir event listeners a los botones de eliminar
-                document.querySelectorAll('.remove-item').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const cartItem = this.closest('.cart-item');
-                        const productId = cartItem.dataset.id;
-                        const item = cart.find(item => item.id === productId);
-
-                        cart = cart.filter(item => item.id !== productId);
-                        showNotification(`${item.name} eliminado del carrito`);
-
-                        // Guardar carrito en localStorage
-                        localStorage.setItem('cart', JSON.stringify(cart));
-
-                        // Actualizar carrito
-                        updateCart();
-                    });
-                });
+                addQuantityButtonListeners();
             }
 
             // Actualizar totales
@@ -867,29 +881,74 @@
             totalElement.textContent = `€${total.toFixed(2)}`;
         }
 
-        // Modificar la función showNotification para hacerla más visible y mejorar la animación
+        // Función para añadir event listeners a los botones de cantidad
+        function addQuantityButtonListeners() {
+            // Añadir event listeners a los botones de cantidad
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', function() {
+                    const cartItem = this.closest('.cart-item');
+                    const productId = cartItem.dataset.id;
+                    const item = cart.find(item => item.id === productId);
+
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                        showNotification(`Cantidad de ${item.name} actualizada`);
+                    } else {
+                        cart = cart.filter(item => item.id !== productId);
+                        showNotification(`${item.name} eliminado del carrito`);
+                    }
+
+                    // Guardar carrito en localStorage
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Actualizar carrito
+                    updateCart();
+                });
+            });
+
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', function() {
+                    const cartItem = this.closest('.cart-item');
+                    const productId = cartItem.dataset.id;
+                    const item = cart.find(item => item.id === productId);
+
+                    item.quantity += 1;
+                    showNotification(`Cantidad de ${item.name} actualizada`);
+
+                    // Guardar carrito en localStorage
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Actualizar carrito
+                    updateCart();
+                });
+            });
+
+            // Añadir event listeners a los botones de eliminar
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const cartItem = this.closest('.cart-item');
+                    const productId = cartItem.dataset.id;
+                    const item = cart.find(item => item.id === productId);
+
+                    cart = cart.filter(item => item.id !== productId);
+                    showNotification(`${item.name} eliminado del carrito`);
+
+                    // Guardar carrito en localStorage
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Actualizar carrito
+                    updateCart();
+                });
+            });
+        }
+
+        // Función para mostrar notificaciones
         function showNotification(message) {
             const notification = document.createElement('div');
             notification.className = 'notification';
             notification.textContent = message;
 
             document.body.appendChild(notification);
-
-            // Estilos para la notificación
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.right = '20px';
-            notification.style.backgroundColor = '#28a745';
-            notification.style.color = 'white';
-            notification.style.padding = '15px 25px';
-            notification.style.borderRadius = '4px';
-            notification.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-            notification.style.zIndex = '9999';
-            notification.style.opacity = '0';
-            notification.style.transform = 'translateY(20px)';
-            notification.style.transition = 'opacity 0.3s, transform 0.3s';
-            notification.style.fontSize = '16px';
-            notification.style.fontWeight = 'bold';
 
             // Mostrar notificación
             setTimeout(() => {
@@ -943,12 +1002,16 @@
                 total: total
             };
 
+            // Obtener el token CSRF
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
+                document.querySelector('input[name="_token"]')?.value;
+
             // Enviar datos al servidor mediante fetch
             fetch('{{ route("pedidos.store") }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        'X-CSRF-TOKEN': csrfToken
                     },
                     body: JSON.stringify({
                         pedido: pedidoData,
@@ -977,6 +1040,7 @@
                         checkoutForm.reset();
                         updateCart();
                     } else {
+                        console.log('Error:', data.message);
                         alert('Ha ocurrido un error al procesar tu pedido. Por favor, inténtalo de nuevo.');
                     }
                 })
@@ -987,5 +1051,4 @@
         });
     });
 </script>
-@endsection
 @endsection

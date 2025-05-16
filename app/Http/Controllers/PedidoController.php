@@ -126,7 +126,11 @@ class PedidoController extends Controller
                 $usuario = new \App\Models\Usuario();
                 $usuario->email = $request->input('cliente.email');
                 $usuario->nombre = $request->input('cliente.nombre');
+                $usuario->apellidos = ''; // Añadir un valor por defecto o tomar del formulario
                 $usuario->password = bcrypt('password_temporal'); // Asignar una contraseña temporal
+                $usuario->telefono = $request->input('cliente.telefono');
+                $usuario->direccion = $request->input('cliente.direccion');
+                $usuario->sexo = 'Otro'; // Valor por defecto o tomar del formulario
                 $usuario->save();
             }
 
@@ -134,9 +138,7 @@ class PedidoController extends Controller
             $cliente = Cliente::firstOrCreate(
                 ['email' => $request->input('cliente.email')],
                 [
-                    'nombre' => $request->input('cliente.nombre'),
-                    'telefono' => $request->input('cliente.telefono'),
-                    'direccion' => $request->input('cliente.direccion')
+                    'puntos' => 0 // Asumiendo que los clientes nuevos comienzan con 0 puntos
                 ]
             );
 
