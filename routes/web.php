@@ -32,6 +32,13 @@ Route::get('/carta', function () {
     return view('carta');
 })->name('carta');
 
+// Rutas para el perfil de usuario
+Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->name('perfil.index');
+Route::put('/perfil/update', [App\Http\Controllers\PerfilController::class, 'update'])->name('perfil.update');
+Route::put('/perfil/password', [App\Http\Controllers\PerfilController::class, 'updatePassword'])->name('perfil.password');
+
+
+
 // Reservas routes
 Route::get('/form-reservas', [ReservaController::class, 'create'])->name('form-reservas');
 Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');

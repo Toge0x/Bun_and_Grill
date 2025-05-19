@@ -235,6 +235,9 @@
                 </svg>
             </div>
             <div class="user-dropdown-content">
+                <a href="{{ route('perfil.index') }}">
+                    Perfil
+                </a>
                 @if(session('logged_user.email') === 'pacop@gmail.com')
                 <a href="/admin-reservas" class="admin-link">Administración</a>
                 @endif
@@ -276,7 +279,11 @@
                     <path d="m6 9 6 6 6-6" />
                 </svg>
             </div>
+
             <div class="mobile-user-dropdown-content">
+                <a href="{{ route('perfil.index') }}">
+                    Perfil
+                </a>
                 @if(session('logged_user.email') === 'pacop@gmail.com')
                 <a href="/admin-reservas" class="admin-link">Administración</a>
                 @endif
