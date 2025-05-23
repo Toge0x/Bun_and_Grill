@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\AlergenoController;
 use App\Http\Controllers\LineaPedidoController;
+use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\CartaController;
 
 Route::get('/', function () {
     return view('home');
@@ -24,13 +26,9 @@ Route::get('/contact', function () {
 })->name('form-contacto');
 Route::post('/contacto/enviar', [ContactoController::class, 'enviar'])->name('contacto.enviar');
 
-Route::get('/hamburguesa-del-mes', function () {
-    return view('hamburguesa-del-mes');
-})->name('hamburguesa-del-mes');
 
-Route::get('/carta', function () {
-    return view('carta');
-})->name('carta');
+Route::get('/carta', [CartaController::class, 'index'])->name('carta');
+Route::get('/hamburguesa-del-mes', [CartaController::class, 'hamburguesaDelMes'])->name('hamburguesa-del-mes');
 
 // Rutas para el perfil de usuario
 Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->name('perfil.index');
